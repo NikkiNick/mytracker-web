@@ -1,0 +1,33 @@
+<h1>Trackers overview</h1>
+<div *ngIf="trackers.length === 0">
+    No trackers
+</div>
+<div *ngIf="trackers.length > 0" class="container-fluid p-2">
+    <div class="row d-flex justify-content-end p-1">
+        <mat-button-toggle-group [(ngModel)]="tableViewMode" name="tableViewMode" aria-label="Tableview mode">
+            <mat-button-toggle [value]="false">
+                <mat-icon>view_module</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle [value]="true">
+                <mat-icon>table_rows</mat-icon>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+    </div>
+    <div *ngIf="!tableViewMode" class="row justify-content-between">
+        <div class="col-12 col-md-6 col-lg-3 p-1"
+        *ngFor="let tracker of trackers">   
+            <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="shadow">
+                <mat-card-title>{{tracker.name}}</mat-card-title>
+                <mat-card-content>
+                    Content
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button [routerLink]="['/trackers/detail', tracker.id]">View detail</button>
+                </mat-card-actions>
+            </mat-card> 
+        </div>
+    </div>
+    <div *ngIf="tableViewMode">
+        table
+     </div>
+</div>

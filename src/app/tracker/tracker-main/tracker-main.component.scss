@@ -1,0 +1,16 @@
+@import '_variables';
+
+#subnav {  
+    margin-top: 52px;
+}
+#subnav .seperator{
+    height: 40px;
+    background-color: #333;
+    margin: 0;
+    font-size: 1.2rem;
+}
+#subnav a{
+    height: 50px;
+    color: $primary-color-highlight;
+    align-content: center;
+}

@@ -8,6 +8,10 @@ import { MaterialModule } from './material/material.module';
 import { NavigationComponent } from './navigation/navigation.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { HomeComponent } from './home/home.component';
+import { HttpClientModule } from '@angular/common/http'
+import { TrackerModule } from './tracker/tracker.module';
+import { FormsModule } from '@angular/forms';
+import { BreadCrumbsComponent } from './bread-crumbs/bread-crumbs.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +22,12 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpClientModule, 
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    TrackerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

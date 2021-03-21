@@ -1,0 +1,11 @@
+@import "_variables";
+
+nav{
+    background-color: $primary-color-dark !important;
+}
+nav a{
+    color: $primary-color-highlight !important;
+}
+nav button{
+    background-color: $primary-color-highlight !important;
+}
