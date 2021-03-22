@@ -15,7 +15,7 @@ export class TrackerOverviewComponent implements OnInit {
   constructor(private service: TrackerService) { }
 
   ngOnInit(): void {
-    this.trackers = this.service.getTrackers()
+    this.trackers = this.service.getAll()
   }
 
 }

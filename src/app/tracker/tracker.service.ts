@@ -6,7 +6,7 @@ import { Tracker } from './tracker.model';
 })
 export class TrackerService {
 
-  getTrackers(): Array<Tracker>{
+  getAll(): Array<Tracker>{
     return [
       { id: "1", name: "Test", created: new Date(), color: "#ff0000" },
       { id: "2", name: "Water", created: new Date() },

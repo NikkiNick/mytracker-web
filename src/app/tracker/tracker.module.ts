@@ -16,12 +16,11 @@ import { TrackerAddComponent } from './tracker-add/tracker-add.component';
     TrackerAddComponent
   ],
   imports: [
-    RouterModule,
     CommonModule,
+    RouterModule,
     FormsModule,
-    MaterialModule,
-    SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule
   ], 
   providers: [
     TrackerService

@@ -5,6 +5,9 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
 import { TrackerAddComponent } from './tracker/tracker-add/tracker-add.component';
 import { TrackerDetailComponent } from './tracker/tracker-detail/tracker-detail.component';
 import { TrackerOverviewComponent } from './tracker/tracker-overview/tracker-overview.component';
+import { UnitTypeAddComponent } from './unittype/unit-type-add/unit-type-add.component';
+import { UnitTypeDetailComponent } from './unittype/unit-type-detail/unit-type-detail.component';
+import { UnitTypeOverviewComponent } from './unittype/unit-type-overview/unit-type-overview.component';
 
 
 export class RoutingData {
@@ -31,6 +34,14 @@ const routes: Routes = [
         component: TrackerOverviewComponent,
         data: { breadcrumb :  'Overview' } 
       }
+    ]
+  },
+  { path: 'unittypes',
+    children: [
+      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'add', component: UnitTypeAddComponent },
+      { path: 'detail/:id', component: UnitTypeDetailComponent },
+      { path: 'overview', component: UnitTypeOverviewComponent }
     ]
   },
   { 

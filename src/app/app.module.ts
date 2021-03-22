@@ -13,6 +13,8 @@ import { TrackerModule } from './tracker/tracker.module';
 import { FormsModule } from '@angular/forms';
 import { BreadCrumbsComponent } from './bread-crumbs/bread-crumbs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { UnitTypeModule } from './unittype/unit-type.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -25,11 +27,13 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule, 
+    HttpClientModule,
+    RouterModule, 
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    TrackerModule
+    TrackerModule,
+    UnitTypeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

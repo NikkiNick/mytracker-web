@@ -9,7 +9,8 @@ export class NavigationComponent implements OnInit {
 
   menuItems: { name: String, url: String }[] = [
     { name: "Home", url: "" },
-    { name: "Trackers", url: "/trackers" }
+    { name: "Trackers", url: "/trackers" },
+    { name: "UnitTypes", url: "/unittypes" }
   ]
 
   constructor() { }
