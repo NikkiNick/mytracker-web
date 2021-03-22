@@ -12,13 +12,15 @@ import { HttpClientModule } from '@angular/common/http'
 import { TrackerModule } from './tracker/tracker.module';
 import { FormsModule } from '@angular/forms';
 import { BreadCrumbsComponent } from './bread-crumbs/bread-crumbs.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
     NotFoundPageComponent,
-    HomeComponent
+    HomeComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

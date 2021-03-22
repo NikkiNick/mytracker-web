@@ -1,1 +1,46 @@
 <h1>Add new Tracker</h1>
+<form class="container-fluid" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col col-lg-6">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" formControlName="trackerName" [(ngModel)]="currentTracker.name">
+                <mat-error *ngIf="form.controls['trackerName'].errors?.required">Please enter a tracker name</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-6">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Unit</mat-label>
+                <mat-select>
+
+                </mat-select>
+                <mat-error *ngIf="form.controls['trackerUnitType'].errors?.required">Please select a unittype for this tracker</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Record length</mat-label>
+                <input matInput type="number" min="1" max="8" formControlName="trackerRecordLength" [(ngModel)]="currentTracker.recordLength">
+                <mat-error *ngIf="form.controls['trackerRecordLength'].errors?.required">Please enter a record length</mat-error>
+                <mat-error *ngIf="form.controls['trackerRecordLength'].errors?.min || form.controls['trackerRecordLength'].errors?.max">Record length must be between 1 and 8</mat-error>
+            </mat-form-field>   
+        </div>
+        <div class="col col-lg-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Record precision</mat-label>
+                <input matInput type="number" min="0" max="6" formControlName="trackerRecordPrecision" [(ngModel)]="currentTracker.recordPrecision">
+                <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.required">Please enter a record precision</mat-error>
+                <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.min || form.controls['trackerRecordPrecision'].errors?.max">Record precision must be between 0 and 6</mat-error>
+            </mat-form-field>   
+        </div>
+    </div>
+    <div class="row w-50">
+        <div class="col">
+            <button mat-raised-button class="bg-primary2" [disabled]="!form.valid">Add Tracker</button>
+        </div>
+    </div>
+</form>

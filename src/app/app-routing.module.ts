@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { TrackerAddComponent } from './tracker/tracker-add/tracker-add.component';
 import { TrackerDetailComponent } from './tracker/tracker-detail/tracker-detail.component';
-import { TrackerMainComponent } from './tracker/tracker-main/tracker-main.component';
 import { TrackerOverviewComponent } from './tracker/tracker-overview/tracker-overview.component';
 
 
@@ -16,7 +15,6 @@ export class RoutingData {
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'trackers', 
-    component: TrackerMainComponent,
     data: { breadcrumb: 'Trackers' },
     children: [
       { path: '', 
@@ -32,8 +30,7 @@ const routes: Routes = [
       { path: 'overview', 
         component: TrackerOverviewComponent,
         data: { breadcrumb :  'Overview' } 
-      },
-      { path: '**', component: NotFoundPageComponent }
+      }
     ]
   },
   { 

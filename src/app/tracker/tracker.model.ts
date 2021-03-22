@@ -3,4 +3,6 @@ export class Tracker {
     name: String
     created: Date
     color?: String
+    recordLength?: number = 4
+    recordPrecision?: number = 2
 }

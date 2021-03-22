@@ -1,4 +1,9 @@
 <app-navigation></app-navigation>
-<main class="container-fluid" id="main">
-    <router-outlet></router-outlet>
-</main>
+<div class="container-fluid">
+    <div class="row">
+        <app-sidebar></app-sidebar>
+        <main id="main" class="col-12 col-lg-10 offset-lg-2 p-3">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>
