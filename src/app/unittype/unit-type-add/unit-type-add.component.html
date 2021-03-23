@@ -1,1 +1,31 @@
-<p>unit-type-add works!</p>
+<div class="p-3">
+    <h1 class="text-center">{{ isEdit ? 'Edit' : 'Add new' }} UnitType</h1>
+</div>
+<form class="container-fluid mt-3" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Name (short)</mat-label>
+                <input matInput type="text" formControlName="unitType_shortName">
+                <mat-error *ngIf="form.controls['unitType_shortName'].errors?.required">Please enter a unittype name (short)</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Name (full)</mat-label>
+                <input matInput type="text" formControlName="unitType_fullName">
+                <mat-error *ngIf="form.controls['unitType_fullName'].errors?.required">Please enter a unittype name (full)</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <button mat-raised-button class="bg-primary2 w-100" [disabled]="!form.valid" type="submit">{{ isEdit ? 'Edit' : 'Add' }} UnitType</button>
+        </div>
+        <div class="col">
+            <button mat-raised-button (click)="closeDialog()" class="w-100 bg-danger" type="button">Cancel</button>
+        </div>
+    </div>
+</form>

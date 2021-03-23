@@ -1,0 +1,8 @@
+<h1>{{ title }}</h1>
+<div mat-card-content class="my-4">
+    {{ message }}
+</div>
+<div mat-card-actions class="d-flex justify-content-between">
+    <button mat-raised-button type="button"(click)="confirm()" class="w-50 mr-2 bg-primary2">Confirm</button>
+    <button mat-raised-button type="button" (click)="cancel()" class="w-50 bg-danger ml-2">Cancel</button>
+</div>

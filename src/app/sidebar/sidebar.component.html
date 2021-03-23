@@ -8,7 +8,7 @@
             <div class="align-middle">Overview</div>
         </div>
     </a>
-    <a routerLink="/trackers/add" class="nav-link d-flex align-items-center">
+    <a (click)="openDialog_addTracker()" class="nav-link d-flex align-items-center" type="button">
         <div class="d-flex w-100 justify-content-start align-items-center">
             <span class="material-icons mr-2">add_circle_outline</span>
             <span class="align-middle">Add new Tracker</span>
@@ -23,7 +23,7 @@
             <div class="align-middle">Overview</div>
         </div>
     </a>
-    <a routerLink="/unittypes/add" class="nav-link d-flex align-items-center">
+    <a  (click)="openDialog_addUnitType()" class="nav-link d-flex align-items-center" type="button">
         <div class="d-flex w-100 justify-content-start align-items-center">
             <span class="material-icons mr-2">add_circle_outline</span>
             <span class="align-middle">Add new UnitType</span>

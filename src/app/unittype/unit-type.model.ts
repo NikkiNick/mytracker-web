@@ -1,5 +1,5 @@
 export class UnitType{
-    id: String
-    shortName: String
-    fullName: String
+    id: number;
+    shortName: String;
+    fullName: String;
 }

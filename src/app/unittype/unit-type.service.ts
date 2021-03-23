@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { UnitTypeAddComponent } from './unit-type-add/unit-type-add.component';
 import { UnitType } from './unit-type.model';
 
 @Injectable({
@@ -6,9 +7,34 @@ import { UnitType } from './unit-type.model';
 })
 export class UnitTypeService {
 
-  getAll(): Array<UnitType> {
-    return [
-      { id: "1", shortName: "kWh", fullName: "Kilowatt per uur" }
-    ];
+  unittypes: Array<UnitType> = [
+      { id: 1, shortName: "kWh", fullName: "Kilowatt per uur" }
+  ];
+
+  getById(id: number): UnitType {
+      return this.unittypes.find(u => u.id === id);
   }
+
+  getAll(): Array<UnitType> {
+    return this.unittypes;
+  }
+
+  insert(unitType: UnitType) {
+    this.unittypes.push(unitType);
+  }
+
+  update(unitType: UnitType){
+    let index = this.unittypes.findIndex(u => u.id === unitType.id)
+    if(index !== -1){
+      this.unittypes[index] = unitType;
+    }
+  }
+
+  delete(id: number){
+    const index = this.unittypes.findIndex(e => e.id === id);
+    if(index !== -1){
+      this.unittypes.splice(index, 1);
+    }
+  }
+
 }

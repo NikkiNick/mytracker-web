@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { BreadCrumbsComponent } from '../bread-crumbs/bread-crumbs.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 
 @NgModule({
   declarations: [
-    BreadCrumbsComponent
+    BreadCrumbsComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { TrackerDetailComponent } from './tracker-detail/tracker-detail.component';
 import { TrackerAddComponent } from './tracker-add/tracker-add.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -20,10 +21,14 @@ import { TrackerAddComponent } from './tracker-add/tracker-add.component';
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    ColorPickerModule
   ], 
   providers: [
     TrackerService
+  ],
+  entryComponents: [
+    TrackerAddComponent
   ]
 })
 export class TrackerModule { }
