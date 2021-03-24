@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
+import { Tracker } from '../tracker.model';
+import { TrackerService } from '../tracker.service';
 
 @Component({
   selector: 'app-tracker-detail',
@@ -8,13 +12,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TrackerDetailComponent implements OnInit {
 
-  id: Number;
-  constructor(private route: ActivatedRoute) { }
+  tracker: Tracker;
 
-  ngOnInit(): void {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute, 
+    private service: TrackerService,
+    private dialog: MatDialog ) { 
     this.route.params.subscribe(p => {
-      this.id = p["id"]
-    })
+      const id:number = +p['id'];
+      this.tracker = this.service.getById(id);
+    });
   }
 
+  ngOnInit(): void {
+  }
+  
 }

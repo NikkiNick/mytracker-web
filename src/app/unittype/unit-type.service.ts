@@ -8,7 +8,7 @@ import { UnitType } from './unit-type.model';
 export class UnitTypeService {
 
   unittypes: Array<UnitType> = [
-      { id: 1, shortName: "kWh", fullName: "Kilowatt per uur" }
+    { id: 1, shortName: "m3", fullName: "Kubieke meter"}
   ];
 
   getById(id: number): UnitType {

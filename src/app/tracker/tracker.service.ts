@@ -7,11 +7,6 @@ import { Tracker } from './tracker.model';
 export class TrackerService {
 
   trackers: Tracker[] = [
-    { id: 1, name: "Test", created: new Date(), color: "#ff0000" },
-    { id: 2, name: "Water", created: new Date() },
-    { id: 3, name: "Water", created: new Date() },
-    { id: 4, name: "Water", created: new Date() },
-    { id: 5, name: "Water", created: new Date() },
   ];
 
   getById(id: number): Tracker {
@@ -23,6 +18,8 @@ export class TrackerService {
   }
 
   insert(tracker: Tracker) {
+    tracker.id = this.trackers.length+1;
+    tracker.created = new Date();
     this.trackers.push(tracker);
   }
 

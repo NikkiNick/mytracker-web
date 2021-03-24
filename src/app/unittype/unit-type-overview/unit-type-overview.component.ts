@@ -48,6 +48,11 @@ export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
       }
     })
   }
+
+  addUnitType(){
+    this.dialog.closeAll();
+    const dialogRef = this.dialog.open(UnitTypeAddComponent, { data: { model: null } });
+  }
   editUnitType(id: number){
     this.dialog.closeAll();
     const unitType = this.service.getById(id);

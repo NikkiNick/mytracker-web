@@ -1,0 +1,30 @@
+<mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }">
+    <h2 class="text-center">Settings</h2>
+    <mat-card-content>
+        <table class="table">
+            <tr>
+                <th scope="row">UnitType</th>
+                <td>{{ tracker.unitType.fullName }} ({{ tracker.unitType.shortName }})</td>
+            </tr>
+            <tr>
+                <th scope="row" style="width: 50%;">Created</th>
+                <td>{{ tracker.created | date: 'shortDate' }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Color</th>
+                <td><div *ngIf="tracker.color" [ngStyle]="{ 'background-color': tracker.color+'60', 'border': '1px solid '+tracker.color }" class="rounded text-center p-1 shadow"></div></td>
+            </tr>
+            <tr>
+                <th scope="row">Record length</th>
+                <td>{{ tracker.recordLength }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Record precision</th>
+                <td>{{ tracker.recordPrecision }}</td>
+            </tr>
+        </table>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button class="mx-1" (click)="editTracker()"><mat-icon>settings</mat-icon></button>
+    </mat-card-actions>
+</mat-card>

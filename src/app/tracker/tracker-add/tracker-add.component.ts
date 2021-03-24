@@ -25,7 +25,7 @@ export class TrackerAddComponent implements OnInit {
     private unitTypeService: UnitTypeService,
     private fb: FormBuilder, 
     public dialogRef: MatDialogRef<TrackerAddComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: { model?: Tracker }) {
+    @Inject(MAT_DIALOG_DATA) public data: { model?: Tracker, navigateTo?: string }) {
       if(data.model !== null){
         this.isEdit = true;
         this.currentTracker = data.model;
@@ -57,7 +57,7 @@ export class TrackerAddComponent implements OnInit {
       } else{
         this.trackerService.insert(this.currentTracker);
       }
-      this.router.navigate(['/trackers', 'overview']);
+      this.router.navigateByUrl(this.data.navigateTo);
       this.closeDialog();
     }
   }

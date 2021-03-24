@@ -18,7 +18,7 @@ export class TrackerOverviewComponent implements OnInit, AfterViewInit {
 
   renderedTrackers: Tracker[];
   tableViewMode: Boolean = false;
-  tableColumnsToDisplay = [ 'name', 'created', 'color', 'recordLength', 'recordPrecision', 'actions' ];
+  tableColumnsToDisplay = [ 'name', 'unitType', 'created', 'color', 'recordLength', 'recordPrecision', 'actions' ];
   tableDataSource: MatTableDataSource<Tracker>;
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -45,10 +45,15 @@ export class TrackerOverviewComponent implements OnInit, AfterViewInit {
     })
   }
 
+  addTracker(){
+    this.dialog.closeAll();
+    this.dialog.open(TrackerAddComponent, { data: { model: null, navigateTo: this.router.url }});
+  }
+
   editTracker(id: number){
     this.dialog.closeAll();
     const tracker = this.service.getById(id);
-    const dialogRef = this.dialog.open(TrackerAddComponent, { data: { model: tracker } });
+    const dialogRef = this.dialog.open(TrackerAddComponent, { data: { model: tracker, navigateTo: this.router.url } });
   }
 
   private loadData(){

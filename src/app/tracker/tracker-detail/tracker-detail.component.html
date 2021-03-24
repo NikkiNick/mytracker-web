@@ -1,2 +1,12 @@
-<h1>Tracker detail</h1>
-<p>detail for {{id}}</p>
+<h1 class="text-center">{{ tracker.name }}</h1>
+<mat-divider></mat-divider>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <app-settings-panel [tracker]="tracker"></app-settings-panel>
+        </div>
+        <div class="col-12 col-md-6">
+            <app-record-panel [tracker]="tracker"></app-record-panel>
+        </div>
+    </div>
+</div>
