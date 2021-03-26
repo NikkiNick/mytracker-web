@@ -1,6 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { SnackBarService } from 'src/app/shared/snack-bar.service';
 import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
 import { Tracker } from '../tracker.model';
 import { TrackerService } from '../tracker.service';
@@ -15,13 +19,19 @@ export class TrackerDetailComponent implements OnInit {
   tracker: Tracker;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
+    private router: Router, 
     private service: TrackerService,
-    private dialog: MatDialog ) { 
+    private snackbarService: SnackBarService) { 
     this.route.params.subscribe(p => {
       const id:number = +p['id'];
-      this.tracker = this.service.getById(id);
+      this.service.getById(id).subscribe(
+        data => this.tracker = data,
+        (err: HttpErrorResponse) => {
+          this.snackbarService.showHttpError(err, 'Tracker ');
+          this.router.navigate(["/trackers/overview"]);
+        }
+      );
     });
   }
 

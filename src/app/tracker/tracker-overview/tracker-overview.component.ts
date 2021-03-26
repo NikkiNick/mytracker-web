@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { SnackBarService } from 'src/app/shared/snack-bar.service';
 import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
 import { Tracker } from '../tracker.model';
 import { TrackerService } from '../tracker.service';
@@ -16,31 +17,38 @@ import { TrackerService } from '../tracker.service';
 })
 export class TrackerOverviewComponent implements OnInit, AfterViewInit {
 
-  renderedTrackers: Tracker[];
+  renderedTrackers: Tracker[] = [];
   tableViewMode: Boolean = false;
   tableColumnsToDisplay = [ 'name', 'unitType', 'created', 'color', 'recordLength', 'recordPrecision', 'actions' ];
   tableDataSource: MatTableDataSource<Tracker>;
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private service: TrackerService, private dialog: MatDialog, private router: Router) {}
-
-  ngOnInit(): void {
+  constructor(
+    private service: TrackerService, 
+    private dialog: MatDialog, 
+    private router: Router,
+    private snackbarService: SnackBarService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.loadData();
   }
 
+  ngOnInit(): void {
+  }
+
   ngAfterViewInit(): void {
-    this.tableDataSource.paginator = this.paginator;
-    this.tableDataSource.sort = this.sort;
   }
 
   deleteTracker(id: number){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: "Please confirm", message: "Are you sure you want to delete this Tracker?" } });
     dialogRef.afterClosed().subscribe(res => {
       if(res){
-        this.service.delete(id);
-        this.loadData();
+        this.service.delete(id).subscribe(
+          () => {
+            this.snackbarService.show("Tracker deleted");
+            this.router.navigateByUrl("/trackers/overview");
+          },
+          err => this.snackbarService.showHttpError(err, "Tracker "));
       }
     })
   }
@@ -52,13 +60,19 @@ export class TrackerOverviewComponent implements OnInit, AfterViewInit {
 
   editTracker(id: number){
     this.dialog.closeAll();
-    const tracker = this.service.getById(id);
-    const dialogRef = this.dialog.open(TrackerAddComponent, { data: { model: tracker, navigateTo: this.router.url } });
+    this.service.getById(id).subscribe(
+      res => this.dialog.open(TrackerAddComponent, { data: { model: res, navigateTo: this.router.url } }),
+      err => this.snackbarService.showHttpError(err, "Tracker ")
+    );
   }
 
   private loadData(){
-    this.tableDataSource = new MatTableDataSource<Tracker>(this.service.getAll());
-    this.tableDataSource.connect().subscribe(d => this.renderedTrackers = d);
+    this.service.getAll().subscribe(trackers => {
+      this.tableDataSource = new MatTableDataSource<Tracker>(trackers);
+      this.tableDataSource.connect().subscribe(d => this.renderedTrackers = d); 
+      this.tableDataSource.paginator = this.paginator;
+      this.tableDataSource.sort = this.sort;
+    });
   }
 
 }

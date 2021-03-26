@@ -3,8 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { pipe } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { SnackBarService } from 'src/app/shared/snack-bar.service';
 import { Tracker } from 'src/app/tracker/tracker.model';
 import { UnitTypeAddComponent } from '../unit-type-add/unit-type-add.component';
 import { UnitType } from '../unit-type.model';
@@ -17,8 +20,7 @@ import { UnitTypeService } from '../unit-type.service';
 })
 export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
 
-  renderedUnitTypes: UnitType[];
-  tableColumnsToDisplay = [ "shortName", "fullName", "actions" ];
+  tableColumnsToDisplay = [ "shortName", "longName", "actions" ];
   tableDataSource: MatTableDataSource<UnitType>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -26,41 +28,54 @@ export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
   constructor(
     private service: UnitTypeService, 
     private router: Router,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private snackbarService: SnackBarService) { 
+  
+      this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => this.loadData() )
+    }
 
   ngOnInit(): void {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.loadData();
   }
 
   ngAfterViewInit(): void {
-    this.tableDataSource.paginator = this.paginator;
-    this.tableDataSource.sort = this.sort;
-    this.tableDataSource.connect().subscribe(d => this.renderedUnitTypes = d);
   }
 
   deleteUnitType(id: number){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: "Please confirm", message: "Are you sure you want to delete this UnitType?" } });
     dialogRef.afterClosed().subscribe(res => {
       if(res){
-        this.service.delete(id);
-        this.loadData();
+        this.service.delete(id).subscribe(
+          () => {
+            this.snackbarService.show("UnitType deleted");
+            this.router.navigateByUrl("/unittypes/overview");
+          },
+          err => this.snackbarService.showHttpError(err, "UnitType ")
+        );
       }
     })
   }
 
   addUnitType(){
     this.dialog.closeAll();
-    const dialogRef = this.dialog.open(UnitTypeAddComponent, { data: { model: null } });
+    this.dialog.open(UnitTypeAddComponent, { data: { model: null } });
   }
   editUnitType(id: number){
     this.dialog.closeAll();
-    const unitType = this.service.getById(id);
-    const dialogRef = this.dialog.open(UnitTypeAddComponent, { data: { model: unitType } });
+    this.service.getById(id).subscribe(
+      res => this.dialog.open(UnitTypeAddComponent, { data: { model: res } }),
+      err => this.snackbarService.showHttpError(err, "UnitType ")
+    );
   }
 
   private loadData(){
-    this.tableDataSource = new MatTableDataSource<UnitType>(this.service.getAll());
+    this.service.getAll().subscribe(
+      data => {
+        this.tableDataSource = new MatTableDataSource<UnitType>(data);
+        this.tableDataSource.paginator = this.paginator;
+        this.tableDataSource.sort = this.sort;
+      },
+      err => this.snackbarService.showHttpError(err, "UnitType ")
+    )
   }
 
 }

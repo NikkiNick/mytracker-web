@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { SnackBarService } from 'src/app/shared/snack-bar.service';
 import { TrackerAddComponent } from 'src/app/tracker/tracker-add/tracker-add.component';
 import { Tracker } from 'src/app/tracker/tracker.model';
 import { UnitType } from '../unit-type.model';
@@ -22,6 +23,7 @@ export class UnitTypeAddComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder, 
     private unitTypeService: UnitTypeService,
+    private snackbarService: SnackBarService,
     public dialogRef: MatDialogRef<UnitTypeAddComponent>, 
     @Inject(MAT_DIALOG_DATA) public data: any) {
       if(data.model){
@@ -35,18 +37,24 @@ export class UnitTypeAddComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       unitType_shortName: [this.currentUnitType.shortName, [ Validators.required ]],
-      unitType_fullName: [this.currentUnitType.fullName, [ Validators.required ]]
+      unitType_longName: [this.currentUnitType.longName, [ Validators.required ]]
     });
   }
 
   onSubmit(){
     if(this.form.valid){
       this.currentUnitType.shortName = this.form.get("unitType_shortName").value
-      this.currentUnitType.fullName = this.form.get("unitType_fullName").value
+      this.currentUnitType.longName = this.form.get("unitType_longName").value
       if(this.isEdit){
-        this.unitTypeService.update(this.currentUnitType);
+        this.unitTypeService.update(this.currentUnitType).subscribe(
+          () => this.snackbarService.show("UnitType updated"),
+          err => this.snackbarService.showHttpError(err, "UnitType ")
+        );
       }else{
-        this.unitTypeService.insert(this.currentUnitType);
+        this.unitTypeService.insert(this.currentUnitType).subscribe(
+          () => this.snackbarService.show("UnitType added"),
+          err => this.snackbarService.showHttpError(err, "UnitType ")
+        );
       }
       this.router.navigate(['/unittypes', 'overview']);
       this.closeDialog();

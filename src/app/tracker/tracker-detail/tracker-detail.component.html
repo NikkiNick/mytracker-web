@@ -1,12 +1,19 @@
-<h1 class="text-center">{{ tracker.name }}</h1>
-<mat-divider></mat-divider>
-<div class="container-fluid mt-3">
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <app-settings-panel [tracker]="tracker"></app-settings-panel>
-        </div>
-        <div class="col-12 col-md-6">
-            <app-record-panel [tracker]="tracker"></app-record-panel>
+<div *ngIf="!tracker" class="d-flex flex-column align-items-center justify-content-center vh-100">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <span class="mt-3">Fetching trackers...</span>
+</div>
+<div *ngIf="tracker">
+    <h1 class="text-center">{{ tracker.name }}</h1>
+    <mat-divider></mat-divider>
+    <div class="container-fluid mt-3">
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <app-settings-panel [tracker]="tracker"></app-settings-panel>
+            </div>
+            <div class="col-12 col-md-6">
+                <app-record-panel [tracker]="tracker"></app-record-panel>
+            </div>
         </div>
     </div>
 </div>
+

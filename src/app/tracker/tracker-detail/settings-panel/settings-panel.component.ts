@@ -19,6 +19,6 @@ export class SettingsPanelComponent implements OnInit {
   }
   editTracker(){
     this.dialog.closeAll();
-    const dialogRef = this.dialog.open(TrackerAddComponent, { data: { model: this.tracker, navigateTo: this.router.url } });
+    this.dialog.open(TrackerAddComponent, { data: { model: this.tracker, navigateTo: this.router.url } });
   }
 }
