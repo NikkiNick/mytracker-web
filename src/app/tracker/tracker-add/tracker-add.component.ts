@@ -60,16 +60,21 @@ export class TrackerAddComponent implements OnInit {
       this.currentTracker.recordPrecision = this.form.get("trackerRecordPrecision").value;
       if(this.isEdit){
         this.trackerService.update(this.currentTracker).subscribe(
-          () => this.snackbarService.show("Tracker updated"),
+          () => {
+            this.snackbarService.show("Tracker updated");
+            this.router.navigateByUrl(this.data.navigateTo);
+          },
           err => this.snackbarService.showHttpError(err, "Tracker ")
         );
       } else{
         this.trackerService.insert(this.currentTracker).subscribe(
-          () => this.snackbarService.show("Tracker added"),
+          () => {
+            this.snackbarService.show("Tracker added");
+            this.router.navigateByUrl(this.data.navigateTo);
+          },
           err => this.snackbarService.showHttpError(err, "Tracker ")
         )
       }
-      this.router.navigateByUrl(this.data.navigateTo);
       this.closeDialog();
     }
   }

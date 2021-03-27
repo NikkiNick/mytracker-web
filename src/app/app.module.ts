@@ -15,6 +15,7 @@ import { BreadCrumbsComponent } from './bread-crumbs/bread-crumbs.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UnitTypeModule } from './unittype/unit-type.module';
 import { RouterModule } from '@angular/router';
+import { TrackerRecordModule } from './tracker-record/tracker-record.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     MaterialModule,
     TrackerModule,
-    UnitTypeModule
+    UnitTypeModule,
+    TrackerRecordModule
   ],
   providers: [],
   bootstrap: [AppComponent]

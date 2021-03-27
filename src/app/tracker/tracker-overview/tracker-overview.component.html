@@ -25,7 +25,8 @@
                 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="shadow">
                     <mat-card-title>{{tracker.name}}</mat-card-title>
                     <mat-card-content>
-                        Content
+                        <div *ngIf="tracker.records.length > 0" class="text-center">Latest record: {{tracker.records[0].amount}} {{tracker.unitType.shortName}}</div>
+                        <div *ngIf="tracker.records.length === 0" class="text-center">No records</div>
                     </mat-card-content>
                     <mat-card-actions class="d-flex justify-content-center">
                         <button mat-raised-button class="mx-1" [routerLink]="['/trackers', 'detail', tracker.id]"><mat-icon>visibility</mat-icon></button>

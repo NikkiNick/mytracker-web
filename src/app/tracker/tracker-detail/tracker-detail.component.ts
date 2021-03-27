@@ -23,6 +23,8 @@ export class TrackerDetailComponent implements OnInit {
     private router: Router, 
     private service: TrackerService,
     private snackbarService: SnackBarService) { 
+      
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.route.params.subscribe(p => {
       const id:number = +p['id'];
       this.service.getById(id).subscribe(
