@@ -13,6 +13,7 @@ import { SettingsPanelComponent } from './tracker-detail/settings-panel/settings
 import { RecordPanelComponent } from './tracker-detail/record-panel/record-panel.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
+import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { BrowserModule } from '@angular/platform-browser';
     ReactiveFormsModule,
     MaterialModule,
     ColorPickerModule,
-    SharedModule
+    SharedModule,
+    TrackerRecordModule
   ], 
   providers: [
     TrackerService

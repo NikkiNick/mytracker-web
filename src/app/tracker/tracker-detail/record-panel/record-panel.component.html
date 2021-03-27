@@ -8,7 +8,9 @@
             </ng-container>
             <ng-container matColumnDef="amount">
                 <th mat-header-cell *matHeaderCellDef scope="col">Amount</th>
-                <td mat-cell *matCellDef="let record">{{ record.amount }} {{ tracker.unitType.shortName }}</td>
+                <td mat-cell *matCellDef="let record">
+                    <app-tracker-record-display [record]="record" [suffix]="tracker.unitType.shortName" [color]="tracker.color"></app-tracker-record-display>
+                </td>
             </ng-container>
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef scope="col">Actions</th>

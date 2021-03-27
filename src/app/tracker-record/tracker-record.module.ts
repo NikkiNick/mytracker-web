@@ -4,12 +4,14 @@ import { TrackerRecordAddComponent } from './tracker-record-add/tracker-record-a
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
+import { TrackerRecordDisplayComponent } from './tracker-record-display/tracker-record-display.component';
 
 
 
 @NgModule({
   declarations: [
-    TrackerRecordAddComponent
+    TrackerRecordAddComponent,
+    TrackerRecordDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -17,6 +19,9 @@ import { MaterialModule } from '../material/material.module';
     ReactiveFormsModule,
     SharedModule,
     MaterialModule
+  ],
+  exports: [
+    TrackerRecordDisplayComponent
   ]
 })
 export class TrackerRecordModule { }

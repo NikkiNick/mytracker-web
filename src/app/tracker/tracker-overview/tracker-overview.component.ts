@@ -19,7 +19,7 @@ export class TrackerOverviewComponent implements OnInit, AfterViewInit {
 
   renderedTrackers: Tracker[] = [];
   tableViewMode: Boolean = false;
-  tableColumnsToDisplay = [ 'name', 'unitType', 'created', 'color', 'recordLength', 'recordPrecision', 'actions' ];
+  tableColumnsToDisplay = [ 'name', 'latestRecord', 'unitType', 'created', 'color', 'recordLength', 'recordPrecision', 'actions' ];
   tableDataSource: MatTableDataSource<Tracker>;
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
