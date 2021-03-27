@@ -14,6 +14,7 @@ import { RecordPanelComponent } from './tracker-detail/record-panel/record-panel
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
+import { ChartPanelComponent } from './tracker-detail/chart-panel/chart-panel.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
     TrackerDetailComponent,
     TrackerAddComponent,
     SettingsPanelComponent,
-    RecordPanelComponent
+    RecordPanelComponent,
+    ChartPanelComponent
   ],
   imports: [
     CommonModule,

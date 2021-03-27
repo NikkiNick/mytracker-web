@@ -1,4 +1,4 @@
-<mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }">
+<mat-card [ngStyle]="{ 'background-color': tracker.color+'60', 'min-height': '100%'}">
     <h2 class="text-center">Records</h2>
     <mat-card-content>
         <table mat-table [dataSource]="tableDataSource" class="w-100" [ngStyle]="{ 'background-color': '#ff000000'}">
