@@ -1,6 +1,35 @@
+<!--
 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }">
     <h2 class="text-center">Chart</h2>
     <mat-card-content>
         <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
     </mat-card-content>
 </mat-card>
+-->
+
+<h2 class="text-center">Chart</h2>
+<form [formGroup]="form" class="container-fluid">
+    <div class="row d-flex justify-content-center align-items-center">
+        <mat-form-field appearance="outline" class="m-0 mx-2">
+            <mat-label>From</mat-label>
+            <mat-select formControlName="intervalFrom" [compareWith]="compareFn" (selectionChange)="selectChange()">
+                <mat-option *ngFor="let record of tracker.records" [value]="record">{{ record.date | date: 'shortDate' }} ({{ record.amount }} {{tracker.unitType.shortName}})</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['intervalFrom'].errors?.fromIsAfterTo">'From' can not be after 'To'</mat-error>
+            <mat-error *ngIf="form.controls['intervalFrom'].errors?.sameFromAndTo">'From' can not be the same as 'To'</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="m-0 mx-2">
+            <mat-label>To</mat-label>
+            <mat-select formControlName="intervalTo" [compareWith]="compareFn" (selectionChange)="selectChange()">
+                <mat-option *ngFor="let record of tracker.records" [value]="record">{{ record.date | date: 'shortDate' }} ({{ record.amount }} {{tracker.unitType.shortName}})</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.controls['intervalTo'].errors?.toIsBeforeFrom">'To' can not be before 'From'</mat-error>
+            <mat-error *ngIf="form.controls['intervalFrom'].errors?.sameFromAndTo">'To' can not be the same as 'From'</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <button mat-raised-button class="bg-primary2 my-1" type="button" (click)="resetChartInterval()"><mat-icon>add</mat-icon>Reset</button>
+    </div>
+</form>
+<app-chart #chart (window:resize)="windowResize()"></app-chart>

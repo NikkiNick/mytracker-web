@@ -4,13 +4,15 @@ import { BreadCrumbsComponent } from '../bread-crumbs/bread-crumbs.component';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ChartComponent } from './chart/chart.component';
 
 
 
 @NgModule({
   declarations: [
     BreadCrumbsComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ChartComponent
   ],
   imports: [
     CommonModule,
@@ -19,6 +21,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
   ],
   exports: [ 
     BreadCrumbsComponent,
+    ChartComponent,
     CommonModule,
     RouterModule,
     MaterialModule 

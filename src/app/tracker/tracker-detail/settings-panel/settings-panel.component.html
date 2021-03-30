@@ -1,4 +1,4 @@
-<mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }">
+<mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="position-relative">
     <h2 class="text-center">Settings</h2>
     <mat-card-content>
         <table class="table">
@@ -24,7 +24,5 @@
             </tr>
         </table>
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-raised-button class="mx-1" (click)="editTracker()"><mat-icon>settings</mat-icon></button>
-    </mat-card-actions>
+    <button mat-raised-button class="m-3 floatingButton" (click)="editTracker()"><mat-icon>settings</mat-icon></button>
 </mat-card>
