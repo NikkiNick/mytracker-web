@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { compareAsc, compareDesc } from 'date-fns';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SnackBarService } from 'src/app/shared/snack-bar.service';
 import { TrackerRecordAddComponent } from 'src/app/tracker-record/tracker-record-add/tracker-record-add.component';
@@ -14,9 +16,10 @@ import { Tracker } from '../../tracker.model';
   templateUrl: './record-panel.component.html',
   styleUrls: ['./record-panel.component.scss']
 })
-export class RecordPanelComponent implements OnInit {
+export class RecordPanelComponent implements OnInit, OnChanges {
 
   @Input() tracker: Tracker;
+  @Input() filteredRecords: TrackerRecord[];
   tableColumnsToDisplay = [ 'date', 'amount', 'actions' ];
   tableDataSource: MatTableDataSource<TrackerRecord>;
 
@@ -29,7 +32,13 @@ export class RecordPanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.tracker.records);
+    this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.tracker.records.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date))));
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue){
+      this.tableDataSource.data = this.filteredRecords;
+    }
   }
 
   addRecord(){
@@ -57,10 +66,6 @@ export class RecordPanelComponent implements OnInit {
           err => this.snackbarService.showHttpError(err, "Record "));
       }
     })
-  }
-
-  setRecordAsBreakpoint(id: number){
-    
   }
 
 }

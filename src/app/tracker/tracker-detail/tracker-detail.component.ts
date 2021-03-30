@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SnackBarService } from 'src/app/shared/snack-bar.service';
+import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
 import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
 import { Tracker } from '../tracker.model';
 import { TrackerService } from '../tracker.service';
@@ -17,6 +18,7 @@ import { TrackerService } from '../tracker.service';
 export class TrackerDetailComponent implements OnInit {
 
   tracker: Tracker;
+  filteredRecords: TrackerRecord[];
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +40,9 @@ export class TrackerDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+  setFilteredData(data: TrackerRecord[]){
+    this.filteredRecords = data;
   }
   
 }

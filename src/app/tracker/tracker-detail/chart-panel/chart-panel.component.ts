@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CanvasOptions, ChartCoordinate, ChartOptions } from 'src/app/shared/chart/chart-options.model.js';
 import { ChartComponent } from 'src/app/shared/chart/chart.component.js';
 import * as CanvasJS from '../../../../assets/CanvasJS/canvasjs.min.js';
 import { Tracker } from '../../tracker.model.js';
-import { differenceInDays, differenceInSeconds, isAfter, isBefore, isWithinInterval } from 'date-fns'
+import { compareDesc, differenceInDays, differenceInSeconds, isAfter, isBefore, isWithinInterval } from 'date-fns'
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model.js';
 
@@ -13,7 +13,7 @@ import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model.js';
   templateUrl: './chart-panel.component.html',
   styleUrls: ['./chart-panel.component.scss']
 })
-export class ChartPanelComponent implements OnInit, AfterViewInit {
+export class ChartPanelComponent implements OnInit, OnChanges {
   
   intervalValidator: ValidatorFn = (fg: FormGroup) => {
     const from: TrackerRecord = fg.get('intervalFrom').value;
@@ -44,6 +44,7 @@ export class ChartPanelComponent implements OnInit, AfterViewInit {
   }
 
   @Input() tracker?: Tracker;
+  @Input() filteredRecords: TrackerRecord[];
   @ViewChild('chart', {static: false}) charts: ChartComponent; 
   form: FormGroup;
 
@@ -51,7 +52,13 @@ export class ChartPanelComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void{
-    this.initCustomChart();
+    this.initCustomChart(this.tracker.records.sort((r1, r2) => compareDesc(new Date(r1.date), new Date(r2.date))));
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue){
+      this.initCustomChart(this.filteredRecords)
+    }
   }
 
   ngOnInit(): void {
@@ -63,35 +70,35 @@ export class ChartPanelComponent implements OnInit, AfterViewInit {
   }
   selectChange(){
     if(this.form.valid){
-      this.initCustomChart();
+      this.initCustomChart(this.filteredRecords);
     }
   }
   windowResize(){
-    this.initCustomChart();
+    this.initCustomChart(this.filteredRecords);
   }
   resetChartInterval(){
     this.form.setValue({ 
       intervalFrom: this.tracker.records.length > 0? this.tracker.records[this.tracker.records.length-1]: null,
       intervalTo: this.tracker.records.length > 0? this.tracker.records[0]: null
     });
-    this.initCustomChart();
+    this.initCustomChart(this.filteredRecords);
   }
-  private initCustomChart(){
+  private initCustomChart(data: TrackerRecord[]){
     let dataPoints: ChartCoordinate[] = [];
     // for(let i = 0; i < 30; i++){
     //   dataPoints.push({x: Math.floor(Math.random()*100), y: Math.floor(Math.random()*600)})
     // }
-    let from = this.form.get("intervalFrom").value as TrackerRecord;
-    let to = this.form.get("intervalTo").value as TrackerRecord;
-    let data = this.tracker.records.filter(r => isWithinInterval(new Date(r.date), {start: new Date(from.date), end: new Date(to.date)})).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    // let from = this.form.get("intervalFrom").value as TrackerRecord;
+    // let to = this.form.get("intervalTo").value as TrackerRecord;
+    // let data = this.tracker.records.filter(r => isWithinInterval(new Date(r.date), {start: new Date(from.date), end: new Date(to.date)})).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
     for(let rec of data){
       dataPoints.push({ x: differenceInSeconds(new Date(rec.date), new Date(this.tracker.records[0].date)), y: rec.amount as number });
     }
     let chartOptions: ChartOptions = new ChartOptions(
       // Canvas
       { 
-        width: '100%',
-        height: '100%',
+        height: "350px",
+        width: "100%",
         margin: 25,
         backgroundColor: "#00000000"
       },

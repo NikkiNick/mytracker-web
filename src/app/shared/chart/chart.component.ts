@@ -22,8 +22,10 @@ export class ChartComponent implements OnInit {
   initChart(options?: ChartOptions){
     this.options = options;
     // init options
-    this.canvas.nativeElement.width = this.canvas.nativeElement.offsetWidth
-    this.canvas.nativeElement.height = this.canvas.nativeElement.offsetHeight
+    this.canvas.nativeElement.style.width = this.options.canvas.width;
+    this.canvas.nativeElement.style.height = this.options.canvas.height;
+    this.canvas.nativeElement.width = this.canvas.nativeElement.offsetWidth;
+    this.canvas.nativeElement.height = this.canvas.nativeElement.offsetHeight;
     this.ctx.canvas.style.backgroundColor = this.options.canvas.backgroundColor;
 
     this.initAxis();
@@ -104,7 +106,8 @@ export class ChartComponent implements OnInit {
         let nextTransformedY = gridHeightMargin - ((this.options.dataPoints[i+1].y - yRangeMin)*yRatio);
         this.drawLine({x: transformedX, y: transformedY}, {x: nextTransformedX, y: nextTransformedY}, { thickness: this.options.graph.lineThickness, strokeColor: this.options.graph.lineColor })
       }
-      this.drawText({x: transformedX, y: transformedY-(this.options.graph.fontSize+10) }, `${this.options.dataPoints[i].y.toString()} ${this.options.axisY.suffix}`, { direction: 'horizontal', alignment: 'center', font: this.options.graph.font, fontSize: this.options.graph.fontSize, color: this.options.graph.fontColor })
+      let textAlign: 'left' | 'center' | 'right' = i === 0 ? 'left' : i === this.options.dataPoints.length -1 ? 'right' : 'center';
+      this.drawText({x: transformedX, y: transformedY-(this.options.graph.fontSize+10) }, `${this.options.dataPoints[i].y.toString()} ${this.options.axisY.suffix}`, { direction: 'horizontal', alignment: textAlign, font: this.options.graph.font, fontSize: this.options.graph.fontSize, color: this.options.graph.fontColor })
 
       //this.drawCircle({x:0,y:0}, {radius: 2, strokeColor: "red", fillColor: "red", lineThickness: 1});
       this.ctx.save();

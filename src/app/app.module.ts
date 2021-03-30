@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './root/app.component';
@@ -16,6 +16,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { UnitTypeModule } from './unittype/unit-type.module';
 import { RouterModule } from '@angular/router';
 import { TrackerRecordModule } from './tracker-record/tracker-record.module';
+import '@angular/common/locales/global/nl-BE';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,9 @@ import { TrackerRecordModule } from './tracker-record/tracker-record.module';
     UnitTypeModule,
     TrackerRecordModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: "nl-BE" }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
