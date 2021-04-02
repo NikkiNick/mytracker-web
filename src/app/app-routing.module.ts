@@ -11,48 +11,53 @@ import { UnitTypeOverviewComponent } from './unittype/unit-type-overview/unit-ty
 
 
 export class RoutingData {
-  name: String
-  url: String
+  name: string;
+  url: string;
 }
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'trackers', 
-    data: { breadcrumb: 'Trackers' },
-    children: [
-      { path: '', 
-        redirectTo: 'overview', 
-        pathMatch: 'full'
-      },
-      { path: 'add',
-        component: TrackerAddComponent
-      },
-      { path: 'detail/:id',
-        component: TrackerDetailComponent
-      },
-      { path: 'overview', 
-        component: TrackerOverviewComponent,
-        data: { breadcrumb :  'Overview' } 
-      }
-    ]
-  },
-  { path: 'unittypes',
-    children: [
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
-      { path: 'add', component: UnitTypeAddComponent },
-      { path: 'detail/:id', component: UnitTypeDetailComponent },
-      { path: 'overview', component: UnitTypeOverviewComponent }
-    ]
-  },
-  { 
-    path: '**', 
-    component: NotFoundPageComponent ,
-    data: { breadcrumb: 'Not found' }
-  }
+    { path: '', component: HomeComponent },
+    {
+        path: 'trackers',
+        data: { breadcrumb: 'Trackers' },
+        children: [
+            {
+                path: '',
+                redirectTo: 'overview',
+                pathMatch: 'full'
+            },
+            {
+                path: 'add',
+                component: TrackerAddComponent
+            },
+            {
+                path: 'detail/:id',
+                component: TrackerDetailComponent
+            },
+            {
+                path: 'overview',
+                component: TrackerOverviewComponent,
+                data: { breadcrumb: 'Overview' }
+            }
+        ]
+    },
+    {
+        path: 'unittypes',
+        children: [
+            { path: '', redirectTo: 'overview', pathMatch: 'full' },
+            { path: 'add', component: UnitTypeAddComponent },
+            { path: 'detail/:id', component: UnitTypeDetailComponent },
+            { path: 'overview', component: UnitTypeOverviewComponent }
+        ]
+    },
+    {
+        path: '**',
+        component: NotFoundPageComponent,
+        data: { breadcrumb: 'Not found' }
+    }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: "reload" })],
-  exports: [RouterModule]
-})
+    imports: [ RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+    exports: [ RouterModule ] })
 export class AppRoutingModule { }

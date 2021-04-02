@@ -1,4 +1,4 @@
-export class UnitType{
+export class UnitType {
     id: number;
     shortName: string;
     longName: string;

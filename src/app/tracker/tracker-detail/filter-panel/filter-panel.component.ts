@@ -11,39 +11,40 @@ import { Tracker } from '../../tracker.model';
 })
 export class FilterPanelComponent implements OnInit {
 
+  constructor(private fb: FormBuilder) { }
+
   @Input() tracker: Tracker;
   @Output() filteredData = new EventEmitter<TrackerRecord[]>();
   form: FormGroup;
-  showContent: boolean = true;
-
-  constructor(private fb: FormBuilder) { }
+  showContent = true;
+  compareFn: ((f1: TrackerRecord, f2: TrackerRecord) => boolean) | null = this.compareByValue;
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      intervalFrom: [this.tracker.records.length > 0? this.tracker.records[this.tracker.records.length-1]: null] ,
-      intervalTo: [this.tracker.records.length > 0? this.tracker.records[0]: null]
+      intervalFrom: [this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null] ,
+      intervalTo: [this.tracker.records.length > 0 ? this.tracker.records[0] : null]
     }, { validators: [this.intervalValidator]});
   }
 
-  selectChange(){
-    if(this.form.valid){
-      let from = this.form.get("intervalFrom").value as TrackerRecord;
-      let to = this.form.get("intervalTo").value as TrackerRecord;
-      let data = this.tracker.records
+  selectChange() {
+    if (this.form.valid) {
+      const from = this.form.get('intervalFrom').value as TrackerRecord;
+      const to = this.form.get('intervalTo').value as TrackerRecord;
+      const data = this.tracker.records
                   .filter(r => isWithinInterval(new Date(r.date), {start: new Date(from.date), end: new Date(to.date)})).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                   .sort((r1, r2) => compareDesc(new Date(r1.date), new Date(r2.date)));
       this.filteredData.emit(data);
     }
   }
-  resetChartInterval(){
-    this.form.setValue({ 
-      intervalFrom: this.tracker.records.length > 0? this.tracker.records[this.tracker.records.length-1]: null,
-      intervalTo: this.tracker.records.length > 0? this.tracker.records[0]: null
+  resetChartInterval() {
+    this.form.setValue({
+      intervalFrom: this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null,
+      intervalTo: this.tracker.records.length > 0 ? this.tracker.records[0] : null
     });
     this.selectChange();
   }
 
-  toggleContent(){
+  toggleContent() {
     this.showContent = !this.showContent;
   }
   intervalValidator: ValidatorFn = (fg: FormGroup) => {
@@ -53,22 +54,21 @@ export class FilterPanelComponent implements OnInit {
     fg.get('intervalTo').setErrors(null);
     fg.get('intervalFrom').setErrors(null);
 
-    if(isBefore(new Date(to.date), new Date(from.date))){
-      console.log("error")
+    if (isBefore(new Date(to.date), new Date(from.date))) {
+      console.log('error');
       fg.get('intervalTo').setErrors({ toIsBeforeFrom: true });
       fg.get('intervalFrom').setErrors({ toIsBeforeFrom: true });
-    } 
+    }
 
-    if(from === to){
+    if (from === to) {
       fg.get('intervalFrom').setErrors({ sameFromAndTo: true });
       fg.get('intervalTo').setErrors({ sameFromAndTo: true });
-    } 
+    }
 
-    return from !== null && to !== null && isBefore(new Date(from.date), new Date(to.date))?null:{interval: true};
+    return from !== null && to !== null && isBefore(new Date(from.date), new Date(to.date)) ? null : {interval: true};
   }
-  compareFn: ((f1: TrackerRecord, f2: TrackerRecord) => boolean) | null = this.compareByValue;
 
-  compareByValue(f1: TrackerRecord, f2: TrackerRecord) { 
-    return f1 && f2 && f1.id === f2.id; 
+  compareByValue(f1: TrackerRecord, f2: TrackerRecord) {
+    return f1 && f2 && f1.id === f2.id;
   }
 }

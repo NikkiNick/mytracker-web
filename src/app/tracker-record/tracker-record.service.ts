@@ -9,24 +9,24 @@ import { TrackerRecordDTO } from './tracker-recordDTO.model';
   providedIn: 'root'
 })
 export class TrackerRecordService {
-  
+
   apiUrl = `${environment.apiUrl}trackerrecord/`;
 
-  constructor(private httpClient: HttpClient){}
+  constructor(private httpClient: HttpClient) {}
 
   getById(id: number): Observable<TrackerRecord> {
-    return this.httpClient.get<TrackerRecord>(`${this.apiUrl+id}`, {});
+    return this.httpClient.get<TrackerRecord>(`${this.apiUrl + id}`, {});
   }
 
   insert(record: TrackerRecordDTO): Observable<any> {
     return this.httpClient.post(`${this.apiUrl}`, record);
   }
 
-  update(record: TrackerRecord): Observable<any>{
+  update(record: TrackerRecord): Observable<any> {
     return this.httpClient.put(`${this.apiUrl}${record.id}`, record);
   }
 
-  delete(id: number): Observable<any>{
+  delete(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}${id}`);
   }
 

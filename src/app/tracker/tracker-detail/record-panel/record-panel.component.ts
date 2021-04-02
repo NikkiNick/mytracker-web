@@ -18,19 +18,19 @@ import { Tracker } from '../../tracker.model';
 })
 export class RecordPanelComponent implements OnInit, OnChanges {
 
-  
+
   @Input() filteredRecords: TrackerRecord[];
   @Input() tracker: Tracker;
   tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'actions'];
   tableDataSource: MatTableDataSource<TrackerRecord>;
-  showContent: boolean = true;
+  showContent = true;
 
   constructor(
     private dialog: MatDialog,
     private recordService: TrackerRecordService,
     private snackbarService: SnackBarService,
-    private router: Router) { 
-  
+    private router: Router) {
+
   }
 
   ngOnInit(): void {
@@ -38,39 +38,39 @@ export class RecordPanelComponent implements OnInit, OnChanges {
     this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    if(changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue){
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
       this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
     }
   }
 
-  addRecord(){
+  addRecord() {
     this.dialog.closeAll();
     this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: this.tracker }});
   }
 
-  editRecord(id: number){
+  editRecord(id: number) {
     this.dialog.closeAll();
     this.recordService.getById(id).subscribe(
       res => this.dialog.open(TrackerRecordAddComponent, { data: { model: res, navigateTo: this.router.url, forEntity: this.tracker } }),
-      err => this.snackbarService.showHttpError(err, "Record ")
+      err => this.snackbarService.showHttpError(err, 'Record ')
     );
   }
-  toggleContent(){
+  toggleContent() {
     this.showContent = !this.showContent;
   }
-  deleteRecord(id: number){
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: "Please confirm", message: "Are you sure you want to delete this Record?" } });
+  deleteRecord(id: number) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: 'Please confirm', message: 'Are you sure you want to delete this Record?' } });
     dialogRef.afterClosed().subscribe(res => {
-      if(res){
+      if (res) {
         this.recordService.delete(id).subscribe(
           () => {
-            this.snackbarService.show("Record deleted");
+            this.snackbarService.show('Record deleted');
             this.router.navigateByUrl(this.router.url);
           },
-          err => this.snackbarService.showHttpError(err, "Record "));
+          err => this.snackbarService.showHttpError(err, 'Record '));
       }
-    })
+    });
   }
 
 }

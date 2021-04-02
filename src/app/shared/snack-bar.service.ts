@@ -9,12 +9,12 @@ export class SnackBarService {
 
   constructor(private snackBar: MatSnackBar) { }
 
-  show(message: string, config: MatSnackBarConfig = { duration: 2500 }){
+  show(message: string, config: MatSnackBarConfig = { duration: 2500 }) {
     this.snackBar.open(message, null, config);
   }
-  showHttpError(error: HttpErrorResponse, prefix: string = ""){
-    let message = `${prefix}Error (${error.status}) - ${error.error}`;
-    this.show(message)
+  showHttpError(error: HttpErrorResponse, prefix: string = '') {
+    const message = `${prefix}Error (${error.status}) - ${error.error}`;
+    this.show(message);
   }
 
 }

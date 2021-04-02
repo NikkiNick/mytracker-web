@@ -19,12 +19,12 @@ import { ChartComponent } from './chart/chart.component';
     RouterModule,
     MaterialModule
   ],
-  exports: [ 
+  exports: [
     BreadCrumbsComponent,
     ChartComponent,
     CommonModule,
     RouterModule,
-    MaterialModule 
+    MaterialModule
   ]
 })
 export class SharedModule { }

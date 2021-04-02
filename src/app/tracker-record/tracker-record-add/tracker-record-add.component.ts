@@ -9,13 +9,12 @@ import { TrackerRecordService } from '../tracker-record.service';
 import { TrackerRecordDTO } from '../tracker-recordDTO.model';
 
 @Component({
-  selector: 'app-tracker-record-add',
-  templateUrl: './tracker-record-add.component.html',
-  styleUrls: ['./tracker-record-add.component.scss']
+    selector: 'app-tracker-record-add',
+    templateUrl: './tracker-record-add.component.html',
+    styleUrls: ['./tracker-record-add.component.scss']
 })
 export class TrackerRecordAddComponent implements OnInit {
-
-  isEdit: Boolean = false;
+  isEdit = false;
   currentRecord: TrackerRecord;
   form: FormGroup;
 
@@ -23,50 +22,50 @@ export class TrackerRecordAddComponent implements OnInit {
     private router: Router,
     private recordService: TrackerRecordService,
     private snackbarService: SnackBarService,
-    private fb: FormBuilder, 
-    public dialogRef: MatDialogRef<TrackerRecordAddComponent>, 
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<TrackerRecordAddComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { model?: TrackerRecord, navigateTo?: string, forEntity?: Tracker }
-  ) { 
-    if(data.model !== null){
-      this.isEdit = true;
-      this.currentRecord = data.model;
-    }else{
-      this.currentRecord = new TrackerRecord();
-    }
+  ) {
+      if (data.model !== null) {
+          this.isEdit = true;
+          this.currentRecord = data.model;
+      } else {
+          this.currentRecord = new TrackerRecord();
+      }
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      recordAmount: [this.currentRecord.amount, [ Validators.required ]]
-    });
+      this.form = this.fb.group({
+          recordAmount: [this.currentRecord.amount, [ Validators.required ]]
+      });
   }
 
-  onSubmit(){
-    if(this.form.valid){
-      this.currentRecord.amount = this.form.get("recordAmount").value;
-      if(this.isEdit){
-        this.recordService.update(this.currentRecord).subscribe(
-          () => {
-            this.snackbarService.show("Record updated");
-            this.router.navigateByUrl(this.data.navigateTo);
-          },
-          err => this.snackbarService.showHttpError(err, "Record ")
-        );
-      } else{
-        let dto = TrackerRecordDTO.create(this.currentRecord, this.data.forEntity);
-        this.recordService.insert(dto).subscribe(
-          () => {
-            this.snackbarService.show("Record added");
-            this.router.navigateByUrl(this.data.navigateTo);
-          },
-          err => this.snackbarService.showHttpError(err, "Record ")
-        )
+  onSubmit() {
+      if (this.form.valid) {
+          this.currentRecord.amount = this.form.get('recordAmount').value;
+          if (this.isEdit) {
+              this.recordService.update(this.currentRecord).subscribe(
+                  () => {
+                      this.snackbarService.show('Record updated');
+                      this.router.navigateByUrl(this.data.navigateTo);
+                  },
+                  (err) => this.snackbarService.showHttpError(err, 'Record ')
+              );
+          } else {
+              const dto = TrackerRecordDTO.create(this.currentRecord, this.data.forEntity);
+              this.recordService.insert(dto).subscribe(
+                  () => {
+                      this.snackbarService.show('Record added');
+                      this.router.navigateByUrl(this.data.navigateTo);
+                  },
+                  (err) => this.snackbarService.showHttpError(err, 'Record ')
+              );
+          }
+          this.closeDialog();
       }
-      this.closeDialog();
-    }
   }
 
-  closeDialog(){
-    this.dialogRef.close();
+  closeDialog() {
+      this.dialogRef.close();
   }
 }

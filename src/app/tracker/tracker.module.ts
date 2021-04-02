@@ -38,7 +38,7 @@ import { FilterPanelComponent } from './tracker-detail/filter-panel/filter-panel
     ColorPickerModule,
     SharedModule,
     TrackerRecordModule
-  ], 
+  ],
   providers: [
     TrackerService
   ],

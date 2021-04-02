@@ -12,26 +12,26 @@ export class TrackerService {
 
   apiUrl = `${environment.apiUrl}tracker/`;
 
-  constructor(private httpClient: HttpClient){}
+  constructor(private httpClient: HttpClient) {}
 
   getById(id: number): Observable<Tracker> {
-    return this.httpClient.get<Tracker>(`${this.apiUrl+id}`, {});
+    return this.httpClient.get<Tracker>(`${this.apiUrl + id}`, {});
   }
 
-  getAll(): Observable<Tracker[]>{
+  getAll(): Observable<Tracker[]> {
     return this.httpClient.get<Tracker[]>(this.apiUrl, {});
   }
 
   insert(tracker: Tracker): Observable<any> {
-    let dto = TrackerDTO.create(tracker);
+    const dto = TrackerDTO.create(tracker);
     return this.httpClient.post(`${this.apiUrl}`, dto);
   }
 
-  update(tracker: Tracker): Observable<any>{
+  update(tracker: Tracker): Observable<any> {
     return this.httpClient.put(`${this.apiUrl}${tracker.id}`, tracker);
   }
 
-  delete(id: number): Observable<any>{
+  delete(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}${id}`);
   }
 

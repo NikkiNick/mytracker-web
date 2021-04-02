@@ -12,18 +12,18 @@ import { Tracker } from '../../tracker.model';
 export class SettingsPanelComponent implements OnInit {
 
   @Input() tracker: Tracker;
-  showContent: boolean = true;
+  showContent = true;
 
   constructor(private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
   }
-  editTracker(){
+  editTracker() {
     this.dialog.closeAll();
     this.dialog.open(TrackerAddComponent, { data: { model: this.tracker, navigateTo: this.router.url } });
   }
 
-  toggleContent(){
+  toggleContent() {
     this.showContent = !this.showContent;
   }
 }

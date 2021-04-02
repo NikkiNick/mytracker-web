@@ -1,25 +1,25 @@
-export declare type LineOptions = {
-    thickness?: number, 
-    strokeColor?: string
+export declare interface LineOptions {
+    thickness?: number;
+    strokeColor?: string;
 }
-export declare type TextOptions = {
-    direction?: 'horizontal' | 'vertical', 
-    alignment?: CanvasTextAlign, 
-    fontSize?: number, 
-    font?: string, 
-    color?: string
+export declare interface TextOptions {
+    direction?: 'horizontal' | 'vertical';
+    alignment?: CanvasTextAlign;
+    fontSize?: number;
+    font?: string;
+    color?: string;
 }
-export declare type CircleOptions = {
-    radius?: number, 
-    strokeColor?: string, 
-    fillColor?: string, 
-    lineThickness?: number
+export declare interface CircleOptions {
+    radius?: number;
+    strokeColor?: string;
+    fillColor?: string;
+    lineThickness?: number;
 }
-export declare type ChartCoordinate = {
+export declare interface ChartCoordinate {
     x: number;
     y: number;
 }
-export declare type RectOptions = {
+export declare interface RectOptions {
     fillColor?: string;
     strokeColor?: string;
     width: number;

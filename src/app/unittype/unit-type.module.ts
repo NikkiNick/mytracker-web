@@ -13,8 +13,8 @@ import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
-    UnitTypeOverviewComponent, 
-    UnitTypeDetailComponent, 
+    UnitTypeOverviewComponent,
+    UnitTypeDetailComponent,
     UnitTypeAddComponent
   ],
   imports: [

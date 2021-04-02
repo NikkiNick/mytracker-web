@@ -19,11 +19,11 @@ export class SidebarComponent implements OnInit {
   openDialog_addTracker(): void {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(TrackerAddComponent, { data: { model: null, navigateTo: '/trackers/overview' } });
-    
+
   }
   openDialog_addUnitType(): void {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(UnitTypeAddComponent, { data: { model: null, navigateTo: '/unittypes/overview' }});
-    
+
   }
 }

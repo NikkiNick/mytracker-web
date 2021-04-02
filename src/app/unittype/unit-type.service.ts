@@ -12,7 +12,7 @@ export class UnitTypeService {
 
   apiUrl = `${environment.apiUrl}unittype/`;
 
-  constructor(private httpClient: HttpClient){}
+  constructor(private httpClient: HttpClient) {}
 
   getById(id: number): Observable<UnitType> {
       return this.httpClient.get<UnitType>(`${this.apiUrl}${id}`);
@@ -26,11 +26,11 @@ export class UnitTypeService {
     return this.httpClient.post<UnitType>(`${this.apiUrl}`, unitType);
   }
 
-  update(unitType: UnitType){
+  update(unitType: UnitType) {
     return this.httpClient.put(`${this.apiUrl}${unitType.id}`, unitType);
   }
 
-  delete(id: number){
+  delete(id: number) {
     return this.httpClient.delete(`${this.apiUrl}${id}`);
   }
 

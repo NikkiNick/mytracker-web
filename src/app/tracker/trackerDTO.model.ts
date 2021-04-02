@@ -1,15 +1,14 @@
-import { TrackerDetailComponent } from "./tracker-detail/tracker-detail.component"
-import { Tracker } from "./tracker.model"
+import { Tracker } from './tracker.model';
 
 export class TrackerDTO {
-    name: String
-    color: String
-    unitTypeId: number
-    recordLength: number
-    recordPrecision: number
+    name: string;
+    color: string;
+    unitTypeId: number;
+    recordLength: number;
+    recordPrecision: number;
 
-    static create(tracker: Tracker): TrackerDTO{
-        let dto = new TrackerDTO();
+    static create(tracker: Tracker): TrackerDTO {
+        const dto = new TrackerDTO();
         dto.name = tracker.name;
         dto.color = tracker.color;
         dto.unitTypeId = tracker.unitType.id;
