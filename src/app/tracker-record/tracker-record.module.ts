@@ -5,13 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { TrackerRecordDisplayComponent } from './tracker-record-display/tracker-record-display.component';
+import { TrackerRecordDifferenceDisplayComponent } from './tracker-record-difference-display/tracker-record-difference-display.component';
 
 
 
 @NgModule({
   declarations: [
     TrackerRecordAddComponent,
-    TrackerRecordDisplayComponent
+    TrackerRecordDisplayComponent,
+    TrackerRecordDifferenceDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { TrackerRecordDisplayComponent } from './tracker-record-display/tracker-
     MaterialModule
   ],
   exports: [
-    TrackerRecordDisplayComponent
+    TrackerRecordDisplayComponent,
+    TrackerRecordDifferenceDisplayComponent
   ]
 })
 export class TrackerRecordModule { }

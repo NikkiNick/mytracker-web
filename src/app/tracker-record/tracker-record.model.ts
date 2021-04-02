@@ -1,5 +1,5 @@
 export class TrackerRecord{
-    public id: Number;
+    public id: number;
     public date: Date;
-    public amount: Number;
+    public amount: number;
 }

@@ -18,10 +18,12 @@ import { Tracker } from '../../tracker.model';
 })
 export class RecordPanelComponent implements OnInit, OnChanges {
 
-  @Input() tracker: Tracker;
+  
   @Input() filteredRecords: TrackerRecord[];
-  tableColumnsToDisplay = [ 'date', 'amount', 'actions' ];
+  @Input() tracker: Tracker;
+  tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'actions'];
   tableDataSource: MatTableDataSource<TrackerRecord>;
+  showContent: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -32,12 +34,13 @@ export class RecordPanelComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.tracker.records.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date))));
+    this.filteredRecords = this.tracker.records.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+    this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
   }
 
   ngOnChanges(changes: SimpleChanges){
     if(changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue){
-      this.tableDataSource.data = this.filteredRecords;
+      this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
     }
   }
 
@@ -53,7 +56,9 @@ export class RecordPanelComponent implements OnInit, OnChanges {
       err => this.snackbarService.showHttpError(err, "Record ")
     );
   }
-
+  toggleContent(){
+    this.showContent = !this.showContent;
+  }
   deleteRecord(id: number){
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: "Please confirm", message: "Are you sure you want to delete this Record?" } });
     dialogRef.afterClosed().subscribe(res => {

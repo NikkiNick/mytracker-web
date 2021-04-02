@@ -1,6 +1,6 @@
 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="position-relative">
     <h2 class="text-center">Filter</h2>
-    <mat-card-content>
+    <mat-card-content class="text-center" [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
         <form [formGroup]="form" class="container-fluid">
             <div class="row d-flex justify-content-center align-items-center">
                 <mat-form-field appearance="outline" class="m-0 mx-2">
@@ -22,6 +22,11 @@
                 </mat-form-field>
             </div>
         </form>
+        <app-tracker-record-difference-display [tracker]="tracker" [firstRecord]="form.controls['intervalTo'].value" [secondRecord]="form.controls['intervalFrom'].value" [smallSize]="false"></app-tracker-record-difference-display>
     </mat-card-content>
-    <button mat-raised-button class="m-3 floatingButton" (click)="resetChartInterval()"><mat-icon>restore</mat-icon></button>
+    <div class="m-3 floatingButtonRight">
+        <button mat-raised-button (click)="resetChartInterval()"><mat-icon>restore</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="showContent"><mat-icon>minimize</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="!showContent"><mat-icon>maximize</mat-icon></button>
+    </div>
 </mat-card>

@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { CanvasOptions, ChartCoordinate, ChartOptions } from 'src/app/shared/chart/chart-options.model.js';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChartOptions } from 'src/app/shared/chart/chart-options.model.js';
 import { ChartComponent } from 'src/app/shared/chart/chart.component.js';
-import * as CanvasJS from '../../../../assets/CanvasJS/canvasjs.min.js';
 import { Tracker } from '../../tracker.model.js';
-import { compareDesc, differenceInDays, differenceInSeconds, isAfter, isBefore, isWithinInterval } from 'date-fns'
+import { compareDesc, differenceInSeconds, isAfter, isBefore } from 'date-fns'
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model.js';
+import { ChartCoordinate } from 'src/app/shared/chart/chart.types.js';
 
 
 @Component({
@@ -119,11 +119,12 @@ export class ChartPanelComponent implements OnInit, OnChanges {
       },
       // Graph
       {
-        pointRadius: 4,
-        pointStrokeColor: "blue",
-        pointFillColor: "blue",
-        lineColor: "#000000",
-        fontSize: 15
+        pointRadius: 8,
+        pointStrokeColor: this.tracker.color,
+        pointFillColor: this.tracker.color,
+        lineColor: this.tracker.color,
+        fontSize: 15,
+        tooltipFontSize: 20
       },
       dataPoints);
     this.charts.initChart(chartOptions)

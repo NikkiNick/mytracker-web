@@ -14,6 +14,7 @@ export class FilterPanelComponent implements OnInit {
   @Input() tracker: Tracker;
   @Output() filteredData = new EventEmitter<TrackerRecord[]>();
   form: FormGroup;
+  showContent: boolean = true;
 
   constructor(private fb: FormBuilder) { }
 
@@ -40,6 +41,10 @@ export class FilterPanelComponent implements OnInit {
       intervalTo: this.tracker.records.length > 0? this.tracker.records[0]: null
     });
     this.selectChange();
+  }
+
+  toggleContent(){
+    this.showContent = !this.showContent;
   }
   intervalValidator: ValidatorFn = (fg: FormGroup) => {
     const from: TrackerRecord = fg.get('intervalFrom').value;

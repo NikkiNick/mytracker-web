@@ -1,9 +1,4 @@
-import { HammerGestureConfig } from "@angular/platform-browser";
-
-export class ChartCoordinate{
-    x: number;
-    y: number;
-  }
+import { ChartCoordinate } from "./chart.types";
 
 export class ChartOptions {
     canvas: CanvasOptions;
@@ -49,7 +44,13 @@ export class ChartOptions {
             helperLinesThickness: graphOptions.helperLinesThickness || 1,
             fontSize: graphOptions.fontSize || 20,
             font: graphOptions.font || "Verdana",
-            fontColor: graphOptions.fontColor || "#000000"
+            fontColor: graphOptions.fontColor || "#000000",
+            showAverage: graphOptions.showAverage || true,
+            averageColor: graphOptions.averageColor || "#FF0000",
+            averageThickness: graphOptions.averageThickness || 1,
+            tooltipFontSize: graphOptions.tooltipFontSize || 12,
+            tooltipFontColor: graphOptions.tooltipFontColor || "#000000",
+            tooltipStrokeColor: graphOptions.tooltipStrokeColor || "#000000"
         }
         this.dataPoints = dataPoints;
     }
@@ -82,4 +83,11 @@ export interface GraphOptions{
     fontSize?: number;
     font?: string;
     fontColor?: string;
+    showAverage?: boolean;
+    averageColor?: string;
+    averageThickness?: number;
+    tooltipFontSize?: number;
+    tooltipBackground?: number;
+    tooltipFontColor?: string;
+    tooltipStrokeColor?: string;
 }

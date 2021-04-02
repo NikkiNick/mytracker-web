@@ -1,6 +1,6 @@
 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="position-relative">
     <h2 class="text-center">Settings</h2>
-    <mat-card-content>
+    <mat-card-content [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
         <table class="table">
             <tr>
                 <th scope="row">UnitType</th>
@@ -24,5 +24,9 @@
             </tr>
         </table>
     </mat-card-content>
-    <button mat-raised-button class="m-3 floatingButton" (click)="editTracker()"><mat-icon>settings</mat-icon></button>
+    <div class="floatingButtonRight m-3">
+        <button mat-raised-button (click)="editTracker()"><mat-icon>settings</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="showContent"><mat-icon>minimize</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="!showContent"><mat-icon>maximize</mat-icon></button>
+    </div>
 </mat-card>

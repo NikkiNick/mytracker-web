@@ -1,1 +1,6 @@
-<canvas #canvas></canvas>
+<div>
+    <div #canvasContainer style="position: relative;">
+        <canvas #canvasOverlay style="position: absolute; left: 0px; right: 0px; z-index: 2;"></canvas>
+        <canvas #canvas style="position: absolute; left: 0px; right: 0px; z-index: 1;"></canvas>
+    </div>
+</div>

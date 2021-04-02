@@ -16,8 +16,13 @@ h1 {
 .bg-primary2{
     background-color: $primary-color-highlight !important;
 }
-.floatingButton {
+.floatingButtonRight {
     position: absolute !important;
     top: 0;
     right: 0;
+}
+.floatingButtonLeft {
+    position: absolute !important;
+    top: 0;
+    left: 0;
 }

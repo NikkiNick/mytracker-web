@@ -12,6 +12,7 @@ import { Tracker } from '../../tracker.model';
 export class SettingsPanelComponent implements OnInit {
 
   @Input() tracker: Tracker;
+  showContent: boolean = true;
 
   constructor(private dialog: MatDialog, private router: Router) { }
 
@@ -20,5 +21,9 @@ export class SettingsPanelComponent implements OnInit {
   editTracker(){
     this.dialog.closeAll();
     this.dialog.open(TrackerAddComponent, { data: { model: this.tracker, navigateTo: this.router.url } });
+  }
+
+  toggleContent(){
+    this.showContent = !this.showContent;
   }
 }
