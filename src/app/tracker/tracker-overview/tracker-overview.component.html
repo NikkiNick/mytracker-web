@@ -25,11 +25,11 @@
                 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="shadow">
                     <mat-card-title class="text-center h2">{{tracker.name}}</mat-card-title>
                     <mat-card-content>
-                        <div *ngIf="tracker.records.length > 0" class="d-flex flex-column text-center">
-                            <app-tracker-record-display [record]="tracker.records[0]" [suffix]="tracker.unitType.shortName" [color]="tracker.color"></app-tracker-record-display>
+                        <div *ngIf="tracker.records.length > 0" class="d-flex flex-column align-items-center text-center">
+                            <span class="font-weight-bold h6">Current</span>
+                            <app-tracker-record-display class="mb-4" [record]="tracker.records[0]" [suffix]="tracker.unitType.shortName" [color]="tracker.color"></app-tracker-record-display>
                             <div class="d-flex flex-column align-items-center" *ngIf="tracker.records.length > 1 && tracker.breakpoint">
-                                <span class="font-weight-bold">Since breakpoint</span>
-                                <mat-icon>arrow_drop_down</mat-icon>
+                                <span class="font-weight-bold h6">Since breakpoint ({{tracker.breakpoint.date | date: "shortDate"}})</span>
                                 <app-tracker-record-difference-display [firstRecord]="tracker.records[0]" [secondRecord]="tracker.breakpoint" [tracker]="tracker" [smallSize]="false"></app-tracker-record-difference-display>
                             </div>
                         </div>

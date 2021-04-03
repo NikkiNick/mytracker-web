@@ -21,7 +21,7 @@ import { TrackerDTO } from '../../trackerDTO.model';
 export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
     @Input() filteredRecords: TrackerRecord[];
     @Input() tracker: Tracker;
-    tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'actions' ];
+    tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'breakpoint', 'actions' ];
     tableDataSource: MatTableDataSource<TrackerRecord>;
     showContent = true;
 
