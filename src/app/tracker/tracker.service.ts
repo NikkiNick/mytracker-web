@@ -28,7 +28,8 @@ export class TrackerService {
   }
 
   update(tracker: Tracker): Observable<any> {
-    return this.httpClient.put(`${this.apiUrl}${tracker.id}`, tracker);
+    const dto = TrackerDTO.create(tracker);
+    return this.httpClient.put(`${this.apiUrl}${tracker.id}`, dto);
   }
 
   delete(id: number): Observable<any> {

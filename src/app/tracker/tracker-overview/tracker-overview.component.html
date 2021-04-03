@@ -25,8 +25,13 @@
                 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="shadow">
                     <mat-card-title class="text-center h2">{{tracker.name}}</mat-card-title>
                     <mat-card-content>
-                        <div *ngIf="tracker.records.length > 0" class="text-center">
+                        <div *ngIf="tracker.records.length > 0" class="d-flex flex-column text-center">
                             <app-tracker-record-display [record]="tracker.records[0]" [suffix]="tracker.unitType.shortName" [color]="tracker.color"></app-tracker-record-display>
+                            <div class="d-flex flex-column align-items-center" *ngIf="tracker.records.length > 1 && tracker.breakpoint">
+                                <span class="font-weight-bold">Since breakpoint</span>
+                                <mat-icon>arrow_drop_down</mat-icon>
+                                <app-tracker-record-difference-display [firstRecord]="tracker.records[0]" [secondRecord]="tracker.breakpoint" [tracker]="tracker" [smallSize]="false"></app-tracker-record-difference-display>
+                            </div>
                         </div>
                         <div *ngIf="tracker.records.length === 0" class="text-center">No records</div>
                     </mat-card-content>
@@ -41,11 +46,11 @@
         <div *ngIf="tableViewMode" class="row">
             <table mat-table [dataSource]="tableDataSource" matSort class="w-100">
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="17.5%">Name</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="15%">Name</th>
                     <td mat-cell *matCellDef="let tracker"><h2>{{ tracker.name }}</h2></td>
                 </ng-container>
                 <ng-container matColumnDef="latestRecord">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="17.5%" >Latest record</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="15%" >Latest record</th>
                     <td mat-cell *matCellDef="let tracker">
                         <span *ngIf="tracker.records.length === 0">No records</span>
                         <span *ngIf="tracker.records.length > 0">
@@ -53,8 +58,15 @@
                         </span>
                     </td>
                 </ng-container>
+                <ng-container matColumnDef="breakpoint">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="10%">Since breakpoint</th>
+                    <td mat-cell *matCellDef="let tracker">
+                        <app-tracker-record-difference-display *ngIf="tracker.breakpoint" [firstRecord]="tracker.records[0]" [secondRecord]="tracker.breakpoint" [tracker]="tracker" [smallSize]="true"></app-tracker-record-difference-display>
+                        <span *ngIf="!tracker.breakpoint">No breakpoint set</span>
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="unitType">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="15%">UnitType</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header width="10%">UnitType</th>
                     <td mat-cell *matCellDef="let tracker">{{ tracker.unitType.longName }} ({{ tracker.unitType.shortName }})</td>
                 </ng-container>
                 <ng-container matColumnDef="created">

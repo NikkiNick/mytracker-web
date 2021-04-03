@@ -10,4 +10,5 @@ export class Tracker {
     recordPrecision = 2;
     unitType?: UnitType;
     records: TrackerRecord[];
+    breakpoint?: TrackerRecord;
 }

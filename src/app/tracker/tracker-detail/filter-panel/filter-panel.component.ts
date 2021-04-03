@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
-import { isBefore, isAfter, isWithinInterval, compareDesc } from 'date-fns';
+import { isBefore, isAfter, isWithinInterval, compareDesc, compareAsc } from 'date-fns';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
 import { Tracker } from '../../tracker.model';
 
@@ -20,10 +20,15 @@ export class FilterPanelComponent implements OnInit {
   compareFn: ((f1: TrackerRecord, f2: TrackerRecord) => boolean) | null = this.compareByValue;
 
   ngOnInit(): void {
+    let validators: ValidatorFn[] = [];
+    if(this.tracker.records.length > 1){
+      validators.push(this.intervalValidator);
+    }
     this.form = this.fb.group({
-      intervalFrom: [this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null] ,
-      intervalTo: [this.tracker.records.length > 0 ? this.tracker.records[0] : null]
-    }, { validators: [this.intervalValidator]});
+      intervalFrom: [ this.tracker.breakpoint || (this.tracker.records.length > 0 ? this.tracker.records[0] : null) ] ,
+      intervalTo: [ this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null ]
+    }, { validators: validators });
+    this.selectChange();
   }
 
   selectChange() {
@@ -54,15 +59,19 @@ export class FilterPanelComponent implements OnInit {
     fg.get('intervalTo').setErrors(null);
     fg.get('intervalFrom').setErrors(null);
 
-    if (isBefore(new Date(to.date), new Date(from.date))) {
-      console.log('error');
-      fg.get('intervalTo').setErrors({ toIsBeforeFrom: true });
-      fg.get('intervalFrom').setErrors({ toIsBeforeFrom: true });
-    }
+    if(to && from){
 
-    if (from === to) {
-      fg.get('intervalFrom').setErrors({ sameFromAndTo: true });
-      fg.get('intervalTo').setErrors({ sameFromAndTo: true });
+      if (isBefore(new Date(to.date), new Date(from.date))) {
+        console.log('error');
+        fg.get('intervalTo').setErrors({ toIsBeforeFrom: true });
+        fg.get('intervalFrom').setErrors({ toIsBeforeFrom: true });
+      }
+
+      if (from === to) {
+        fg.get('intervalFrom').setErrors({ sameFromAndTo: true });
+        fg.get('intervalTo').setErrors({ sameFromAndTo: true });
+      }
+
     }
 
     return from !== null && to !== null && isBefore(new Date(from.date), new Date(to.date)) ? null : {interval: true};

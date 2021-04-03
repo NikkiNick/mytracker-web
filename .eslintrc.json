@@ -21,13 +21,13 @@
     "rules": {
         "max-len": "off",
         "require-jsdoc": "off",
-        "object-curly-spacing": [ "error", "always"],
-        "arrow-spacing": ["error", "always"],
+        "object-curly-spacing": [ "error", "always" ],
+        "arrow-spacing": [ "error", "always" ],
         "new-cap": "off",
         "comma-dangle": "off",
         "array-bracket-spacing": "off",
-        "semi": ["error", "always"],
-        "indent": ["error", 4],
+        "semi": [ 2, "always" ],
+        "indent": [ "error", 4],
         "no-invalid-this": "off"
     }
 }

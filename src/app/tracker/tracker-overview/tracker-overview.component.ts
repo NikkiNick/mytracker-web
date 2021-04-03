@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { compareAsc, compareDesc } from 'date-fns';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { SnackBarService } from 'src/app/shared/snack-bar.service';
 import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
@@ -18,7 +19,7 @@ import { TrackerService } from '../tracker.service';
 export class TrackerOverviewComponent implements OnInit, AfterViewInit {
   renderedTrackers: Tracker[] = [];
   tableViewMode = false;
-  tableColumnsToDisplay = [ 'name', 'latestRecord', 'unitType', 'created', 'color', 'recordLength', 'recordPrecision', 'actions' ];
+  tableColumnsToDisplay = [ 'name', 'latestRecord', 'breakpoint', 'unitType', 'created', 'color', 'recordLength', 'recordPrecision', 'actions' ];
   tableDataSource: MatTableDataSource<Tracker>;
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -67,6 +68,7 @@ export class TrackerOverviewComponent implements OnInit, AfterViewInit {
 
   private loadData() {
       this.service.getAll().subscribe((trackers) => {
+          trackers.forEach(t => t.records.sort((d1, d2) => compareDesc(new Date(d1.date), new Date(d2.date))));
           this.tableDataSource = new MatTableDataSource<Tracker>(trackers);
           this.tableDataSource.connect().subscribe((d) => this.renderedTrackers = d);
           this.tableDataSource.paginator = this.paginator;

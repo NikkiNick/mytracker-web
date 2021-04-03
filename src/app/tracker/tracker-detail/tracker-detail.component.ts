@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { compareAsc, compareDesc } from 'date-fns';
 import { Observable } from 'rxjs';
 import { SnackBarService } from 'src/app/shared/snack-bar.service';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
@@ -30,7 +31,10 @@ export class TrackerDetailComponent implements OnInit {
     this.route.params.subscribe(p => {
       const id: number = +p.id;
       this.service.getById(id).subscribe(
-        data => this.tracker = data,
+        (data) => {
+          this.tracker = data;
+          this.tracker.records.sort((d1, d2) => compareAsc(new Date(d1.date), new Date(d2.date)));
+        },
         (err: HttpErrorResponse) => {
           this.snackbarService.showHttpError(err, 'Tracker ');
           this.router.navigate(['/trackers/overview']);

@@ -10,6 +10,8 @@ import { TrackerRecordAddComponent } from 'src/app/tracker-record/tracker-record
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
 import { TrackerRecordService } from 'src/app/tracker-record/tracker-record.service';
 import { Tracker } from '../../tracker.model';
+import { TrackerService } from '../../tracker.service';
+import { TrackerDTO } from '../../trackerDTO.model';
 
 @Component({
   selector: 'app-record-panel',
@@ -17,60 +19,73 @@ import { Tracker } from '../../tracker.model';
   styleUrls: ['./record-panel.component.scss']
 })
 export class RecordPanelComponent implements OnInit, OnChanges {
+    @Input() filteredRecords: TrackerRecord[];
+    @Input() tracker: Tracker;
+    tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'percentOnTotal', 'actions' ];
+    tableDataSource: MatTableDataSource<TrackerRecord>;
+    showContent = true;
 
+    constructor(
+      private dialog: MatDialog,
+      private recordService: TrackerRecordService,
+	  private trackerService: TrackerService,
+      private snackbarService: SnackBarService,
+      private router: Router) {}
 
-  @Input() filteredRecords: TrackerRecord[];
-  @Input() tracker: Tracker;
-  tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'actions'];
-  tableDataSource: MatTableDataSource<TrackerRecord>;
-  showContent = true;
-
-  constructor(
-    private dialog: MatDialog,
-    private recordService: TrackerRecordService,
-    private snackbarService: SnackBarService,
-    private router: Router) {
-
-  }
-
-  ngOnInit(): void {
-    this.filteredRecords = this.tracker.records.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-    this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
-      this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
+    ngOnInit(): void {
+        //this.filteredRecords = this.tracker.records.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+        this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
     }
-  }
 
-  addRecord() {
-    this.dialog.closeAll();
-    this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: this.tracker }});
-  }
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
+            this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
+        }
+    }
 
-  editRecord(id: number) {
-    this.dialog.closeAll();
-    this.recordService.getById(id).subscribe(
-      res => this.dialog.open(TrackerRecordAddComponent, { data: { model: res, navigateTo: this.router.url, forEntity: this.tracker } }),
-      err => this.snackbarService.showHttpError(err, 'Record ')
-    );
-  }
-  toggleContent() {
-    this.showContent = !this.showContent;
-  }
-  deleteRecord(id: number) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: 'Please confirm', message: 'Are you sure you want to delete this Record?' } });
-    dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.recordService.delete(id).subscribe(
-          () => {
-            this.snackbarService.show('Record deleted');
-            this.router.navigateByUrl(this.router.url);
-          },
-          err => this.snackbarService.showHttpError(err, 'Record '));
-      }
-    });
-  }
+    addRecord() {
+        this.dialog.closeAll();
+        this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: this.tracker }});
+    }
+
+    editRecord(id: number) {
+        this.dialog.closeAll();
+        this.recordService.getById(id).subscribe(
+            (res) => this.dialog.open(TrackerRecordAddComponent, { data: { model: res, navigateTo: this.router.url, forEntity: this.tracker } }),
+            (err) => this.snackbarService.showHttpError(err, 'Record ')
+        );
+    }
+    toggleContent() {
+        this.showContent = !this.showContent;
+    }
+
+    deleteRecord(id: number) {
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: 'Please confirm', message: 'Are you sure you want to delete this Record?' } });
+        dialogRef.afterClosed().subscribe(res => {
+            if (res) {
+                this.recordService.delete(id).subscribe(
+                    () => {
+                        this.snackbarService.show('Record deleted');
+                        this.router.navigateByUrl(this.router.url);
+                    },
+                    (err) => this.snackbarService.showHttpError(err, 'Record '));
+            }
+        });
+    }
+
+    setBreakpoint(record: TrackerRecord) {
+		this.tracker.breakpoint = record;
+		this.trackerService.update(this.tracker).subscribe(
+			() => {
+				this.snackbarService.show("Breakpoint registered");
+				this.router.navigateByUrl(this.router.url);
+			},
+			(err) => this.snackbarService.showHttpError(err, 'Record ')
+		);
+    }
+
+    calculatePercentOnTotal(record: TrackerRecord){
+        return "ok";
+    }
 
 }
