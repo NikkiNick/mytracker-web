@@ -21,67 +21,50 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() filteredRecords: TrackerRecord[];
   @ViewChild('chart', { static: false }) charts: ChartComponent;
   form: FormGroup;
-  compareFn: ((f1: TrackerRecord, f2: TrackerRecord) => boolean) | null = this.compareByValue;
-
-  intervalValidator: ValidatorFn = (fg: FormGroup) => {
-      const from: TrackerRecord = fg.get('intervalFrom').value;
-      const to: TrackerRecord = fg.get('intervalTo').value;
-
-      if (isBefore(new Date(to.date), new Date(from.date))) {
-          fg.get('intervalTo').setErrors({ toIsBeforeFrom: true });
-      } else {
-          fg.get('intervalTo').setErrors(null);
-      }
-
-      if (isAfter(new Date(from.date), new Date(to.date))) {
-          fg.get('intervalFrom').setErrors({ fromIsAfterTo: true });
-      } else {
-          fg.get('intervalFrom').setErrors(null);
-      }
-
-      if (from === to) {
-          fg.get('intervalFrom').setErrors({ sameFromAndTo: true });
-          fg.get('intervalTo').setErrors({ sameFromAndTo: true });
-      } else {
-          fg.get('intervalFrom').setErrors(null);
-          fg.get('intervalTo').setErrors(null);
-      }
-
-      return from !== null && to !== null && isBefore(new Date(from.date), new Date(to.date)) ? null : { interval: true };
-  }
 
   ngOnChanges(changes: SimpleChanges) {
       if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
-          this.initCustomChart(this.filteredRecords);
+          //this.initCustomChart(this.filteredRecords);
+          this.changeDisplay();
       }
   }
 
   ngAfterViewInit(): void {
-    this.initCustomChart(this.tracker.records.sort((r1, r2) => compareDesc(new Date(r1.date), new Date(r2.date))));
+    //this.initCustomChart(this.tracker.records.sort((r1, r2) => compareDesc(new Date(r1.date), new Date(r2.date))));
+    this.changeDisplay();
   }
 
   ngOnInit(): void {
       this.form = this.fb.group({
-          intervalFrom: [this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null],
-          intervalTo: [this.tracker.records.length > 0 ? this.tracker.records[0] : null]
-      }, { validators: [this.intervalValidator] });
+          displayBy: ['Average', []]
+      });
   }
-  selectChange() {
+  changeDisplay() {
       if (this.form.valid) {
-          this.initCustomChart(this.filteredRecords);
+          let data: ChartCoordinate[] = [];
+            switch(this.form.get('displayBy').value){
+                case 'Amount':
+                    for (const rec of this.filteredRecords) {
+                        data.push({ x: differenceInSeconds(new Date(rec.date), new Date(this.filteredRecords[0].date)), y: rec.amount as unknown as number });
+                    }
+                    break;
+                case 'Average':
+                    for (let i = 0; i < this.filteredRecords.length; i++) {
+                        if(i < this.filteredRecords.length-1){
+                            const diff = TrackerRecord.calculateDifference(this.filteredRecords[i], this.filteredRecords[i+1]);
+                            data.push({ x: differenceInSeconds(new Date(this.filteredRecords[i].date), new Date(this.filteredRecords[0].date)), y: diff.averageDiff });
+                        }
+                    }
+                    break;
+            }
+            this.initCustomChart(data);
       }
   }
   windowResize() {
-      this.initCustomChart(this.filteredRecords);
+      this.changeDisplay();
   }
-  resetChartInterval() {
-      this.form.setValue({
-          intervalFrom: this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null,
-          intervalTo: this.tracker.records.length > 0 ? this.tracker.records[0] : null
-      });
-      this.initCustomChart(this.filteredRecords);
-  }
-  private initCustomChart(data: TrackerRecord[]) {
+
+  private initCustomChart(data: ChartCoordinate[]) {
       const dataPoints: ChartCoordinate[] = [];
       // for(let i = 0; i < 30; i++){
       //   dataPoints.push({x: Math.floor(Math.random()*100), y: Math.floor(Math.random()*600)})
@@ -89,9 +72,9 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
       // let from = this.form.get("intervalFrom").value as TrackerRecord;
       // let to = this.form.get("intervalTo").value as TrackerRecord;
       // let data = this.tracker.records.filter(r => isWithinInterval(new Date(r.date), {start: new Date(from.date), end: new Date(to.date)})).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-      for (const rec of data) {
-          dataPoints.push({ x: differenceInSeconds(new Date(rec.date), new Date(this.tracker.records[0].date)), y: rec.amount as number });
-      }
+    //   for (const rec of data) {
+    //       dataPoints.push({ x: differenceInSeconds(new Date(rec.date), new Date(data[0].date)), y: rec.amount as number });
+    //   }
       const chartOptions: ChartOptions = new ChartOptions(
       // Canvas
           {
@@ -122,9 +105,10 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
               pointFillColor: this.tracker.color,
               lineColor: this.tracker.color,
               fontSize: 15,
-              tooltipFontSize: 20
+              tooltipFontSize: 20,
+              showAverage: this.form.get("displayBy").value === "Amount" ? false : true
           },
-          dataPoints);
+          data);
       this.charts.initChart(chartOptions);
   }
 

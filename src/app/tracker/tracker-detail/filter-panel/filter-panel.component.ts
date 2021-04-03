@@ -43,8 +43,8 @@ export class FilterPanelComponent implements OnInit {
   }
   resetChartInterval() {
     this.form.setValue({
-      intervalFrom: this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null,
-      intervalTo: this.tracker.records.length > 0 ? this.tracker.records[0] : null
+      intervalFrom: this.tracker.records.length > 0 ? this.tracker.records[0] : null,
+      intervalTo: this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null
     });
     this.selectChange();
   }

@@ -1,4 +1,15 @@
-<h2 class="text-center font-weight-bold">Chart</h2>
-<div>
-    <app-chart #chart (window:resize)="windowResize()"></app-chart>
+<div class="d-flex flex-column text-center">
+    <h2 class="text-center font-weight-bold">Chart</h2>
+    <form [formGroup]="form">
+        <mat-form-field appearance="outline" (selectionChange)="changeDisplay()">
+            <mat-label>Display</mat-label>
+            <mat-select formControlName="displayBy">
+                <mat-option value="Amount" (click)="changeDisplay()">Amount</mat-option>
+                <mat-option value="Average" (click)="changeDisplay()">Average</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div>
+        <app-chart #chart (window:resize)="windowResize()"></app-chart>
+    </div>
 </div>

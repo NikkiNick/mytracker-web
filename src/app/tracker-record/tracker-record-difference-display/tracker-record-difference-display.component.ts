@@ -1,64 +1,69 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import differenceInDays from 'date-fns/differenceInDays';
 import { Tracker } from 'src/app/tracker/tracker.model';
-import { TrackerRecord } from '../tracker-record.model';
+import { TrackerRecord, TrackerRecordDifference } from '../tracker-record.model';
 
 @Component({
     selector: 'app-tracker-record-difference-display',
     templateUrl: './tracker-record-difference-display.component.html',
     styleUrls: ['./tracker-record-difference-display.component.scss']
 })
-export class TrackerRecordDifferenceDisplayComponent implements OnInit {
+export class TrackerRecordDifferenceDisplayComponent implements OnInit, OnChanges {
   @Input() firstRecord: TrackerRecord;
   @Input() secondRecord: TrackerRecord;
   @Input() tracker: Tracker;
   @Input() smallSize = true;
+  difference: TrackerRecordDifference;
 
-  constructor() { }
+  constructor() { 
+    
+  }
 
   ngOnInit(): void {
+      this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+      if(changes.firstRecord && changes.firstRecord.currentValue !== changes.firstRecord.previousValue){
+        this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);
+      }
+      if(changes.secondRecord && changes.secondRecord.currentValue !== changes.secondRecord.previousValue){ 
+        this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);
+      }
   }
 
   dayDifference(): { prefix: string, color: string, difference: number } {
       let prefix = '';
       let color = 'black';
-      const diff = differenceInDays(new Date(this.firstRecord.date), new Date(this.secondRecord.date));
-      if (diff > 0) {
+      if (this.difference.dayDiff > 0) {
           color = 'green';
           prefix = '+';
-      } else if (diff < 0) {
+      } else if (this.difference.dayDiff < 0) {
           color = 'red';
       }
-      return { prefix, color, difference: diff };
+      return { prefix, color, difference: this.difference.dayDiff };
   }
 
   amountDifference(): { prefix: string, color: string, difference: number } {
       let prefix = '';
       let color = 'black';
-      const diff = this.firstRecord.amount - this.secondRecord.amount;
-      if (diff > 0) {
+      if (this.difference.amountDiff > 0) {
           color = 'green';
           prefix = '+';
-      } else if (diff < 0) {
+      } else if (this.difference.amountDiff < 0) {
           color = 'red';
       }
-      return { prefix, color, difference: diff };
+      return { prefix, color, difference: this.difference.amountDiff };
   }
   averageDifference(): { prefix: string, color: string, difference: number } {
       let prefix = '';
       let color = 'black';
-      let diff;
-      if (this.dayDifference().difference === 0) {
-          diff = this.amountDifference().difference.toFixed(this.tracker.recordPrecision) as unknown as number;
-      } else {
-          diff = (this.amountDifference().difference / this.dayDifference().difference).toFixed(this.tracker.recordPrecision) as unknown as number;
-      }
-      if (diff > 0) {
+      if (this.difference.averageDiff > 0) {
           color = 'green';
           prefix = '+';
-      } else if (diff < 0) {
+      } else if (this.difference.averageDiff < 0) {
           color = 'red';
       }
-      return { prefix, color, difference: diff };
+      return { prefix, color, difference: this.difference.averageDiff.toFixed(this.tracker.recordPrecision) as unknown as number };
   }
 }

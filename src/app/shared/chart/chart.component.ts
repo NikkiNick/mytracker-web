@@ -86,11 +86,17 @@ export class ChartComponent implements OnInit {
       this.ctx.translate(graphOriginMargin.x, graphOriginMargin.y);
 
       // Draw Average
-      if (this.options.dataPoints.length > 1 && this.options.graph.showAverage) {
+      if (this.options.dataPoints.length > 1 && this.options.graph.showAverage === true) {
+          //const average = this.options.dataPoints.map(d => d.y).reduce((prev, curr, _, array) => prev + (curr/array.length), 0);
+          let total: number = 0;
+          for(let datapoint of this.options.dataPoints){
+              total += Math.floor(datapoint.y)
+          }
+          const average = total / this.options.dataPoints.length
           const startTransformedX = 0;
-          const startTransformedY = graphHeightMargin - ((this.options.dataPoints[0].y - yRangeMin) * yRatio);
+          const startTransformedY = graphHeightMargin - ((average - yRangeMin) * yRatio);
           const endTransformedX = graphWidthMargin;
-          const endTransformedY = graphHeightMargin - ((this.options.dataPoints[this.options.dataPoints.length - 1].y - yRangeMin) * yRatio);
+          const endTransformedY = graphHeightMargin - ((average - yRangeMin) * yRatio);
 
           const startCoordinate: ChartCoordinate = { x: startTransformedX, y: startTransformedY };
           const endCoordinate: ChartCoordinate = { x: endTransformedX, y: endTransformedY };
@@ -99,6 +105,15 @@ export class ChartComponent implements OnInit {
               strokeColor: this.options.graph.averageColor
           };
           this.drawLine(this.ctx, startCoordinate, endCoordinate, lineOptions);
+          const textOptions: TextOptions = {
+            color: "red",
+            alignment: "right",
+            direction: "horizontal",
+            fontSize: this.options.graph.fontSize,
+            font: this.options.graph.font,
+          };
+          const text = `${average.toFixed(2)} ${this.options.axisY.suffix}`
+          this.drawText(this.ctx, endCoordinate, text, textOptions);
       }
 
       // Datapoints and connections
@@ -142,7 +157,7 @@ export class ChartComponent implements OnInit {
           // Draw Text
           const textAlign: 'left' | 'center' | 'right' = i === 0 ? 'left' : i === this.options.dataPoints.length - 1 ? 'right' : 'center';
           const pointTextCoordinate: ChartCoordinate = { x: transformedX, y: transformedY - (this.options.graph.fontSize + this.options.graph.pointRadius + 10) };
-          const pointText = `${this.options.dataPoints[i].y.toString()} ${this.options.axisY.suffix}`;
+          const pointText = `${this.options.dataPoints[i].y.toFixed(2) as unknown as number} ${this.options.axisY.suffix}`;
           const pointTextOptions: TextOptions = {
               direction: 'horizontal',
               alignment: textAlign,

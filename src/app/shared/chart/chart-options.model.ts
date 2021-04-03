@@ -45,7 +45,7 @@ export class ChartOptions {
             fontSize: graphOptions.fontSize || 20,
             font: graphOptions.font || 'Verdana',
             fontColor: graphOptions.fontColor || '#000000',
-            showAverage: graphOptions.showAverage || true,
+            showAverage: graphOptions.showAverage || false,
             averageColor: graphOptions.averageColor || '#FF0000',
             averageThickness: graphOptions.averageThickness || 1,
             tooltipFontSize: graphOptions.tooltipFontSize || 12,
