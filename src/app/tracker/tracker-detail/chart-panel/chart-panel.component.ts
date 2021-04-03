@@ -14,16 +14,19 @@ import { ChartCoordinate } from 'src/app/shared/chart/chart.types.js';
     styleUrls: ['./chart-panel.component.scss']
 })
 export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
-    constructor(private fb: FormBuilder) {
-    }
 
   @Input() tracker?: Tracker;
   @Input() filteredRecords: TrackerRecord[];
   @ViewChild('chart', { static: false }) charts: ChartComponent;
   form: FormGroup;
 
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+        displayBy: ['Amount', []]
+    });
+  }
   ngOnChanges(changes: SimpleChanges) {
-      if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
+      if (!changes.filteredRecords.firstChange && changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
           //this.initCustomChart(this.filteredRecords);
           this.changeDisplay();
       }
@@ -35,9 +38,6 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   ngOnInit(): void {
-      this.form = this.fb.group({
-          displayBy: ['Amount', []]
-      });
   }
   changeDisplay() {
       if (this.form.valid) {
