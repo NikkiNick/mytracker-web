@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { TrackerRecordAddComponent } from '../tracker-record/tracker-record-add/tracker-record-add.component';
 import { TrackerAddComponent } from '../tracker/tracker-add/tracker-add.component';
 import { UnitTypeAddComponent } from '../unittype/unit-type-add/unit-type-add.component';
 
@@ -25,5 +26,9 @@ export class SidebarComponent implements OnInit {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(UnitTypeAddComponent, { data: { model: null, navigateTo: '/unittypes/overview' }});
 
+  }
+  openDialog_addTrackerRecord(): void {
+    this.dialog.closeAll();
+    const dialogRed = this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: '/trackers/detail/', forEntity: null }})
   }
 }

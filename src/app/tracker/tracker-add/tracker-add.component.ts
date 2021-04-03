@@ -34,7 +34,6 @@ export class TrackerAddComponent implements OnInit {
             this.currentTracker = new Tracker();
         }
     }
-  compareFn: ((f1: UnitType, f2: UnitType) => boolean) | null = this.compareByValue;
 
   ngOnInit(): void {
       this.unitTypeService.getAll().subscribe(
@@ -82,6 +81,7 @@ export class TrackerAddComponent implements OnInit {
       this.dialogRef.close();
   }
 
+  compareFn: ((f1: UnitType, f2: UnitType) => boolean) | null = this.compareByValue;
   compareByValue(f1: UnitType, f2: UnitType) {
       return f1 && f2 && f1.id === f2.id;
   }

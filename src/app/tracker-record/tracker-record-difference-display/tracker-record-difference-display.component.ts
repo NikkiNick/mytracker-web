@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import differenceInDays from 'date-fns/differenceInDays';
 import { Tracker } from 'src/app/tracker/tracker.model';
 import { TrackerRecord, TrackerRecordDifference } from '../tracker-record.model';
@@ -22,7 +22,7 @@ export class TrackerRecordDifferenceDisplayComponent implements OnInit, OnChange
   ngOnInit(): void {
       this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);
   }
-
+  
   ngOnChanges(changes: SimpleChanges){
       if(changes.firstRecord && changes.firstRecord.currentValue !== changes.firstRecord.previousValue){
         this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);

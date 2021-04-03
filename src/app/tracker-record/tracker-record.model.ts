@@ -8,7 +8,7 @@ export class TrackerRecord {
     public static calculateDifference(r1: TrackerRecord, r2: TrackerRecord): TrackerRecordDifference{
         let diff: TrackerRecordDifference = new TrackerRecordDifference();
         diff.amountDiff = r1.amount - r2.amount;
-        diff.dayDiff = differenceInDays(new Date(r1.date), new Date(r2.date));
+        diff.dayDiff = Math.abs(differenceInDays(new Date(r2.date), new Date(r1.date)));
         if (diff.dayDiff === 0) {
             diff.averageDiff = diff.amountDiff as unknown as number;
         } else {

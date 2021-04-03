@@ -36,7 +36,7 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
       this.form = this.fb.group({
-          displayBy: ['Average', []]
+          displayBy: ['Amount', []]
       });
   }
   changeDisplay() {

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,10 +18,10 @@ import { TrackerDTO } from '../../trackerDTO.model';
   templateUrl: './record-panel.component.html',
   styleUrls: ['./record-panel.component.scss']
 })
-export class RecordPanelComponent implements OnInit, OnChanges {
+export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
     @Input() filteredRecords: TrackerRecord[];
     @Input() tracker: Tracker;
-    tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'percentOnTotal', 'actions' ];
+    tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'actions' ];
     tableDataSource: MatTableDataSource<TrackerRecord>;
     showContent = true;
 
@@ -32,13 +32,17 @@ export class RecordPanelComponent implements OnInit, OnChanges {
       private snackbarService: SnackBarService,
       private router: Router) {}
 
-    ngOnInit(): void {
-        //this.filteredRecords = this.tracker.records.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+    ngOnInit(): void {  
+        //this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
+    }
+    ngAfterViewInit(): void {
+        this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
         this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
+            this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
             this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
         }
     }
@@ -74,10 +78,14 @@ export class RecordPanelComponent implements OnInit, OnChanges {
     }
 
     setBreakpoint(record: TrackerRecord) {
-		this.tracker.breakpoint = record;
+        if(this.tracker.breakpoint?.id === record.id){
+            this.tracker.breakpoint = null;
+        } else{
+		    this.tracker.breakpoint = record;
+        }
 		this.trackerService.update(this.tracker).subscribe(
 			() => {
-				this.snackbarService.show("Breakpoint registered");
+				this.snackbarService.show(`Breakpoint ${this.tracker.breakpoint?"registered":"removed"}`);
 				this.router.navigateByUrl(this.router.url);
 			},
 			(err) => this.snackbarService.showHttpError(err, 'Record ')

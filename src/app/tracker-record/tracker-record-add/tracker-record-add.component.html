@@ -3,6 +3,17 @@
 </div>
 <mat-divider></mat-divider>
 <form class="container-fluid" [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-3">
+    <div class="row" *ngIf="!data.forEntity">
+        <div class="col">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tracker</mat-label>
+                <mat-select formControlName="selectedTracker" [compareWith]="compareFn">
+                    <mat-option *ngFor="let tracker of trackers" [value]="tracker">{{ tracker.name }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls['selectedTracker'].errors?.required">Please select a tracker for this record</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <mat-form-field appearance="outline" class="w-100">
