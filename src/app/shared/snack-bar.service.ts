@@ -13,7 +13,7 @@ export class SnackBarService {
     this.snackBar.open(message, null, config);
   }
   showHttpError(error: HttpErrorResponse, prefix: string = '') {
-    const message = `${prefix}Error (${error.status}) - ${error.error}`;
+    const message = `${prefix}Error (${error.status}) - ${error.message}`;
     this.show(message);
   }
 

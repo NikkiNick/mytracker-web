@@ -1,38 +1,57 @@
 <nav id="subnav" class="col-2 d-none d-lg-block min-vh-100 bg-dark fixed-top nav flex-column p-0">
     <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
-        <small>TRACKERS</small>
+        <small>USER</small> 
     </div>
-    <a routerLink="/trackers/overview" class="nav-link d-flex align-items-center">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-            <span class="material-icons mr-2">list</span>
-            <div class="align-middle">Overview</div>
-        </div>
-    </a>
-    <a (click)="openDialog_addTracker()" class="nav-link d-flex align-items-center" type="button">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-            <span class="material-icons mr-2">add_circle_outline</span>
-            <span class="align-middle">Add new Tracker</span>
-        </div>
-    </a>
-    <a (click)="openDialog_addTrackerRecord()" class="nav-link d-flex align-items-center" type="button">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-            <span class="material-icons mr-2">add_circle_outline</span>
-            <span class="align-middle">Add new Record</span>
-        </div>
-    </a>
-    <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
-        <small>UNITTYPES</small>
+    <div *ngIf="!isAuthenticated">
+        <a routerLink="/user/login" class="nav-link d-flex align-items-center">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">login</span>
+                <div class="align-middle">Login</div>
+            </div>
+        </a>
     </div>
-    <a routerLink="/unittypes/overview" class="nav-link d-flex align-items-center">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-            <span class="material-icons mr-2">list</span>
-            <div class="align-middle">Overview</div>
+    <div *ngIf="isAuthenticated">
+        <a class="nav-link d-flex align-items-center" (click)="logOut()" type="button">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">logout</span>
+                <div class="align-middle">Logout</div>
+            </div>
+        </a>
+        <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
+            <small>TRACKERS</small>
         </div>
-    </a>
-    <a  (click)="openDialog_addUnitType()" class="nav-link d-flex align-items-center" type="button">
-        <div class="d-flex w-100 justify-content-start align-items-center">
-            <span class="material-icons mr-2">add_circle_outline</span>
-            <span class="align-middle">Add new UnitType</span>
+        <a routerLink="/trackers/overview" class="nav-link d-flex align-items-center">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">list</span>
+                <div class="align-middle">Overview</div>
+            </div>
+        </a>
+        <a (click)="openDialog_addTracker()" class="nav-link d-flex align-items-center" type="button">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">add_circle_outline</span>
+                <span class="align-middle">Add new Tracker</span>
+            </div>
+        </a>
+        <a (click)="openDialog_addTrackerRecord()" class="nav-link d-flex align-items-center" type="button">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">add_circle_outline</span>
+                <span class="align-middle">Add new Record</span>
+            </div>
+        </a>
+        <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
+            <small>UNITTYPES</small>
         </div>
-    </a>
+        <a routerLink="/unittypes/overview" class="nav-link d-flex align-items-center">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">list</span>
+                <div class="align-middle">Overview</div>
+            </div>
+        </a>
+        <a  (click)="openDialog_addUnitType()" class="nav-link d-flex align-items-center" type="button">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">add_circle_outline</span>
+                <span class="align-middle">Add new UnitType</span>
+            </div>
+        </a>
+    </div>
 </nav>

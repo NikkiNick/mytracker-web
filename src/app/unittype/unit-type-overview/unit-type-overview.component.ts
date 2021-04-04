@@ -31,6 +31,7 @@ export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private snackbarService: SnackBarService) {
 
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => this.loadData() );
     }
 

@@ -25,6 +25,7 @@
     "canvasjs": "^1.8.3",
     "date-fns": "^2.19.0",
     "jquery": "^3.6.0",
+    "jwt-decode": "^3.1.2",
     "ngx-bootstrap": "^6.2.0",
     "ngx-color-picker": "^11.0.0",
     "popper": "^1.0.1",
