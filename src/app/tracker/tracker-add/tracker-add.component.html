@@ -32,14 +32,6 @@
         </div>
         <div class="col">
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Record length</mat-label>
-                <input matInput type="number" min="1" max="8" formControlName="trackerRecordLength">
-                <mat-error *ngIf="form.controls['trackerRecordLength'].errors?.required">Please enter a record length</mat-error>
-                <mat-error *ngIf="form.controls['trackerRecordLength'].errors?.min || form.controls['trackerRecordLength'].errors?.max">Record length must be between 1 and 8</mat-error>
-            </mat-form-field>   
-        </div>
-        <div class="col">
-            <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Record precision</mat-label>
                 <input matInput type="number" min="0" max="6" formControlName="trackerRecordPrecision">
                 <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.required">Please enter a record precision</mat-error>

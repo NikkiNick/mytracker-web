@@ -6,7 +6,6 @@ export class Tracker {
     name: string;
     created: Date;
     color?: string;
-    recordLength = 4;
     recordPrecision = 2;
     unitType?: UnitType;
     records: TrackerRecord[];

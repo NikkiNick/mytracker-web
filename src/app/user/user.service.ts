@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '../auth/auth.service';
 import { User } from './user.model';
 
 @Injectable({
@@ -11,10 +12,10 @@ export class UserService {
 
   apiUrl = `${environment.apiUrl}user/`;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
-  getById(id: number): Observable<User> {
-    return this.httpClient.get<User>(`${this.apiUrl}${id}`);
+  getAuthenticatedUser(): Observable<User> {
+    return this.httpClient.get<User>(`${this.apiUrl}`);
   }
 
   insert(user: User) {
@@ -22,7 +23,11 @@ export class UserService {
   }
 
   update(user: User) {
-    return this.httpClient.put(`${this.apiUrl}${user.id}`, user);
+    return this.httpClient.put(`${this.apiUrl}`, user);
+  }
+
+  updatePassword(oldPassword: string, newPassword: string){
+    return this.httpClient.put(`${this.apiUrl}password`, { oldPassword: oldPassword, newPassword: newPassword });
   }
 
 }

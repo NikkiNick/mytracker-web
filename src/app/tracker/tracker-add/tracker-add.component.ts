@@ -44,7 +44,6 @@ export class TrackerAddComponent implements OnInit {
           trackerName: [this.currentTracker.name, [ Validators.required ]],
           trackerUnitType: [this.currentTracker.unitType, [ Validators.required ]],
           trackerColor: [this.currentTracker.color],
-          trackerRecordLength: [this.currentTracker.recordLength, [ Validators.required, Validators.min(1), Validators.max(8) ]],
           trackerRecordPrecision: [this.currentTracker.recordPrecision, [ Validators.required, Validators.min(0), Validators.max(6) ]]
       });
   }
@@ -54,7 +53,6 @@ export class TrackerAddComponent implements OnInit {
           this.currentTracker.name = this.form.get('trackerName').value;
           this.currentTracker.unitType = this.form.get('trackerUnitType').value;
           this.currentTracker.color = this.form.get('trackerColor').value;
-          this.currentTracker.recordLength = this.form.get('trackerRecordLength').value;
           this.currentTracker.recordPrecision = this.form.get('trackerRecordPrecision').value;
           if (this.isEdit) {
               this.trackerService.update(this.currentTracker).subscribe(

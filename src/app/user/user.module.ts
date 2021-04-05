@@ -6,11 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
+import { ProfileComponent } from './profile/profile.component';
+import { UserAddComponent } from './user-add/user-add.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, ProfileComponent, UserAddComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     HttpClientModule,

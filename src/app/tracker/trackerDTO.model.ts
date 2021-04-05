@@ -6,7 +6,6 @@ export class TrackerDTO {
     name: string;
     color: string;
     unitTypeId: number;
-    recordLength: number;
     recordPrecision: number;
     breakpointRecordId: number;
 
@@ -17,7 +16,6 @@ export class TrackerDTO {
         dto.name = tracker.name;
         dto.color = tracker.color;
         dto.unitTypeId = tracker.unitType?.id;
-        dto.recordLength = tracker.recordLength;
         dto.recordPrecision = tracker.recordPrecision;
         dto.breakpointRecordId = tracker.breakpoint?.id;
         return dto;

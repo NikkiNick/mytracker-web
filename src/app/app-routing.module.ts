@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { HomeComponent } from './home/home.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { TrackerAddComponent } from './tracker/tracker-add/tracker-add.component';
@@ -10,6 +11,7 @@ import { UnitTypeAddComponent } from './unittype/unit-type-add/unit-type-add.com
 import { UnitTypeDetailComponent } from './unittype/unit-type-detail/unit-type-detail.component';
 import { UnitTypeOverviewComponent } from './unittype/unit-type-overview/unit-type-overview.component';
 import { LoginComponent } from './user/login/login.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 
 export class RoutingData {
@@ -45,7 +47,7 @@ const routes: Routes = [
         ]
     },
     {
-        canActivate: [AuthGuard],
+        canActivate: [ AuthGuard ],
         path: 'unittypes',
         children: [
             { path: '', redirectTo: 'overview', pathMatch: 'full' },
@@ -59,6 +61,7 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'login', pathMatch: 'full' },
             { path: 'login', component: LoginComponent },
+            { path: 'profile', component: ProfileComponent, canActivate: [ AuthGuard ] },
             { path: '**', redirectTo: 'login', pathMatch: 'full'}
         ]
     },

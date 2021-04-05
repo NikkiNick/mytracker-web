@@ -11,6 +11,12 @@
         </a>
     </div>
     <div *ngIf="isAuthenticated">
+        <a routerLink="/user/profile" class="nav-link d-flex align-items-center">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <span class="material-icons mr-2">account_circle</span>
+                <div class="align-middle">Profile</div>
+            </div>
+        </a>
         <a class="nav-link d-flex align-items-center" (click)="logOut()" type="button">
             <div class="d-flex w-100 justify-content-start align-items-center">
                 <span class="material-icons mr-2">logout</span>
