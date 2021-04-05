@@ -21,8 +21,8 @@
         </table>
     </mat-card-content>
     <div class="floatingButtonRight m-3">
-        <button mat-raised-button (click)="editTracker()"><mat-icon>settings</mat-icon></button>
-        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="showContent"><mat-icon>minimize</mat-icon></button>
-        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="!showContent"><mat-icon>maximize</mat-icon></button>
+        <button mat-raised-button (click)="editTracker()" matTooltip="Edit settings"><mat-icon>settings</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="showContent" matTooltip="Minimize panel"><mat-icon>minimize</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="!showContent" matTooltip="Maximize panel"><mat-icon>maximize</mat-icon></button>
     </div>
 </mat-card>
