@@ -38,7 +38,7 @@ export class TrackerRecordAddComponent implements OnInit {
       if(data.forEntity === null){
         this.trackerService.getAll().subscribe(
             (data) => this.trackers = data,
-            (err) =>  this.snackbarService.showHttpError(err, 'Tracker ')
+            (err) =>  this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker`+" ")
         );
       }
   }
@@ -60,10 +60,10 @@ export class TrackerRecordAddComponent implements OnInit {
           if (this.isEdit) {
               this.recordService.update(this.currentRecord).subscribe(
                   () => {
-                      this.snackbarService.show('Record updated');
+                      this.snackbarService.show($localize`:@@record-updated:Record updated`);
                       this.router.navigateByUrl(this.data.navigateTo);
                   },
-                  (err) => this.snackbarService.showHttpError(err, 'Record ')
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+" ")
               );
           } else {
               let dto: TrackerRecordDTO;
@@ -75,10 +75,10 @@ export class TrackerRecordAddComponent implements OnInit {
               }
               this.recordService.insert(dto).subscribe(
                   () => {
-                      this.snackbarService.show('Record added');
+                      this.snackbarService.show($localize`:@@record-added:Record added`);
                       this.router.navigateByUrl(`${this.data.navigateTo}${this.data.forEntity?'':selectedTracker.id}`);
                   },
-                  (err) => this.snackbarService.showHttpError(err, 'Record ')
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+" ")
               );
           }
           this.closeDialog();

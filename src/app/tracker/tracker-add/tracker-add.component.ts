@@ -57,18 +57,18 @@ export class TrackerAddComponent implements OnInit {
           if (this.isEdit) {
               this.trackerService.update(this.currentTracker).subscribe(
                   () => {
-                      this.snackbarService.show('Tracker updated');
+                      this.snackbarService.show($localize`:@@tracker-updated:Tracker updated`);
                       this.router.navigateByUrl(this.data.navigateTo);
                   },
-                  (err) => this.snackbarService.showHttpError(err, 'Tracker ')
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker`+' ')
               );
           } else {
               this.trackerService.insert(this.currentTracker).subscribe(
                   () => {
-                      this.snackbarService.show('Tracker added');
+                      this.snackbarService.show($localize`:@@tracker-added:Tracker added`);
                       this.router.navigateByUrl(this.data.navigateTo);
                   },
-                  (err) => this.snackbarService.showHttpError(err, 'Tracker ')
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker`+' ')
               );
           }
           this.closeDialog();

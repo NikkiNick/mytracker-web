@@ -2,8 +2,8 @@ import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, View
 import { ChartOptions } from 'src/app/shared/chart/chart-options.model.js';
 import { ChartComponent } from 'src/app/shared/chart/chart.component.js';
 import { Tracker } from '../../tracker.model.js';
-import { compareDesc, differenceInSeconds, isAfter, isBefore } from 'date-fns';
-import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
+import { differenceInSeconds } from 'date-fns';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model.js';
 import { ChartCoordinate } from 'src/app/shared/chart/chart.types.js';
 
@@ -27,13 +27,11 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
   }
   ngOnChanges(changes: SimpleChanges) {
       if (!changes.filteredRecords.firstChange && changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
-          //this.initCustomChart(this.filteredRecords);
           this.changeDisplay();
       }
   }
 
   ngAfterViewInit(): void {
-    //this.initCustomChart(this.tracker.records.sort((r1, r2) => compareDesc(new Date(r1.date), new Date(r2.date))));
     this.changeDisplay();
   }
 

@@ -33,7 +33,6 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
       private router: Router) {}
 
     ngOnInit(): void {  
-        //this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
     }
     ngAfterViewInit(): void {
         this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
@@ -56,7 +55,7 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
         this.dialog.closeAll();
         this.recordService.getById(id).subscribe(
             (res) => this.dialog.open(TrackerRecordAddComponent, { data: { model: res, navigateTo: this.router.url, forEntity: this.tracker } }),
-            (err) => this.snackbarService.showHttpError(err, 'Record ')
+            (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+' ')
         );
     }
     toggleContent() {
@@ -64,15 +63,15 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     deleteRecord(id: number) {
-        const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: 'Please confirm', message: 'Are you sure you want to delete this Record?' } });
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: $localize`:@@record-delete-title:Please confirm`, message: $localize`:@@record-delete-message:Are you sure you want to delete this Record?` } });
         dialogRef.afterClosed().subscribe(res => {
             if (res) {
                 this.recordService.delete(id).subscribe(
                     () => {
-                        this.snackbarService.show('Record deleted');
+                        this.snackbarService.show($localize`:@@record-deleted:Record deleted`);
                         this.router.navigateByUrl(this.router.url);
                     },
-                    (err) => this.snackbarService.showHttpError(err, 'Record '));
+                    (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+' '));
             }
         });
     }
@@ -85,15 +84,15 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
         }
 		this.trackerService.update(this.tracker).subscribe(
 			() => {
-				this.snackbarService.show(`Breakpoint ${this.tracker.breakpoint?"registered":"removed"}`);
+                if(this.tracker.breakpoint !== null){
+				    this.snackbarService.show($localize`:@@tracker-breakpoint-removed:Breakpoint removed`);
+                } else{
+				    this.snackbarService.show($localize`:@@tracker-breakpoint-registered:Breakpoint registered`);
+                }
 				this.router.navigateByUrl(this.router.url);
 			},
-			(err) => this.snackbarService.showHttpError(err, 'Record ')
+			(err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+' ')
 		);
-    }
-
-    calculatePercentOnTotal(record: TrackerRecord){
-        return "ok";
     }
 
 }

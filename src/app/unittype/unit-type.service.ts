@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UnitTypeAddComponent } from './unit-type-add/unit-type-add.component';
 import { UnitType } from './unit-type.model';
+import { UnitTypeDTO } from './unit-typeDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class UnitTypeService {
   }
 
   update(unitType: UnitType) {
-    return this.httpClient.put(`${this.apiUrl}${unitType.id}`, unitType);
+    const dto = UnitTypeDTO.create(unitType);
+    return this.httpClient.put(`${this.apiUrl}${unitType.id}`, dto);
   }
 
   delete(id: number) {

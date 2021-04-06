@@ -44,13 +44,13 @@ export class UnitTypeAddComponent implements OnInit {
             this.currentUnitType.longName = this.form.get('unitType_longName').value;
             if (this.isEdit) {
                 this.unitTypeService.update(this.currentUnitType).subscribe(
-                    () => this.snackbarService.show('UnitType updated'),
-                    (err) => this.snackbarService.showHttpError(err, 'UnitType ')
+                    () => this.snackbarService.show($localize`:@@unittype-updated:UnitType updated`),
+                    (err) => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
                 );
             } else {
                 this.unitTypeService.insert(this.currentUnitType).subscribe(
-                    () => this.snackbarService.show('UnitType added'),
-                    (err) => this.snackbarService.showHttpError(err, 'UnitType ')
+                    () => this.snackbarService.show($localize`:@@unittype-added:UnitType added`),
+                    (err) => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
                 );
             }
             this.router.navigate(['/unittypes', 'overview']);

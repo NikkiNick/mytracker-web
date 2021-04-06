@@ -62,7 +62,6 @@ export class FilterPanelComponent implements OnInit {
     if(to && from){
 
       if (isBefore(new Date(to.date), new Date(from.date))) {
-        console.log('error');
         fg.get('intervalTo').setErrors({ toIsBeforeFrom: true });
         fg.get('intervalFrom').setErrors({ toIsBeforeFrom: true });
       }

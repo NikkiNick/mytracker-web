@@ -1,50 +1,52 @@
 <div class="p-3">
-    <h1 class="text-center">{{ isEdit? 'Edit':'Add new' }} Tracker</h1>
+    <h1 class="text-center" *ngIf="isEdit" i18n="@@tracker-edit">Edit tracker</h1>
+    <h1 class="text-center" *ngIf="!isEdit" i18n="@@tracker-add-new">Add new tracker</h1>
 </div>
 <mat-divider></mat-divider>
 <form class="container-fluid" [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-5">
     <div class="row">
         <div class="col">
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Name</mat-label>
+                <mat-label i18n="@@tracker-name">Name</mat-label>
                 <input matInput type="text" formControlName="trackerName">
-                <mat-error *ngIf="form.controls['trackerName'].errors?.required">Please enter a tracker name</mat-error>
+                <mat-error *ngIf="form.controls['trackerName'].errors?.required" i18n="@@tracker-name-error-required">Please enter a tracker name</mat-error>
             </mat-form-field>
         </div>
     </div>
     <div class="row">
         <div class="col">
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Unit</mat-label>
+                <mat-label i18n="@@unittype">Unittype</mat-label>
                 <mat-select formControlName="trackerUnitType" [compareWith]="compareFn">
                     <mat-option *ngFor="let unitType of unitTypes" [value]="unitType">{{ unitType.longName }} ({{ unitType.shortName }})</mat-option>
                 </mat-select>
-                <mat-error *ngIf="form.controls['trackerUnitType'].errors?.required">Please select a unittype for this tracker</mat-error>
+                <mat-error *ngIf="form.controls['trackerUnitType'].errors?.required" i18n="@@tracker-unittype-error-required">Please select a unittype for this tracker</mat-error>
             </mat-form-field>
         </div>
     </div>
     <div class="row">
         <div class="col">
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Color</mat-label>
+                <mat-label i18n="@@tracker-color">Color</mat-label>
                 <input matInput formControlName="trackerColor" [style.background]="currentTracker.color+'60'" type="color"/>
             </mat-form-field>
         </div>
         <div class="col">
             <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Record precision</mat-label>
+                <mat-label i18n="@@tracker-record-precision">Record precision</mat-label>
                 <input matInput type="number" min="0" max="6" formControlName="trackerRecordPrecision">
-                <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.required">Please enter a record precision</mat-error>
-                <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.min || form.controls['trackerRecordPrecision'].errors?.max">Record precision must be between 0 and 6</mat-error>
+                <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.required" i18n="@@tracker-record-precision-error-required">Please enter a record precision</mat-error>
+                <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.min || form.controls['trackerRecordPrecision'].errors?.max" i18n="@@tracker-record-precision-error-range">Record precision must be between 0 and 6</mat-error>
             </mat-form-field>   
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <button mat-raised-button class="bg-primary2 w-100" [disabled]="!form.valid" type="submit">{{ isEdit ? 'Edit' : 'Add' }} Tracker</button>
+            <button *ngIf="isEdit" mat-raised-button class="bg-primary2 w-100" [disabled]="!form.valid" type="submit" i18n="@@tracker-edit">Edit tracker</button>
+            <button *ngIf="!isEdit" mat-raised-button class="bg-primary2 w-100" [disabled]="!form.valid" type="submit" i18n="@@tracker-add">Add tracker</button>
         </div>
         <div class="col">
-            <button mat-raised-button (click)="closeDialog()" class="w-100 bg-danger" type="button">Cancel</button>
+            <button mat-raised-button (click)="closeDialog()" class="w-100 bg-danger" type="button" i18n="@@cancel">Cancel</button>
         </div>
     </div>
 </form>

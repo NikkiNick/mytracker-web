@@ -42,15 +42,15 @@ export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
   }
 
   deleteUnitType(id: number) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: 'Please confirm', message: 'Are you sure you want to delete this UnitType?' } });
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: $localize`:@@unittype-confirm-delete-title:Please confirm`, message: $localize`:@@unittype-confirm-delete-message:Are you sure you want to delete this UnitType?` } });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.service.delete(id).subscribe(
           () => {
-            this.snackbarService.show('UnitType deleted');
+            this.snackbarService.show($localize`:@@unittype-deleted:UnitType deleted`);
             this.router.navigateByUrl('/unittypes/overview');
           },
-          err => this.snackbarService.showHttpError(err, 'UnitType ')
+          err => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
         );
       }
     });
@@ -64,7 +64,7 @@ export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
     this.dialog.closeAll();
     this.service.getById(id).subscribe(
       res => this.dialog.open(UnitTypeAddComponent, { data: { model: res } }),
-      err => this.snackbarService.showHttpError(err, 'UnitType ')
+      err => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
     );
   }
 
@@ -75,7 +75,7 @@ export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
         this.tableDataSource.paginator = this.paginator;
         this.tableDataSource.sort = this.sort;
       },
-      err => this.snackbarService.showHttpError(err, 'UnitType ')
+      err => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
     );
   }
 
