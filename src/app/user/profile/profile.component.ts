@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     });
     this.userService.getAuthenticatedUser().subscribe(
       (user) => this.authenticatedUser = user,
-      (err) => this.snackbarService.showHttpError(err, "User")
+      (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User`+" ")
     )
   }
 

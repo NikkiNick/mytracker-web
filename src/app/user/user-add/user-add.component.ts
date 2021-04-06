@@ -48,18 +48,18 @@ export class UserAddComponent implements OnInit {
           if (this.isEdit) {
               this.userService.update(this.currentUser).subscribe(
                   () => {
-                      this.snackbarService.show('User updated');
+                      this.snackbarService.show($localize`:@@user-updated:User updated`+' ');
                       this.router.navigateByUrl(this.data.navigateTo);
                   },
-                  (err) => this.snackbarService.showHttpError(err, 'User ')
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User`+' ')
               );
           } else {
               this.userService.insert(this.currentUser).subscribe(
                   () => {
-                      this.snackbarService.show('User added');
+                      this.snackbarService.show($localize`:@@user-updated:User added`+' ');
                       this.router.navigateByUrl(this.data.navigateTo);
                   },
-                  (err) => this.snackbarService.showHttpError(err, 'User ')
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User`+' ')
               );
           }
           this.closeDialog();

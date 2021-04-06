@@ -48,7 +48,7 @@ export class ChangePasswordComponent implements OnInit {
               this.form.get("oldPassword").setErrors({ oldPasswordNotCorrect: true});
             }
             else{
-              this.snackbarService.showHttpError(err, "Password ");
+              this.snackbarService.showHttpError(err, $localize`:@@user-password:Password`+" ");
               this.closeDialog();
             }
           }
@@ -62,9 +62,6 @@ export class ChangePasswordComponent implements OnInit {
   passwordValidator: ValidatorFn = (fg: FormGroup) => {
     const newPassword: string = fg.get('newPassword').value;
     const newPasswordConfirm: string = fg.get('newPasswordConfirm').value;
-
-    //fg.get('newPassword').setErrors(null);
-    //fg.get('newPasswordConfirm').setErrors(null);
 
     return newPasswordConfirm !== null && newPassword !== null && newPassword === newPasswordConfirm ? null : { nonEqualPasswords: true };
 

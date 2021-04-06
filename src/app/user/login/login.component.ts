@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
           this.authService.setToken(res.token);
           this.router.navigateByUrl('');
         },
-        (err) => this.snackbarService.showHttpError(err, "Login ")
+        (err) => this.snackbarService.showHttpError(err, $localize`:@@user-login:Login`+" ")
       )
     }
   }

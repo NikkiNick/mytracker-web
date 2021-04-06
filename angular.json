@@ -13,6 +13,12 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "nl": "src/assets/i18n/nl.json"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -43,6 +49,9 @@
             }
           },
           "configurations": {
+            "nl": {
+              "localize": ["nl"]
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -79,6 +88,9 @@
             "browserTarget": "mytracker-web:build"
           },
           "configurations": {
+            "nl": {
+              "browserTarget": "mytracker-web:build:nl"
+            },
             "production": {
               "browserTarget": "mytracker-web:build:production"
             }
@@ -87,7 +99,10 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mytracker-web:build"
+            "browserTarget": "mytracker-web:build",
+            "outputPath": "src/locale",
+            "i18nLocale": "en-US",
+            "format": "xlf"
           }
         },
         "test": {

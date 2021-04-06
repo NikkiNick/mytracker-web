@@ -5,9 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "extract-i18n": "npm run build:prod && npx locl extract -s=dist/**/*.js -f=json -o=./src/assets/i18n/en.json && npm run sync-i18n",
+    "sync-i18n": "sync-i18n --files ./src/assets/i18n/*.json --primary en --languages nl --space 2"
   },
   "private": true,
   "dependencies": {
@@ -17,6 +20,7 @@
     "@angular/compiler": "~9.0.0",
     "@angular/core": "~9.0.0",
     "@angular/forms": "~9.0.0",
+    "@angular/localize": "^9.1.13",
     "@angular/material": "^9.2.4",
     "@angular/platform-browser": "~9.0.0",
     "@angular/platform-browser-dynamic": "~9.0.0",
@@ -39,6 +43,7 @@
     "@angular/cli": "~9.0.1",
     "@angular/compiler-cli": "~9.0.0",
     "@angular/language-service": "~9.0.0",
+    "@locl/cli": "^1.0.0",
     "@types/canvasjs": "^1.9.6",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
@@ -48,6 +53,7 @@
     "codelyzer": "^5.1.2",
     "eslint": "^7.23.0",
     "eslint-config-google": "^0.14.0",
+    "i18next-json-sync": "^2.3.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
