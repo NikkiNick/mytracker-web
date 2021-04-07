@@ -85,9 +85,9 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
 		this.trackerService.update(this.tracker).subscribe(
 			() => {
                 if(this.tracker.breakpoint !== null){
-				    this.snackbarService.show($localize`:@@tracker-breakpoint-removed:Breakpoint removed`);
-                } else{
 				    this.snackbarService.show($localize`:@@tracker-breakpoint-registered:Breakpoint registered`);
+                } else{
+				    this.snackbarService.show($localize`:@@tracker-breakpoint-removed:Breakpoint removed`);
                 }
 				this.router.navigateByUrl(this.router.url);
 			},
