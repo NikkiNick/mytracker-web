@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { compareAsc, compareDesc } from 'date-fns';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { SnackBarService } from 'src/app/shared/snack-bar.service';
+import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { TrackerRecordAddComponent } from 'src/app/tracker-record/tracker-record-add/tracker-record-add.component';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
 import { TrackerRecordService } from 'src/app/tracker-record/tracker-record.service';

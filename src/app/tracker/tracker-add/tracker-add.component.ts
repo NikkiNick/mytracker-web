@@ -3,7 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SnackBarService } from 'src/app/shared/snack-bar.service';
+import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { UnitType } from 'src/app/unittype/unit-type.model';
 import { UnitTypeService } from 'src/app/unittype/unit-type.service';
 import { Tracker } from '../tracker.model';

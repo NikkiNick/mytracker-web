@@ -2,11 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './root/app.component';
+import { AppComponent } from './main/root/app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material.module';
-import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
-import { HomeComponent } from './home/home.component';
+import { MaterialModule } from './shared/material/material.module';
+import { NotFoundPageComponent } from './main/not-found-page/not-found-page.component';
+import { HomeComponent } from './main/home/home.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TrackerModule } from './tracker/tracker.module';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { NavModule } from './nav/nav.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -32,7 +33,7 @@ import { NavModule } from './nav/nav.module';
         RouterModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        MaterialModule,
+        SharedModule,
         TrackerModule,
         UnitTypeModule,
         TrackerRecordModule,

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SnackBarService } from 'src/app/shared/snack-bar.service';
+import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { Tracker } from 'src/app/tracker/tracker.model';
 import { TrackerService } from 'src/app/tracker/tracker.service';
 import { TrackerRecord } from '../tracker-record.model';

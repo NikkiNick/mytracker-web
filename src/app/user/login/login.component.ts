@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { AuthResponse } from 'src/app/auth/auth-response.model';
 import { AuthService } from 'src/app/auth/auth.service';
-import { SnackBarService } from 'src/app/shared/snack-bar.service';
+import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 
 @Component({
   selector: 'app-login',

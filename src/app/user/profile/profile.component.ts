@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { SnackBarService } from 'src/app/shared/snack-bar.service';
+import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { UserAddComponent } from '../user-add/user-add.component';
 import { User } from '../user.model';

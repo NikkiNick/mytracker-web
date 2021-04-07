@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrackerOverviewComponent } from './tracker-overview/tracker-overview.component';
 import { TrackerService } from './tracker.service';
-import { MaterialModule } from '../material/material.module';
+import { MaterialModule } from '../shared/material/material.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
@@ -34,7 +34,6 @@ import { FilterPanelComponent } from './tracker-detail/filter-panel/filter-panel
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule,
     ColorPickerModule,
     SharedModule,
     TrackerRecordModule

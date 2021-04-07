@@ -7,7 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { pipe } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { SnackBarService } from 'src/app/shared/snack-bar.service';
+import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { Tracker } from 'src/app/tracker/tracker.model';
 import { UnitTypeAddComponent } from '../unit-type-add/unit-type-add.component';
 import { UnitType } from '../unit-type.model';
