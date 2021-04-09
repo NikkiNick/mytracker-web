@@ -3,6 +3,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DialogData } from 'src/app/dialog-data.model';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { UnitType } from 'src/app/unittype/unit-type.model';
 import { UnitTypeService } from 'src/app/unittype/unit-type.service';
@@ -26,11 +27,12 @@ export class TrackerAddComponent implements OnInit {
       private snackbarService: SnackBarService,
       private fb: FormBuilder,
       public dialogRef: MatDialogRef<TrackerAddComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: { model?: Tracker, navigateTo?: string }) {
+      @Inject(MAT_DIALOG_DATA) public data: any) {
         if (data.model !== null) {
             this.isEdit = true;
             this.currentTracker = data.model;
-        } else {
+        } 
+        else {
             this.currentTracker = new Tracker();
         }
     }
@@ -55,7 +57,7 @@ export class TrackerAddComponent implements OnInit {
           this.currentTracker.color = this.form.get('trackerColor').value;
           this.currentTracker.recordPrecision = this.form.get('trackerRecordPrecision').value;
           if (this.isEdit) {
-              this.trackerService.update(this.currentTracker).subscribe(
+              this.trackerService.update(this.currentTracker as Tracker).subscribe(
                   () => {
                       this.snackbarService.show($localize`:@@tracker-updated:Tracker updated`);
                       this.router.navigateByUrl(this.data.navigateTo);

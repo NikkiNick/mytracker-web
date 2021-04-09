@@ -32,7 +32,7 @@ export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
     private snackbarService: SnackBarService) {
 
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => this.loadData() );
+      this.loadData();
     }
 
   ngOnInit(): void {

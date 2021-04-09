@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { getMatIconFailedToSanitizeLiteralError } from '@angular/material/icon';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { compareAsc, compareDesc } from 'date-fns';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { ICrudService } from 'src/app/shared/crud/crud.service';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { TrackerRecordAddComponent } from 'src/app/tracker-record/tracker-record-add/tracker-record-add.component';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
@@ -28,7 +29,7 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
     constructor(
       private dialog: MatDialog,
       private recordService: TrackerRecordService,
-	  private trackerService: TrackerService,
+      private trackerService: TrackerService,
       private snackbarService: SnackBarService,
       private router: Router) {}
 

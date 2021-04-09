@@ -10,15 +10,6 @@
                     <a class="nav-link active" [routerLink]="menuItem.url">{{ menuItem.name }}</a>
                 </li>
             </ul>
-            <div *ngIf="isAuthenticated" class="d-flex align-items-center">
-                <a [routerLink]="['user', 'profile']" class="h6 m-0 mx-2">{{ authenticatedUser.firstName }} {{ authenticatedUser.lastName }}</a>
-                <a type="button" [matMenuTriggerFor]="user_menu"><mat-icon>more_vert</mat-icon></a>       
-                <mat-menu #user_menu="matMenu">
-                    <a mat-menu-item i18n="@@user-profile" [routerLink]="['user', 'profile']">View profile</a>
-                    <a mat-menu-item i18n="@@user-logout" (click)="logout()">Logout</a>
-                </mat-menu>
-            </div>
-            <a *ngIf="!isAuthenticated" [routerLink]="['user', 'login']" i18n="@@user-login">Login</a>
         </div>
     </div>
 </nav>

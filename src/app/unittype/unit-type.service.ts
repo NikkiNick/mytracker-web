@@ -1,39 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CrudService, CrudServiceOptions } from '../shared/crud/crud.service';
 import { UnitTypeAddComponent } from './unit-type-add/unit-type-add.component';
 import { UnitType } from './unit-type.model';
 import { UnitTypeDTO } from './unit-typeDTO.model';
+import { UnitTypeSerializer } from './unittype.serializer';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UnitTypeService {
+export class UnitTypeService extends CrudService<UnitType, UnitTypeDTO> implements ITrackerService{
 
-  apiUrl = `${environment.apiUrl}unittype/`;
-
-  constructor(private httpClient: HttpClient) {}
-
-  getById(id: number): Observable<UnitType> {
-      return this.httpClient.get<UnitType>(`${this.apiUrl}${id}`);
-  }
-
-  getAll(): Observable<UnitType[]> {
-    return this.httpClient.get<UnitType[]>(this.apiUrl);
-  }
-
-  insert(unitType: UnitType) {
-    return this.httpClient.post<UnitType>(`${this.apiUrl}`, unitType);
-  }
-
-  update(unitType: UnitType) {
-    const dto = UnitTypeDTO.create(unitType);
-    return this.httpClient.put(`${this.apiUrl}${unitType.id}`, dto);
-  }
-
-  delete(id: number) {
-    return this.httpClient.delete(`${this.apiUrl}${id}`);
-  }
-
+  constructor(@Inject("UnittypeServiceConfig") options: CrudServiceOptions<UnitType>, protected httpClient: HttpClient) {
+      super(options, httpClient, new UnitTypeSerializer());
+      console.log("Unittype:"+ this.apiUrl);
+     }
 }
+
+export interface ITrackerService{}

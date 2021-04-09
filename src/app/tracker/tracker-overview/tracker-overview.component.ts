@@ -1,15 +1,17 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { compareAsc, compareDesc } from 'date-fns';
+import { DialogData } from 'src/app/dialog-data.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { ICrudService } from 'src/app/shared/crud/crud.service';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
 import { Tracker } from '../tracker.model';
-import { TrackerService } from '../tracker.service';
+import { ITrackerService, TrackerService } from '../tracker.service';
 
 @Component({
     selector: 'app-tracker-overview',
@@ -61,13 +63,13 @@ export class TrackerOverviewComponent implements OnInit, AfterViewInit {
   editTracker(id: number) {
       this.dialog.closeAll();
       this.service.getById(id).subscribe(
-          (res) => this.dialog.open(TrackerAddComponent, { data: { model: res, navigateTo: this.router.url } }),
+          (res: Tracker) => this.dialog.open<TrackerAddComponent, DialogData>(TrackerAddComponent, { data: { model: res as Tracker, navigateTo: this.router.url } }),
           (err) => this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker`+' ')
       );
   }
 
   private loadData() {
-      this.service.getAll().subscribe((trackers) => {
+      this.service.getAll().subscribe((trackers: Tracker[]) => {
           trackers.forEach(t => t.records.sort((d1, d2) => compareDesc(new Date(d1.date), new Date(d2.date))));
           this.tableDataSource = new MatTableDataSource<Tracker>(trackers);
           this.tableDataSource.connect().subscribe((d) => this.renderedTrackers = d);

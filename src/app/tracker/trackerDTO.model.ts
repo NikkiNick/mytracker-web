@@ -1,6 +1,7 @@
+import { DtoModel } from '../shared/crud/models/dto.model';
 import { Tracker } from './tracker.model';
 
-export class TrackerDTO {
+export class TrackerDTO extends DtoModel<Tracker> {
     id?: number;
     created?: Date;
     name: string;
@@ -8,16 +9,4 @@ export class TrackerDTO {
     unitTypeId: number;
     recordPrecision: number;
     breakpointRecordId: number;
-
-    static create(tracker: Tracker): TrackerDTO {
-        const dto = new TrackerDTO();
-        dto.id = tracker.id || null;
-        dto.created = tracker.created || null;
-        dto.name = tracker.name;
-        dto.color = tracker.color;
-        dto.unitTypeId = tracker.unitType?.id;
-        dto.recordPrecision = tracker.recordPrecision;
-        dto.breakpointRecordId = tracker.breakpoint?.id;
-        return dto;
-    }
 }

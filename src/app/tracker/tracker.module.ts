@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrackerOverviewComponent } from './tracker-overview/tracker-overview.component';
 import { TrackerService } from './tracker.service';
-import { MaterialModule } from '../shared/material/material.module';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
@@ -16,6 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
 import { ChartPanelComponent } from './tracker-detail/chart-panel/chart-panel.component';
 import { FilterPanelComponent } from './tracker-detail/filter-panel/filter-panel.component';
+import { Tracker } from './tracker.model';
 
 @NgModule({
   declarations: [
@@ -39,6 +39,13 @@ import { FilterPanelComponent } from './tracker-detail/filter-panel/filter-panel
     TrackerRecordModule
   ],
   providers: [
+    {   
+      provide: "TrackerServiceConfig", 
+      useValue: {
+        model: Tracker,
+        apiUrl: "http://localhost:54980/api" 
+      }
+    },
     TrackerService
   ],
   entryComponents: [
@@ -46,3 +53,5 @@ import { FilterPanelComponent } from './tracker-detail/filter-panel/filter-panel
   ]
 })
 export class TrackerModule { }
+
+

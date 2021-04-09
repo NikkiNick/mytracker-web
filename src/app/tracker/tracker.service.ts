@@ -1,39 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { CrudService, CrudServiceOptions } from '../shared/crud/crud.service';
 import { Tracker } from './tracker.model';
+import { TrackerSerializer } from './tracker.serializer';
 import { TrackerDTO } from './trackerDTO.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class TrackerService {
+export class TrackerService extends CrudService<Tracker, TrackerDTO> implements ITrackerService{
 
-  apiUrl = `${environment.apiUrl}tracker/`;
-
-  constructor(private httpClient: HttpClient) {}
-
-  getById(id: number): Observable<Tracker> {
-    return this.httpClient.get<Tracker>(`${this.apiUrl + id}`, {});
-  }
-
-  getAll(): Observable<Tracker[]> {
-    return this.httpClient.get<Tracker[]>(this.apiUrl, {});
-  }
-
-  insert(tracker: Tracker): Observable<any> {
-    const dto = TrackerDTO.create(tracker);
-    return this.httpClient.post(`${this.apiUrl}`, dto);
-  }
-
-  update(tracker: Tracker): Observable<any> {
-    const dto = TrackerDTO.create(tracker);
-    return this.httpClient.put(`${this.apiUrl}${tracker.id}`, dto);
-  }
-
-  delete(id: number): Observable<any> {
-    return this.httpClient.delete(`${this.apiUrl}${id}`);
-  }
+    constructor(@Inject("TrackerServiceConfig") options: CrudServiceOptions<Tracker>, protected httpClient: HttpClient) {
+        super(options, httpClient, new TrackerSerializer());
+        console.log("Tracker:"+ this.apiUrl);
+       }
 
 }
+ 
+export interface ITrackerService{}

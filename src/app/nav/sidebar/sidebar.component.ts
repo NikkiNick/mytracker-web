@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { TrackerRecordAddComponent } from '../../tracker-record/tracker-record-add/tracker-record-add.component';
 import { TrackerAddComponent } from '../../tracker/tracker-add/tracker-add.component';

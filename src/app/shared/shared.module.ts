@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from './material/material.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ChartComponent } from './chart/chart.component';
+import { CrudModule } from './crud/crud.module';
 
 
 
@@ -17,14 +18,15 @@ import { ChartComponent } from './chart/chart.component';
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    CrudModule
   ],
   exports: [
     BreadCrumbsComponent,
+    ConfirmationDialogComponent,
     ChartComponent,
-    CommonModule,
-    RouterModule,
-    MaterialModule
+    MaterialModule,
+    CrudModule
   ]
 })
 export class SharedModule { }

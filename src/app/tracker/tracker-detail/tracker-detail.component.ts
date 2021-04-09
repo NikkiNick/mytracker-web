@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { compareAsc, compareDesc } from 'date-fns';
 import { Observable } from 'rxjs';
+import { ICrudService } from 'src/app/shared/crud/crud.service';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
 import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
@@ -31,7 +32,7 @@ export class TrackerDetailComponent implements OnInit {
     this.route.params.subscribe(p => {
       const id: number = +p.id;
       this.service.getById(id).subscribe(
-        (data) => {
+        (data: Tracker) => {
           this.tracker = data;
           this.tracker.records.sort((d1, d2) => compareAsc(new Date(d1.date), new Date(d2.date)));
         },
@@ -44,6 +45,7 @@ export class TrackerDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tracker;
   }
   setFilteredData(data: TrackerRecord[]) {
     this.filteredRecords = data;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { SnackBarService } from '../../shared/snackbar/snack-bar.service';
 import { User } from '../../user/user.model';
@@ -16,7 +17,7 @@ export class NavigationComponent implements OnInit {
       { name: $localize`:@@nav-trackers:Trackers`, url: '/trackers' },
       { name: $localize`:@@nav-unittypes:Unittypes`, url: '/unittypes' }
   ];
-  isAuthenticated: boolean = false;
+  isAuthenticated: Observable<boolean>
   authenticatedUser?: User;
   form: FormGroup;
 
@@ -27,7 +28,7 @@ export class NavigationComponent implements OnInit {
     private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.authService.isAuthenticated$.subscribe(auth => this.isAuthenticated = auth);
+    this.isAuthenticated = this.authService.isAuthenticated$;
     this.form = this.fb.group({
       email: [, [ Validators.required, Validators.email ]],
       password: [, [Validators.required]]

@@ -8,6 +8,7 @@ import { MaterialModule } from '../shared/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UnitTypeService } from './unit-type.service';
 import { SharedModule } from '../shared/shared.module';
+import { UnitType } from './unit-type.model';
 
 
 
@@ -24,6 +25,15 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     SharedModule
   ],
-  providers: [ UnitTypeService ]
+  providers: [ 
+    {   
+      provide: "UnittypeServiceConfig", 
+      useValue: {
+        model: UnitType,
+        apiUrl: "http://localhost:54980/api" 
+      }
+    },
+    UnitTypeService 
+  ]
 })
 export class UnitTypeModule { }
