@@ -16,6 +16,7 @@ import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
 import { ChartPanelComponent } from './tracker-detail/chart-panel/chart-panel.component';
 import { FilterPanelComponent } from './tracker-detail/filter-panel/filter-panel.component';
 import { Tracker } from './tracker.model';
+import { TrackerManipulationDialogComponent } from './tracker-manipulation-dialog/tracker-manipulation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { Tracker } from './tracker.model';
     SettingsPanelComponent,
     RecordPanelComponent,
     ChartPanelComponent,
-    FilterPanelComponent
+    FilterPanelComponent,
+    TrackerManipulationDialogComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { Tracker } from './tracker.model';
     TrackerService
   ],
   entryComponents: [
-    TrackerAddComponent
+    TrackerAddComponent,
+    TrackerManipulationDialogComponent
   ]
 })
 export class TrackerModule { }

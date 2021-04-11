@@ -6,6 +6,7 @@ import { MaterialModule } from './material/material.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ChartComponent } from './chart/chart.component';
 import { CrudModule } from './crud/crud.module';
+import { DialogModule } from './dialog/dialog.module';
 
 
 
@@ -13,7 +14,7 @@ import { CrudModule } from './crud/crud.module';
   declarations: [
     BreadCrumbsComponent,
     ConfirmationDialogComponent,
-    ChartComponent
+    ChartComponent,
   ],
   imports: [
     CommonModule,
@@ -26,7 +27,8 @@ import { CrudModule } from './crud/crud.module';
     ConfirmationDialogComponent,
     ChartComponent,
     MaterialModule,
-    CrudModule
+    CrudModule,
+    DialogModule
   ]
 })
 export class SharedModule { }

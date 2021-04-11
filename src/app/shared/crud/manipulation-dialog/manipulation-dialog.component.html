@@ -1,0 +1,8 @@
+<app-dialog [heading]="heading">
+    <ng-content></ng-content>
+    <div class="d-flex justify-content-center">
+        <button *ngIf="model" mat-raised-button class="bg-primary2 w-100 m-1" type="button" i18n="@@edit" (click)="confirm()">Edit</button>
+        <button *ngIf="!model" mat-raised-button class="bg-primary2 w-100 m-1" type="button" i18n="@@add" (click)="confirm()">Add</button>
+        <button mat-raised-button (click)="close()" class="w-100 bg-danger m-1" type="button" i18n="@@cancel">Cancel</button>
+    </div>
+</app-dialog>

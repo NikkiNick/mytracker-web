@@ -101,4 +101,33 @@
             No trackers
         </div>
     </div>
+    <div>
+        <app-crud-table [data]="renderedTrackers" detailUrl="/trackers/detail" [service]="service" [manipulationDialog]="manipulationDialog">
+            <ng-template tableColumn="Name" width="15%" let-model i18n-tableColumn="@@tracker-name">
+                <span class="h4">{{ model.name }}</span>
+            </ng-template>
+            <ng-template tableColumn="Latest record" width="15%"  [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-latest-record">
+                <span *ngIf="model.records.length === 0" i18n="@@tracker-norecords">No records</span>
+                <div *ngIf="model.records.length > 0" class="m-1">
+                    <app-tracker-record-display [record]="model.records[0]" [suffix]="model.unitType.shortName" [color]="model.color"></app-tracker-record-display>
+                </div>
+            </ng-template>            
+            <ng-template tableColumn="Since breakpoint" let-model i18n-tableColumn="@@tracker-since-breakpoint">
+                <app-tracker-record-difference-display *ngIf="model.breakpoint" [firstRecord]="model.records[0]" [secondRecord]="model.breakpoint" [tracker]="model" [smallSize]="true"></app-tracker-record-difference-display>
+                <span *ngIf="!model.breakpoint" i18n="@@tracker-nobreakpoint">No breakpoint set</span>
+            </ng-template>            
+            <ng-template tableColumn="Unittype" let-model i18n-tableColumn="@@unittype">
+                {{ model.unitType.longName }} ({{ model.unitType.shortName }})
+            </ng-template>            
+            <ng-template tableColumn="Created" let-model  [centeredColumn]="true"  i18n-tableColumn="@@tracker-created">
+                {{ model.created | date: 'shortDate' }}
+            </ng-template>
+            <ng-template tableColumn="Color" width="7.5%"  [centeredColumn]="true"  let-model i18n-tableColumn="@@tracker-color">
+                <div *ngIf="model.color" [ngStyle]="{ 'background-color': model.color, 'border': '1px solid '+model.color, 'min-height': '22px'}" class="rounded text-center p-1 shadow"></div>
+            </ng-template>
+            <ng-template tableColumn="Record precision" [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-record-precision">
+                {{ model.recordPrecision }}
+            </ng-template>
+        </app-crud-table>
+    </div>
 </div>

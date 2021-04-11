@@ -1,17 +1,17 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { compareAsc, compareDesc } from 'date-fns';
+import { compareDesc } from 'date-fns';
 import { DialogData } from 'src/app/dialog-data.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { ICrudService } from 'src/app/shared/crud/crud.service';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
+import { TrackerManipulationDialogComponent } from '../tracker-manipulation-dialog/tracker-manipulation-dialog.component';
 import { Tracker } from '../tracker.model';
-import { ITrackerService, TrackerService } from '../tracker.service';
+import { TrackerService } from '../tracker.service';
 
 @Component({
     selector: 'app-tracker-overview',
@@ -23,11 +23,12 @@ export class TrackerOverviewComponent implements OnInit, AfterViewInit {
   tableViewMode = false;
   tableColumnsToDisplay = [ 'name', 'latestRecord', 'breakpoint', 'unitType', 'created', 'color', 'recordPrecision', 'actions' ];
   tableDataSource: MatTableDataSource<Tracker>;
+  manipulationDialog = TrackerManipulationDialogComponent;
   @ViewChild('paginator') paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
-    private service: TrackerService,
+    public service: TrackerService,
     private dialog: MatDialog,
     private router: Router,
     private snackbarService: SnackBarService) {
