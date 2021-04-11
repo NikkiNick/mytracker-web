@@ -1,4 +1,5 @@
-import { AfterContentChecked, AfterContentInit, Component, ContentChild, Inject, Input, OnInit, Output } from '@angular/core';
+import { trigger } from '@angular/animations';
+import { AfterContentChecked, AfterContentInit, Component, ContentChild, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -18,10 +19,13 @@ import { ManipulationDialogData } from './manipulation-dialog-data.model';
 })
 export class ManipulationDialogComponent<T extends IBaseModel> extends DialogComponent implements OnInit, AfterContentInit, IManipulationDialog<T> {
 
+  isLoading: boolean = true;
+  isEdit: boolean = true;
+
   @Input() service: ICrudService<T>;
   @Input() heading?: string;
   model: BehaviorSubject<T>
-  @ContentChild(NgForm) contentForm?: NgForm;
+  @ContentChild("manipulationForm") contentForm?: NgForm;
 
   constructor(
     public router: Router,
@@ -39,17 +43,23 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
   loadModel(){
     if(this.data.modelId){
       this.service.getById(this.data.modelId).subscribe(
-        (model) => this.model.next(model)
+        (model) => {
+          this.model.next(model);
+          this.isLoading = false;
+        },
+        (err) => this.snackbarService.showHttpError(err)
       );
     }
     else{
       this.model.next({} as T);
+      this.isLoading = false;
+      this.isEdit = false;
     }
   }
 
   confirm(){
+    this.model = this.dialogRef.componentInstance.model;
     if(this.data.modelId){
-      this.model = this.dialogRef.componentInstance.model;
       this.service.update(this.model.value).subscribe(
         (res) => this.snackbarService.show("Succesfully updated item"),
         (err) => this.snackbarService.showHttpError(err),
@@ -57,9 +67,16 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
           this.dialogRef.close();
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);
         }
-      )
+      );
     } else{
-
+      this.service.insert(this.model.value).subscribe(
+        (res) => this.snackbarService.show("Succesfully added item"),
+        (err) => this.snackbarService.showHttpError(err),
+        () => {
+          this.dialogRef.close();
+          this.router.navigateByUrl(this.data.navigateTo || this.router.url);
+        }
+      );
     }
   }
 

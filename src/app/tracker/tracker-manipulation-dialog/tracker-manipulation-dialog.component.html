@@ -1,6 +1,6 @@
-<app-manipulation-dialog heading="Edit tracker" manipulationAction="update" [service]="trackerService">
+<app-manipulation-dialog [heading]="(data.modelId?'Edit':'Add')+' tracker'" [service]="trackerService">
     <ng-container *ngIf="model.value">
-        <form class="container-fluid" [formGroup]="form">
+        <form class="container-fluid" [formGroup]="form" #manipulationForm="ngForm">
             <div class="row">
                 <div class="col">
                     <mat-form-field appearance="outline" class="w-100">
