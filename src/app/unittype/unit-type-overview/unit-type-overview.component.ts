@@ -10,6 +10,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { Tracker } from 'src/app/tracker/tracker.model';
 import { UnitTypeAddComponent } from '../unit-type-add/unit-type-add.component';
+import { UnitTypeManipulationDialogComponent } from '../unit-type-manipulation-dialog/unit-type-manipulation-dialog.component';
 import { UnitType } from '../unit-type.model';
 import { UnitTypeService } from '../unit-type.service';
 
@@ -18,65 +19,12 @@ import { UnitTypeService } from '../unit-type.service';
   templateUrl: './unit-type-overview.component.html',
   styleUrls: ['./unit-type-overview.component.scss']
 })
-export class UnitTypeOverviewComponent implements OnInit, AfterViewInit {
+export class UnitTypeOverviewComponent {
+  
+  manipulationDialog = UnitTypeManipulationDialogComponent;
 
-  tableColumnsToDisplay = [ 'shortName', 'longName', 'actions' ];
-  tableDataSource: MatTableDataSource<UnitType>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  constructor(
-    private service: UnitTypeService,
-    private router: Router,
-    private dialog: MatDialog,
-    private snackbarService: SnackBarService) {
-
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.loadData();
-    }
-
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-  }
-
-  deleteUnitType(id: number) {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: $localize`:@@unittype-confirm-delete-title:Please confirm`, message: $localize`:@@unittype-confirm-delete-message:Are you sure you want to delete this UnitType?` } });
-    dialogRef.afterClosed().subscribe(res => {
-      if (res) {
-        this.service.delete(id).subscribe(
-          () => {
-            this.snackbarService.show($localize`:@@unittype-deleted:UnitType deleted`);
-            this.router.navigateByUrl('/unittypes/overview');
-          },
-          err => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
-        );
-      }
-    });
-  }
-
-  addUnitType() {
-    this.dialog.closeAll();
-    this.dialog.open(UnitTypeAddComponent, { data: { model: null } });
-  }
-  editUnitType(id: number) {
-    this.dialog.closeAll();
-    this.service.getById(id).subscribe(
-      res => this.dialog.open(UnitTypeAddComponent, { data: { model: res } }),
-      err => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
-    );
-  }
-
-  private loadData() {
-    this.service.getAll().subscribe(
-      data => {
-        this.tableDataSource = new MatTableDataSource<UnitType>(data);
-        this.tableDataSource.paginator = this.paginator;
-        this.tableDataSource.sort = this.sort;
-      },
-      err => this.snackbarService.showHttpError(err, $localize`:@@unittype:UnitType`+' ')
-    );
+  constructor(public service: UnitTypeService, private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
 }

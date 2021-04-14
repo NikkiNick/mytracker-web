@@ -1,17 +1,18 @@
 import { ComponentType } from '@angular/cdk/portal';
-import { AfterContentInit, Component, ContentChildren, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, ContentChildren, Input, OnInit, QueryList, Renderer2, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { DialogData } from 'src/app/dialog-data.model';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import { SnackBarService } from '../../snackbar/snack-bar.service';
 import { ICrudService } from '../crud.service';
 import { IBaseModel } from '../models/ibase-model';
-import { TableColumnDirective } from './table-column.directive';
 import { ManipulationDialogComponent } from '../manipulation-dialog/manipulation-dialog.component';
 import { ManipulationDialogData } from '../manipulation-dialog/manipulation-dialog-data.model';
 import { MatPaginator } from '@angular/material/paginator';
+import { TableColumnDirective } from './directives/table-column.directive';
+import { GridCardTitleDirective } from './directives/grid-card-title.directive';
+import { GridCardContentDirective } from './directives/grid-card-content.directive';
 
 @Component({
     selector: 'app-crud-table',
@@ -23,21 +24,32 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
     columnsToDisplay: string[] = [];
     tableDataSource: MatTableDataSource<T>
     isLoading: boolean = true;
+    currentDisplayMode: 'table' | 'grid';
+    renderedItems: T[];
 
     @Input() heading?: string;
     @Input() service: ICrudService<T>;
     @Input() detailUrl: string;
-    @Input() showAddButton: boolean = true;
+    @Input() showAddButton?: boolean = true;
     @Input() itemsPerPage?: number[] = [10, 25, 50];
+    @Input() displayModes?: Array<'table' | 'grid'> = ['table', 'grid'];
     @Input() manipulationDialog: ComponentType<ManipulationDialogComponent<T>>;
     @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
-    @ViewChild('paginator') paginator: MatPaginator;
-    
+    @ContentChild(GridCardTitleDirective) gridCardTitleTemplate: GridCardTitleDirective;
+    @ContentChild(GridCardContentDirective) gridCardContentTemplate: GridCardTitleDirective;
+    @ViewChild('paginator', { static: false }) set paginator(pager:MatPaginator) {
+        if (pager) this.tableDataSource.paginator = pager;
+    }
+    @ContentChild('gridCardContainer', { static: false, read: ViewContainerRef }) gcVcRef: ViewContainerRef;
+    @ViewChild('actions', { read: TemplateRef }) actions: TemplateRef<any>;
     constructor(
         private dialog: MatDialog,
         private snackbarService: SnackBarService,
-        private router: Router) { 
+        private router: Router,
+        private renderer: Renderer2) {
+            this.tableDataSource = new MatTableDataSource();
     }
+
     // ngOnChanges(changes: SimpleChanges): void {
     //     if(changes.data.previousValue){
     //         this.initTable();
@@ -50,23 +62,26 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
         if(this.service || this.detailUrl){
             this.columnsToDisplay.push('Actions');
         }
+        this.currentDisplayMode = this.displayModes[0];
+        this.initTable();
     }
    
 
     ngOnInit(): void {
-        this.initTable();
     }
 
     private initTable(){
         this.service.getAll().subscribe(
             (res: T[]) => {
-                this.tableDataSource = new MatTableDataSource<T>(res);
-                this.tableDataSource.paginator = this.paginator;
+                this.tableDataSource.data = res;
+                this.tableDataSource.connect().subscribe((d) => this.renderedItems = d);
                 this.isLoading = false;
             },
-            (err) => this.snackbarService.showHttpError(err)
-         )
+            (err) => this.snackbarService.showHttpError(err),
+         );
+        
     }
+
     openManipulationDialog(id?: number){
         this.dialog.closeAll();
         const dialogRef = this.dialog.open(this.manipulationDialog, { data: { modelId: id } as unknown as ManipulationDialogData });

@@ -15,7 +15,6 @@ export class UnitTypeService extends CrudService<UnitType, UnitTypeDTO> implemen
 
   constructor(@Inject("UnittypeServiceConfig") options: CrudServiceOptions<UnitType>, protected httpClient: HttpClient) {
       super(options, httpClient, new UnitTypeSerializer());
-      console.log("Unittype:"+ this.apiUrl);
      }
 }
 

@@ -1,6 +1,6 @@
 <h1 i18n="@@tracker-overview">Trackers overview</h1>
 <mat-divider></mat-divider>
-<div class="container-fluid p-2">
+<!-- <div class="container-fluid p-2">
     <div class="row justify-content-end p-1">
         <button mat-raised-button class="bg-primary2 my-1" type="button" (click)="addTracker()"><mat-icon>add</mat-icon><span i18n="@@tracker-add-new">Add new Tracker</span></button>
     </div>
@@ -93,15 +93,13 @@
                         <button mat-raised-button class="mx-1" color="warn" (click)="deleteTracker(tracker.id)" matTooltip="Delete tracker" i18n-matTooltip="@@tracker-delete"><mat-icon>delete_forever</mat-icon></button>
                     </td>
                 </ng-container>
-                <tr mat-header-row *matHeaderRowDef="tableColumnsToDisplay"></tr>
-                <tr mat-row *matRowDef="let rowData; columns: tableColumnsToDisplay"></tr>
             </table>
         </div>
         <div class="row justify-content-center p-2" *ngIf="tableDataSource.data.length === 0" i18n="@@tracker-notrackers">
             No trackers
         </div>
     </div>
-    <div>
+    <div> -->
         <app-crud-table detailUrl="/trackers/detail" [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[5,10,15]">
             <ng-template tableColumn="Name" width="15%" let-model i18n-tableColumn="@@tracker-name">
                 <span class="h4">{{ model.name }}</span>
@@ -128,6 +126,20 @@
             <ng-template tableColumn="Record precision" [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-record-precision">
                 {{ model.recordPrecision }}
             </ng-template>
+            <ng-template gridCardTitle let-model>
+                <div class="text-center h2">{{model.name}}</div>
+            </ng-template>
+            <ng-template gridCardContent let-model>
+                <div *ngIf="model.records.length > 0" class="d-flex flex-column align-items-center text-center">
+                    <span class="font-weight-bold h6">Current</span>
+                    <app-tracker-record-display [record]="model.records[0]" [suffix]="model.unitType.shortName" [color]="model.color" class="w-100"></app-tracker-record-display>
+                    <div class="d-flex flex-column align-items-center mt-3" *ngIf="model.records.length > 1 && model.breakpoint">
+                        <span class="font-weight-bold h6" i18n="@@tracker-since-breakpoint-date">Since breakpoint ({{model.breakpoint.date | date: "shortDate"}})</span>
+                        <app-tracker-record-difference-display [firstRecord]="model.records[0]" [secondRecord]="model.breakpoint" [tracker]="model" [smallSize]="false"></app-tracker-record-difference-display>
+                    </div>
+                </div>
+                <div *ngIf="model.records.length === 0" class="text-center" i18n="@@tracker-no-records">No records</div>
+            </ng-template>
         </app-crud-table>
-    </div>
-</div>
+    <!-- </div> -->
+<!-- </div> -->

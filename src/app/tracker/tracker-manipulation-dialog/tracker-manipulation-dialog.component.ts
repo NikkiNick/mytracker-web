@@ -73,8 +73,8 @@ ngOnInit(): void {
 //     }
 // }
 
-compareFn: ((f1: UnitType, f2: UnitType) => boolean) | null = this.compareByValue;
-compareByValue(f1: UnitType, f2: UnitType) {
-    return f1 && f2 && f1.id === f2.id;
-}
+  compareFn: ((f1: UnitType, f2: UnitType) => boolean) | null = this.compareByValue;
+  compareByValue(f1: UnitType, f2: UnitType) {
+      return f1 && f2 && f1.id === f2.id;
+  }
 }

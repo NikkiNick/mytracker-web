@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UnitTypeService } from './unit-type.service';
 import { SharedModule } from '../shared/shared.module';
 import { UnitType } from './unit-type.model';
+import { UnitTypeManipulationDialogComponent } from './unit-type-manipulation-dialog/unit-type-manipulation-dialog.component';
+import { TrackerManipulationDialogComponent } from '../tracker/tracker-manipulation-dialog/tracker-manipulation-dialog.component';
 
 
 
@@ -16,7 +18,8 @@ import { UnitType } from './unit-type.model';
   declarations: [
     UnitTypeOverviewComponent,
     UnitTypeDetailComponent,
-    UnitTypeAddComponent
+    UnitTypeAddComponent,
+    UnitTypeManipulationDialogComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +37,9 @@ import { UnitType } from './unit-type.model';
       }
     },
     UnitTypeService 
+  ],
+  entryComponents: [
+    UnitTypeManipulationDialogComponent
   ]
 })
 export class UnitTypeModule { }

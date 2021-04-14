@@ -1,24 +1,34 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { CrudTableComponent } from './crud-table/crud-table.component';
 import { MaterialModule } from '../material/material.module';
-import { TableColumnDirective } from './crud-table/table-column.directive';
 import { RouterModule } from '@angular/router';
 import { DialogModule } from '../dialog/dialog.module';
 import { ManipulationDialogComponent } from './manipulation-dialog/manipulation-dialog.component';
-import { ManipulationDialogData } from './manipulation-dialog/manipulation-dialog-data.model';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GridCardDirective } from './crud-table/directives/grid-card.directive';
+import { TableColumnDirective } from './crud-table/directives/table-column.directive';
+import { GridCardTitleDirective } from './crud-table/directives/grid-card-title.directive';
+import { GridCardContentDirective } from './crud-table/directives/grid-card-content.directive';
 
 @NgModule({
   declarations: [
     CrudTableComponent,
     TableColumnDirective,
-    ManipulationDialogComponent
+    ManipulationDialogComponent,
+    GridCardDirective,
+    GridCardTitleDirective,
+    GridCardContentDirective
   ],
   imports: [
     CommonModule,
+    BrowserModule,
     RouterModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     DialogModule
   ],
@@ -27,6 +37,9 @@ import { ManipulationDialogData } from './manipulation-dialog/manipulation-dialo
   exports: [
     CrudTableComponent,
     TableColumnDirective,
+    GridCardDirective,
+    GridCardTitleDirective,
+    GridCardContentDirective,
     ManipulationDialogComponent
   ]
 })
