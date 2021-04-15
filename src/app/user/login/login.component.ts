@@ -11,7 +11,7 @@ import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   form: FormGroup;
 
@@ -20,14 +20,14 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private snackbarService: SnackBarService,
     private router: Router
-  ) { }
-
-  ngOnInit(): void {
+  ) {
+    
     this.form = this.fb.group({
       email: [, [ Validators.required, Validators.email ] ],
       password: [, [ Validators.required ] ]
     })
   }
+
   login(){
     if(this.form.valid){
       let email = this.form.get('email').value;

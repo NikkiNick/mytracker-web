@@ -5,34 +5,31 @@ import { Router } from '@angular/router';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
 import { ManipulationDialogComponent } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog.component';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
-import { UnitType } from '../unit-type.model';
-import { UnitTypeService } from '../unit-type.service';
+import { User } from '../user.model';
+import { UserService } from '../user.service';
 
 @Component({
-  selector: 'app-unit-type-manipulation-dialog',
-  templateUrl: './unit-type-manipulation-dialog.component.html',
-  styleUrls: ['./unit-type-manipulation-dialog.component.scss']
+  selector: 'app-user-manipulation-dialog',
+  templateUrl: './user-manipulation-dialog.component.html',
+  styleUrls: ['./user-manipulation-dialog.component.scss']
 })
-export class UnitTypeManipulationDialogComponent extends ManipulationDialogComponent<UnitType> {
+export class UserManipulationDialogComponent extends ManipulationDialogComponent<User> {
 
   form: FormGroup;
-  
+
   constructor(
+    public userService: UserService,
     public router : Router,
-    public service: UnitTypeService,
     public snackbarService: SnackBarService,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<UnitTypeManipulationDialogComponent>,
+    public dialogRef: MatDialogRef<UserManipulationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ManipulationDialogData) {
       super(router, snackbarService, dialogRef, data);
+      this.service = userService;
       this.form = this.fb.group({
-        unitType_shortName: [, [ Validators.required ]],
-        unitType_longName: [, [ Validators.required ]]
+        firstName: [ , [ Validators.required ] ],
+        lastName: [ , [ Validators.required ] ],
+        email: [ , [ Validators.required, Validators.email ] ]
       });
-  }
-
-  confirm(): void{
-    alert("lol");
-  }
-  
+    }
 }

@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
-import { TrackerAddComponent } from '../../tracker-add/tracker-add.component';
 import { TrackerManipulationDialogComponent } from '../../tracker-manipulation-dialog/tracker-manipulation-dialog.component';
 import { Tracker } from '../../tracker.model';
 import { TrackerService } from '../../tracker.service';

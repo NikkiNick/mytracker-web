@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { id } from 'date-fns/locale';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
 import { TrackerManipulationDialogComponent } from 'src/app/tracker/tracker-manipulation-dialog/tracker-manipulation-dialog.component';
 import { TrackerService } from 'src/app/tracker/tracker.service';
@@ -9,8 +8,6 @@ import { UnitTypeManipulationDialogComponent } from 'src/app/unittype/unit-type-
 import { UnitTypeService } from 'src/app/unittype/unit-type.service';
 import { AuthService } from '../../auth/auth.service';
 import { TrackerRecordAddComponent } from '../../tracker-record/tracker-record-add/tracker-record-add.component';
-import { TrackerAddComponent } from '../../tracker/tracker-add/tracker-add.component';
-import { UnitTypeAddComponent } from '../../unittype/unit-type-add/unit-type-add.component';
 
 @Component({
   selector: 'app-sidebar',

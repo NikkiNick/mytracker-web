@@ -7,13 +7,16 @@ import { SharedModule } from '../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
 import { ProfileComponent } from './profile/profile.component';
-import { UserAddComponent } from './user-add/user-add.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-
-
+import { UserManipulationDialogComponent } from './user-manipulation-dialog/user-manipulation-dialog.component';
 
 @NgModule({
-  declarations: [LoginComponent, ProfileComponent, UserAddComponent, ChangePasswordComponent],
+  declarations: [
+    LoginComponent, 
+    ProfileComponent, 
+    ChangePasswordComponent, 
+    UserManipulationDialogComponent
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -24,4 +27,5 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
   ],
   providers: [ UserService ]
 })
+
 export class UserModule { }

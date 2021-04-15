@@ -57,25 +57,26 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
     }
   }
 
-  confirm(){
+  confirm(): void{
     this.model = this.dialogRef.componentInstance.model;
     if(this.data.modelId){
       this.service.update(this.model.value).subscribe(
-        (res) => this.snackbarService.show("Succesfully updated item"),
-        (err) => this.snackbarService.showHttpError(err),
-        () => {
-          this.dialogRef.close();
+        (res) => {
+          console.log("ok")
+          this.snackbarService.show("Succesfully updated item");
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);
-        }
+          this.dialogRef.close();
+        },
+        (err) => this.snackbarService.showHttpError(err),
       );
     } else{
       this.service.insert(this.model.value).subscribe(
-        (res) => this.snackbarService.show("Succesfully added item"),
-        (err) => this.snackbarService.showHttpError(err),
-        () => {
-          this.dialogRef.close();
+        (res) => {
+          this.snackbarService.show("Succesfully added item");
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);
-        }
+          this.dialogRef.close();
+      },
+        (err) => this.snackbarService.showHttpError(err),
       );
     }
   }

@@ -53,7 +53,7 @@ export class TrackerRecordDifferenceDisplayComponent implements OnInit, OnChange
       } else if (this.difference.amountDiff < 0) {
           color = 'red';
       }
-      return { prefix, color, difference: this.difference.amountDiff };
+      return { prefix, color, difference: this.difference.amountDiff.toFixed(this.tracker.recordPrecision) as unknown as number };
   }
   averageDifference(): { prefix: string, color: string, difference: number } {
       let prefix = '';

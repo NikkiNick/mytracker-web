@@ -3,10 +3,6 @@ import { User } from "./user.model";
 
 export class UserSerializer extends BaseSerializer<User>{
     
-    constructor(){
-        super();
-    }
-
     public fromJson(object: any): User {
         return {
             id: object.Id,

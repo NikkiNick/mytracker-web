@@ -7,6 +7,8 @@ import { AuthRequest } from './auth-request.model';
 import jwt_decode from "jwt-decode";
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
+import { map } from 'rxjs/operators';
+import { AuthResponse } from './auth-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +28,7 @@ export class AuthService {
     let req: AuthRequest = new AuthRequest();
     req.email = email;
     req.password = password;
-    return this.http.post(this.apiUrl, req);
+    return this.http.post(this.apiUrl, req).pipe(map((res: AuthResponse) => AuthResponse.fromJson(res)));
   }
 
   getToken(): string | null {

@@ -12,11 +12,13 @@ import { GridCardDirective } from './crud-table/directives/grid-card.directive';
 import { TableColumnDirective } from './crud-table/directives/table-column.directive';
 import { GridCardTitleDirective } from './crud-table/directives/grid-card-title.directive';
 import { GridCardContentDirective } from './crud-table/directives/grid-card-content.directive';
+import { TableActionsColumnDirective } from './crud-table/directives/table-actions-column.directive';
 
 @NgModule({
   declarations: [
     CrudTableComponent,
     TableColumnDirective,
+    TableActionsColumnDirective,
     ManipulationDialogComponent,
     GridCardDirective,
     GridCardTitleDirective,
@@ -37,6 +39,7 @@ import { GridCardContentDirective } from './crud-table/directives/grid-card-cont
   exports: [
     CrudTableComponent,
     TableColumnDirective,
+    TableActionsColumnDirective,
     GridCardDirective,
     GridCardTitleDirective,
     GridCardContentDirective,

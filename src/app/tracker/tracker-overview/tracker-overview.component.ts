@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { TrackerRecordAddComponent } from 'src/app/tracker-record/tracker-record-add/tracker-record-add.component';
 import { TrackerManipulationDialogComponent } from '../tracker-manipulation-dialog/tracker-manipulation-dialog.component';
+import { Tracker } from '../tracker.model';
 import { TrackerService } from '../tracker.service';
 
 @Component({
@@ -14,7 +17,12 @@ export class TrackerOverviewComponent {
 
   constructor(
     public service: TrackerService,
-    private router: Router) {
+    private router: Router,
+    private dialog: MatDialog) {
        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
+  openAddRecordDialog(tracker: Tracker){
+    this.dialog.closeAll();
+    this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: tracker }});
   }
 }

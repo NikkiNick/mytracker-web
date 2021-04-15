@@ -1,14 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { compareAsc, compareDesc } from 'date-fns';
-import { Observable } from 'rxjs';
-import { ICrudService } from 'src/app/shared/crud/crud.service';
+import { compareAsc } from 'date-fns';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
-import { TrackerAddComponent } from '../tracker-add/tracker-add.component';
 import { Tracker } from '../tracker.model';
 import { TrackerService } from '../tracker.service';
 

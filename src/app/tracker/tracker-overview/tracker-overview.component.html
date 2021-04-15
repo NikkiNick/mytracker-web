@@ -101,7 +101,7 @@
     </div>
     <div> -->
         <app-crud-table detailUrl="/trackers/detail" [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[5,10,15]">
-            <ng-template tableColumn="Name" width="15%" let-model i18n-tableColumn="@@tracker-name">
+            <ng-template tableColumn="Name" width="17.5%" let-model i18n-tableColumn="@@tracker-name">
                 <span class="h4">{{ model.name }}</span>
             </ng-template>
             <ng-template tableColumn="Latest record" width="15%"  [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-latest-record">
@@ -120,11 +120,14 @@
             <ng-template tableColumn="Created" let-model  [centeredColumn]="true"  i18n-tableColumn="@@tracker-created">
                 {{ model.created | date: 'shortDate' }}
             </ng-template>
-            <ng-template tableColumn="Color" width="7.5%"  [centeredColumn]="true"  let-model i18n-tableColumn="@@tracker-color">
+            <ng-template tableColumn="Color" width="5%"  [centeredColumn]="true"  let-model i18n-tableColumn="@@tracker-color">
                 <div *ngIf="model.color" [ngStyle]="{ 'background-color': model.color, 'border': '1px solid '+model.color, 'min-height': '22px'}" class="rounded text-center p-1 shadow"></div>
             </ng-template>
             <ng-template tableColumn="Record precision" [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-record-precision">
                 {{ model.recordPrecision }}
+            </ng-template>
+            <ng-template tableActionsColumn let-model>
+                <button mat-raised-button class="mx-1" color="success" (click)="openAddRecordDialog(model)" matTooltip="Add record" i18n-matTooltip="@@add-record"><mat-icon>add</mat-icon></button>
             </ng-template>
             <ng-template gridCardTitle let-model>
                 <div class="text-center h2">{{model.name}}</div>

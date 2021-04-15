@@ -24,19 +24,19 @@ export abstract class CrudService<T extends IBaseModel, U extends DtoModel<T>> i
     protected readonly _httpClient: HttpClient,
     protected readonly _serializer: BaseSerializer<T>) {
 
-    this.className = _options.model.name.toLowerCase();
-    this.endpoint = _options.altEndpoint || this.className;
-    this.apiUrl = `${_options.apiUrl}/${this.endpoint}`
+    this.className = this._options.model.name.toLowerCase();
+    this.endpoint = this._options.altEndpoint || this.className;
+    this.apiUrl = `${this._options.apiUrl}/${this.endpoint}`
   }
   getAll(): Observable<T[]> {
     return this._httpClient
               .get<T[]>(this.apiUrl, {})
-              .pipe(map((data: any[]) => this.convertDatalist(data)));
+              .pipe(map((data: any[]) => data.map((d: any) => this._serializer.fromJson(d))));
   }
   getById(id: number): Observable<T> {
     return this._httpClient
               .get<T>(this.apiUrl + "/" + id, {})
-              .pipe(map((data: any) => this.convertData(data) as T));
+              .pipe(map((data: any) => this._serializer.fromJson(data)));
   }
   insert(item: T): Observable<any> {
     return this._httpClient
@@ -49,13 +49,6 @@ export abstract class CrudService<T extends IBaseModel, U extends DtoModel<T>> i
   delete(id: number): Observable<any> {
     return this._httpClient
               .delete<any>(this.apiUrl + "/" + id, {});
-  }
-
-  protected convertData(response: any): T {
-    return this._serializer.fromJson(response);
-  }
-  protected convertDatalist(response: any): T[]{
-    return response.map((r: any) => this._serializer.fromJson(r) as T);
   }
 
 }

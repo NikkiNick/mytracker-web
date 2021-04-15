@@ -1,5 +1,5 @@
 import { ComponentType } from '@angular/cdk/portal';
-import { AfterContentInit, Component, ContentChild, ContentChildren, Input, OnInit, QueryList, Renderer2, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, ContentChildren, ElementRef, Input, OnInit, QueryList, Renderer2, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -13,6 +13,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TableColumnDirective } from './directives/table-column.directive';
 import { GridCardTitleDirective } from './directives/grid-card-title.directive';
 import { GridCardContentDirective } from './directives/grid-card-content.directive';
+import { TableActionsColumnDirective } from './directives/table-actions-column.directive';
+import { Template } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
     selector: 'app-crud-table',
@@ -33,15 +35,17 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
     @Input() showAddButton?: boolean = true;
     @Input() itemsPerPage?: number[] = [10, 25, 50];
     @Input() displayModes?: Array<'table' | 'grid'> = ['table', 'grid'];
+    @Input() filter?: boolean = true;
     @Input() manipulationDialog: ComponentType<ManipulationDialogComponent<T>>;
-    @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
+    @ContentChildren(TableColumnDirective) columnTemplates: QueryList<TableColumnDirective>;
+    @ContentChild(TableActionsColumnDirective) actionColumnTemplate: TableActionsColumnDirective;
     @ContentChild(GridCardTitleDirective) gridCardTitleTemplate: GridCardTitleDirective;
     @ContentChild(GridCardContentDirective) gridCardContentTemplate: GridCardTitleDirective;
+    @ContentChild('gridCardContainer', { static: false, read: ViewContainerRef }) gcVcRef: ViewContainerRef;
     @ViewChild('paginator', { static: false }) set paginator(pager:MatPaginator) {
         if (pager) this.tableDataSource.paginator = pager;
     }
-    @ContentChild('gridCardContainer', { static: false, read: ViewContainerRef }) gcVcRef: ViewContainerRef;
-    @ViewChild('actions', { read: TemplateRef }) actions: TemplateRef<any>;
+    @ViewChild('actions', { read: ViewContainerRef, static: false }) actions: ViewContainerRef;
     constructor(
         private dialog: MatDialog,
         private snackbarService: SnackBarService,
@@ -58,11 +62,6 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
     // }
 
     ngAfterContentInit(): void {    
-        this.columns.forEach((col: TableColumnDirective) => this.columnsToDisplay.push(col.columnName));
-        if(this.service || this.detailUrl){
-            this.columnsToDisplay.push('Actions');
-        }
-        this.currentDisplayMode = this.displayModes[0];
         this.initTable();
     }
    
@@ -71,6 +70,11 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
     }
 
     private initTable(){
+        this.columnTemplates.forEach((col: TableColumnDirective) => this.columnsToDisplay.push(col.columnName));
+        if(this.service || this.detailUrl){
+            this.columnsToDisplay.push('Actions');
+        }
+        this.currentDisplayMode = this.displayModes[0];
         this.service.getAll().subscribe(
             (res: T[]) => {
                 this.tableDataSource.data = res;
@@ -80,6 +84,11 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
             (err) => this.snackbarService.showHttpError(err),
          );
         
+    }
+
+    applyFilter(event: Event){
+        const filterValue = (event.target as HTMLInputElement).value;
+        this.tableDataSource.filter = filterValue.trim().toLowerCase();
     }
 
     openManipulationDialog(id?: number){

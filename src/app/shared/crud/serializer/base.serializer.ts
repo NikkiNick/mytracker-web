@@ -1,6 +1,6 @@
 import { IBaseModel } from "../models/ibase-model";
 
-export abstract class BaseSerializer<T extends IBaseModel> {
+export abstract class BaseSerializer<T> {
     public fromJson(object: any): T {
         return object as T;
     }
