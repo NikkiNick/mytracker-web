@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UnitTypeOverviewComponent } from './unit-type-overview/unit-type-overview.component';
-import { UnitTypeDetailComponent } from './unit-type-detail/unit-type-detail.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UnitTypeService } from './unit-type.service';
@@ -14,7 +13,6 @@ import { UnitTypeManipulationDialogComponent } from './unit-type-manipulation-di
 @NgModule({
   declarations: [
     UnitTypeOverviewComponent,
-    UnitTypeDetailComponent,
     UnitTypeManipulationDialogComponent
   ],
   imports: [

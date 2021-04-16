@@ -7,6 +7,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
 import { ChartComponent } from './chart/chart.component';
 import { CrudModule } from './crud/crud.module';
 import { DialogModule } from './dialog/dialog.module';
+import { PageComponent } from './page/page.component';
 
 
 
@@ -15,6 +16,7 @@ import { DialogModule } from './dialog/dialog.module';
     BreadCrumbsComponent,
     ConfirmationDialogComponent,
     ChartComponent,
+    PageComponent,
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { DialogModule } from './dialog/dialog.module';
     ChartComponent,
     MaterialModule,
     CrudModule,
-    DialogModule
+    DialogModule,
+    PageComponent
   ]
 })
 export class SharedModule { }

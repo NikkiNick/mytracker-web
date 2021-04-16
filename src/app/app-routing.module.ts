@@ -5,7 +5,6 @@ import { HomeComponent } from './main/home/home.component';
 import { NotFoundPageComponent } from './main/not-found-page/not-found-page.component';
 import { TrackerDetailComponent } from './tracker/tracker-detail/tracker-detail.component';
 import { TrackerOverviewComponent } from './tracker/tracker-overview/tracker-overview.component';
-import { UnitTypeDetailComponent } from './unittype/unit-type-detail/unit-type-detail.component';
 import { UnitTypeOverviewComponent } from './unittype/unit-type-overview/unit-type-overview.component';
 import { LoginComponent } from './user/login/login.component';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -17,10 +16,13 @@ export class RoutingData {
 }
 
 const routes: Routes = [
-    { path: '', component: HomeComponent },
+    { 
+        path: '', component: HomeComponent,
+        data: { breadCrumb: "Home" } 
+    },
     {
         path: 'trackers',
-        data: { breadcrumb: 'Trackers' },
+        data: { breadCrumb: 'Trackers' },
         canActivate: [AuthGuard],
         children: [
             {
@@ -30,30 +32,54 @@ const routes: Routes = [
             },
             {
                 path: 'detail/:id',
-                component: TrackerDetailComponent
+                component: TrackerDetailComponent,
+                data: { breadCrumb: 'Detail' },
             },
             {
                 path: 'overview',
                 component: TrackerOverviewComponent,
-                data: { breadcrumb: 'Overview' }
+                data: { breadCrumb: 'Overview' },
             }
         ]
     },
     {
         canActivate: [ AuthGuard ],
         path: 'unittypes',
+        data: { breadCrumb: 'Unittypes' },
         children: [
-            { path: '', redirectTo: 'overview', pathMatch: 'full' },
-            { path: 'detail/:id', component: UnitTypeDetailComponent },
-            { path: 'overview', component: UnitTypeOverviewComponent }
+            { 
+                path: '', 
+                redirectTo: 'overview', 
+                pathMatch: 'full' 
+            },
+            { 
+                path: 'overview', 
+                component: UnitTypeOverviewComponent,
+                data: { breadCrumb: "Overview" } 
+            }
         ]
     },
     {
         path: 'user',
+        data: { breadCrumb: 'User' },
         children: [
-            { path: '', redirectTo: 'login', pathMatch: 'full' },
-            { path: 'login', component: LoginComponent },
-            { path: 'profile', component: ProfileComponent, canActivate: [ AuthGuard ] },
+            { 
+                path: '', 
+                redirectTo: 'profile', 
+                pathMatch: 'full' 
+            },
+            { 
+                path: 'login', 
+                component: LoginComponent,
+                data: { breadCrumb: 'Login' },
+            
+            },
+            { 
+                path: 'profile', 
+                component: ProfileComponent, 
+                canActivate: [ AuthGuard ],
+                data: { breadCrumb: 'Profile' },
+            },
             { path: '**', redirectTo: 'login', pathMatch: 'full'}
         ]
     },

@@ -1,8 +1,8 @@
 <div>
     <span *ngFor="let breadcrumb of breadcrumbs; let last = last">
-        <small><a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a></small>
+        <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
         <span *ngIf="!last">
-            <small> {{ deliminator }} </small>
+            {{ deliminator }}
         </span>
     </span>
  </div>

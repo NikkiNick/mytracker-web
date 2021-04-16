@@ -1,10 +1,10 @@
-<h1 i18n="@@unittype-overview">Unittypes overview</h1>
-<mat-divider></mat-divider>
-<app-crud-table [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[5,10,15]" [displayModes]="['table']">
-    <ng-template tableColumn="Name (short)" width="20%" let-model i18n-tableColumn="@@unittype-shortname">
-        {{ model.shortName }}
-    </ng-template>
-    <ng-template tableColumn="Name (long)" width="60%" let-model i18n-tableColumn="@@unittype-longname">
-        {{ model.longName }}
-    </ng-template>
-</app-crud-table>
+<app-page title="Unittypes overview" i18n-title="@@unittype-overview">
+    <app-crud-table [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[5,10,15]" [displayModes]="['table']">
+        <ng-template tableColumn="Name (short)" width="20%" let-model i18n-tableColumn="@@unittype-shortname">
+            {{ model.shortName }}
+        </ng-template>
+        <ng-template tableColumn="Name (long)" width="60%" let-model i18n-tableColumn="@@unittype-longname">
+            {{ model.longName }}
+        </ng-template>
+    </app-crud-table>
+</app-page>
