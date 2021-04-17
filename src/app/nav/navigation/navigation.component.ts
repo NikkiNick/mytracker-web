@@ -17,13 +17,13 @@ export class NavigationComponent implements OnInit {
       { name: $localize`:@@nav-trackers:Trackers`, url: '/trackers' },
       { name: $localize`:@@nav-unittypes:Unittypes`, url: '/unittypes' }
   ];
-  isAuthenticated: Observable<boolean>
+  isAuthenticated: Observable<boolean>;
   authenticatedUser?: User;
   form: FormGroup;
 
   constructor(
-    private authService: AuthService, 
-    private userService: UserService, 
+    private authService: AuthService,
+    private userService: UserService,
     private snackbarService: SnackBarService,
     private fb: FormBuilder) { }
 
@@ -35,11 +35,11 @@ export class NavigationComponent implements OnInit {
     });
     this.userService.getAuthenticatedUser().subscribe(
       (res) => this.authenticatedUser = res,
-      (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User`+' ')
-    )
+      (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User` + ' ')
+    );
   }
 
-  logout(){
+  logout() {
     this.authService.logOut();
   }
 }

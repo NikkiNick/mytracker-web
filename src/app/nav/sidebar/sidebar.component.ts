@@ -18,9 +18,9 @@ export class SidebarComponent implements OnInit {
   isAuthenticated: boolean;
 
   constructor(
-    private dialog: MatDialog, 
-    private router: Router, 
-    private authService: AuthService, 
+    private dialog: MatDialog,
+    private router: Router,
+    private authService: AuthService,
     private trackerService: TrackerService,
     private unitTypeService: UnitTypeService) { }
 
@@ -42,9 +42,9 @@ export class SidebarComponent implements OnInit {
   }
   openDialog_addTrackerRecord(): void {
     this.dialog.closeAll();
-    const dialogRed = this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: '/trackers/detail/', forEntity: null }})
+    const dialogRed = this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: '/trackers/detail/', forEntity: null }});
   }
-  logOut(){
+  logOut() {
     this.authService.logOut();
   }
 }

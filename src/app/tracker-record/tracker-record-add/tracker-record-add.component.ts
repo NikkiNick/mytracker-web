@@ -15,10 +15,6 @@ import { TrackerRecordDTO } from '../tracker-recordDTO.model';
     styleUrls: ['./tracker-record-add.component.scss']
 })
 export class TrackerRecordAddComponent implements OnInit {
-  isEdit = false;
-  currentRecord: TrackerRecord;
-  form: FormGroup;
-  trackers?: Tracker[];
 
   constructor(
     private router: Router,
@@ -35,17 +31,23 @@ export class TrackerRecordAddComponent implements OnInit {
       } else {
           this.currentRecord = new TrackerRecord();
       }
-      if(data.forEntity === null){
+      if (data.forEntity === null) {
         this.trackerService.getAll().subscribe(
-            (data) => this.trackers = data,
-            (err) =>  this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker`+" ")
+            (trackerData: Tracker[]) => this.trackers = trackerData,
+            (err) =>  this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker` + ' ')
         );
       }
   }
+  isEdit = false;
+  currentRecord: TrackerRecord;
+  form: FormGroup;
+  trackers?: Tracker[];
+
+  compareFn: ((f1: Tracker, f2: Tracker) => boolean) | null = this.compareByValue;
 
   ngOnInit(): void {
-      let trackerValidators: ValidatorFn[] = [];
-      if(!this.data.forEntity){
+      const trackerValidators: ValidatorFn[] = [];
+      if (!this.data.forEntity) {
         trackerValidators.push(Validators.required);
       }
       this.form = this.fb.group({
@@ -63,12 +65,12 @@ export class TrackerRecordAddComponent implements OnInit {
                       this.snackbarService.show($localize`:@@record-updated:Record updated`);
                       this.router.navigateByUrl(this.data.navigateTo);
                   },
-                  (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+" ")
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record` + ' ')
               );
           } else {
               let dto: TrackerRecordDTO;
-              let selectedTracker: Tracker = this.form.get('selectedTracker').value;
-              if(this.data.forEntity){  
+              const selectedTracker: Tracker = this.form.get('selectedTracker').value;
+              if (this.data.forEntity) {
                 dto = TrackerRecordDTO.create(this.currentRecord, this.data.forEntity);
               } else {
                 dto = TrackerRecordDTO.create(this.currentRecord, selectedTracker);
@@ -76,9 +78,9 @@ export class TrackerRecordAddComponent implements OnInit {
               this.recordService.insert(dto).subscribe(
                   () => {
                       this.snackbarService.show($localize`:@@record-added:Record added`);
-                      this.router.navigateByUrl(`${this.data.navigateTo}${this.data.forEntity?'':selectedTracker.id}`);
+                      this.router.navigateByUrl(`${this.data.navigateTo}${this.data.forEntity ? '' : selectedTracker.id}`);
                   },
-                  (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+" ")
+                  (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record` + ' ')
               );
           }
           this.closeDialog();
@@ -88,8 +90,6 @@ export class TrackerRecordAddComponent implements OnInit {
   closeDialog() {
       this.dialogRef.close();
   }
-
-  compareFn: ((f1: Tracker, f2: Tracker) => boolean) | null = this.compareByValue;
   compareByValue(f1: Tracker, f2: Tracker) {
     return f1 && f2 && f1.id === f2.id;
 }

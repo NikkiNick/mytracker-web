@@ -1,6 +1,6 @@
-import { UnitType } from "./unit-type.model";
+import { UnitType } from './unit-type.model';
 
-export class UnitTypeDTO{
+export class UnitTypeDTO {
     public id?: number;
     public shortName: string;
     public longName: string;

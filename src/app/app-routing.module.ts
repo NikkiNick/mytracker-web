@@ -16,9 +16,9 @@ export class RoutingData {
 }
 
 const routes: Routes = [
-    { 
+    {
         path: '', component: HomeComponent,
-        data: { breadCrumb: "Home" } 
+        data: { breadCrumb: 'Home' }
     },
     {
         path: 'trackers',
@@ -47,15 +47,15 @@ const routes: Routes = [
         path: 'unittypes',
         data: { breadCrumb: 'Unittypes' },
         children: [
-            { 
-                path: '', 
-                redirectTo: 'overview', 
-                pathMatch: 'full' 
+            {
+                path: '',
+                redirectTo: 'overview',
+                pathMatch: 'full'
             },
-            { 
-                path: 'overview', 
+            {
+                path: 'overview',
                 component: UnitTypeOverviewComponent,
-                data: { breadCrumb: "Overview" } 
+                data: { breadCrumb: 'Overview' }
             }
         ]
     },
@@ -63,20 +63,20 @@ const routes: Routes = [
         path: 'user',
         data: { breadCrumb: 'User' },
         children: [
-            { 
-                path: '', 
-                redirectTo: 'profile', 
-                pathMatch: 'full' 
+            {
+                path: '',
+                redirectTo: 'profile',
+                pathMatch: 'full'
             },
-            { 
-                path: 'login', 
+            {
+                path: 'login',
                 component: LoginComponent,
                 data: { breadCrumb: 'Login' },
-            
+
             },
-            { 
-                path: 'profile', 
-                component: ProfileComponent, 
+            {
+                path: 'profile',
+                component: ProfileComponent,
                 canActivate: [ AuthGuard ],
                 data: { breadCrumb: 'Profile' },
             },

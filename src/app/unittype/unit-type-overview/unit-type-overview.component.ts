@@ -9,7 +9,7 @@ import { UnitTypeService } from '../unit-type.service';
   styleUrls: ['./unit-type-overview.component.scss']
 })
 export class UnitTypeOverviewComponent {
-  
+
   manipulationDialog = UnitTypeManipulationDialogComponent;
 
   constructor(public service: UnitTypeService) {}

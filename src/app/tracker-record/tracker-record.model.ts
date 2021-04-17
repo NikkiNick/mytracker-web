@@ -1,12 +1,12 @@
-import { differenceInDays } from "date-fns";
+import { differenceInDays } from 'date-fns';
 
 export class TrackerRecord {
     public id: number;
     public date: Date;
     public amount: number;
 
-    public static calculateDifference(r1: TrackerRecord, r2: TrackerRecord): TrackerRecordDifference{
-        let diff: TrackerRecordDifference = new TrackerRecordDifference();
+    public static calculateDifference(r1: TrackerRecord, r2: TrackerRecord): TrackerRecordDifference {
+        const diff: TrackerRecordDifference = new TrackerRecordDifference();
         diff.amountDiff = r1.amount - r2.amount;
         diff.dayDiff = Math.abs(differenceInDays(new Date(r2.date), new Date(r1.date)));
         if (diff.dayDiff === 0) {
@@ -17,9 +17,9 @@ export class TrackerRecord {
         return diff;
     }
 }
-export class TrackerRecordDifference{
-    amountDiff: number
-    dayDiff: number
-    averageDiff: number
+export class TrackerRecordDifference {
+    amountDiff: number;
+    dayDiff: number;
+    averageDiff: number;
 }
 

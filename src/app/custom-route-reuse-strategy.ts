@@ -1,4 +1,4 @@
-import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from "@angular/router";
+import { RouteReuseStrategy, ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
 
 export class CustomRouteReuseStrategy extends RouteReuseStrategy {
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
@@ -14,7 +14,7 @@ export class CustomRouteReuseStrategy extends RouteReuseStrategy {
     }
 
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        return false
+        return false;
     }
 
     store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle | null): void {

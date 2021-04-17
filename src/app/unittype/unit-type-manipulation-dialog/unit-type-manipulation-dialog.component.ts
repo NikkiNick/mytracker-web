@@ -16,9 +16,9 @@ import { UnitTypeService } from '../unit-type.service';
 export class UnitTypeManipulationDialogComponent extends ManipulationDialogComponent<UnitType> {
 
   form: FormGroup;
-  
+
   constructor(
-    public router : Router,
+    public router: Router,
     public service: UnitTypeService,
     public snackbarService: SnackBarService,
     private fb: FormBuilder,
@@ -31,8 +31,8 @@ export class UnitTypeManipulationDialogComponent extends ManipulationDialogCompo
       });
   }
 
-  confirm(): void{
-    alert("lol");
+  confirm(): void {
+    alert('lol');
   }
-  
+
 }

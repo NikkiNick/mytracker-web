@@ -22,15 +22,15 @@ import { UnitTypeManipulationDialogComponent } from './unit-type-manipulation-di
     ReactiveFormsModule,
     SharedModule
   ],
-  providers: [ 
-    {   
-      provide: "UnittypeServiceConfig", 
+  providers: [
+    {
+      provide: 'UnittypeServiceConfig',
       useValue: {
         model: UnitType,
-        apiUrl: "http://localhost:54980/api" 
+        apiUrl: 'http://localhost:54980/api'
       }
     },
-    UnitTypeService 
+    UnitTypeService
   ],
   entryComponents: [
     UnitTypeManipulationDialogComponent

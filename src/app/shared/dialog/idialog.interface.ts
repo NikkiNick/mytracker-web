@@ -1,5 +1,5 @@
-export interface IDialog{
+export interface IDialog {
     close();
     confirm();
 }
-  
+

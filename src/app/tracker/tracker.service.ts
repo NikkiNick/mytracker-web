@@ -11,17 +11,17 @@ import { TrackerDTO } from './trackerDTO.model';
 @Injectable({
     providedIn: 'root'
 })
-export class TrackerService extends CrudService<Tracker, TrackerDTO> implements ITrackerService{
+export class TrackerService extends CrudService<Tracker, TrackerDTO> implements ITrackerService {
 
-    constructor(@Inject("TrackerServiceConfig") options: CrudServiceOptions<Tracker>, protected httpClient: HttpClient) {
+    constructor(@Inject('TrackerServiceConfig') options: CrudServiceOptions<Tracker>, protected httpClient: HttpClient) {
         super(options, httpClient, new TrackerSerializer());
     }
-    getAll(): Observable<Tracker[]>{
+    getAll(): Observable<Tracker[]> {
         return super.getAll()
                     .pipe(
-                        tap((t: Tracker[]) => t.forEach(tr => tr.records.sort((d1, d2) => compareDesc(new Date(d1.date), new Date(d2.date))))))
+                        tap((t: Tracker[]) => t.forEach(tr => tr.records.sort((d1, d2) => compareDesc(new Date(d1.date), new Date(d2.date))))));
     }
 
 }
- 
-export interface ITrackerService{}
+
+export interface ITrackerService {}

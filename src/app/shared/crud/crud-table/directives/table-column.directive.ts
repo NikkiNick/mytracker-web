@@ -6,10 +6,10 @@ import { Directive, ElementRef, Input, TemplateRef } from '@angular/core';
 export class TableColumnDirective {
 
   @Input('tableColumn') columnName: string;
-  @Input() centeredColumn?: boolean = false;
+  @Input() centeredColumn = false;
   @Input() width?: number;
 
-  constructor(public templateRef: TemplateRef<any>) { 
+  constructor(public templateRef: TemplateRef<any>) {
   }
 
 }

@@ -19,7 +19,7 @@ export class UserManipulationDialogComponent extends ManipulationDialogComponent
 
   constructor(
     public userService: UserService,
-    public router : Router,
+    public router: Router,
     public snackbarService: SnackBarService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<UserManipulationDialogComponent>,

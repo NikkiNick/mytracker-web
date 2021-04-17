@@ -1,9 +1,9 @@
-import { BaseSerializer } from "../shared/crud/serializer/base.serializer";
-import { UnitType } from "./unit-type.model";
+import { BaseSerializer } from '../shared/crud/serializer/base.serializer';
+import { UnitType } from './unit-type.model';
 
-export class UnitTypeSerializer extends BaseSerializer<UnitType>{
-    
-    constructor(){
+export class UnitTypeSerializer extends BaseSerializer<UnitType> {
+
+    constructor() {
         super();
     }
 
@@ -21,5 +21,5 @@ export class UnitTypeSerializer extends BaseSerializer<UnitType>{
             longName: object.longName
         };
     }
-    
+
 }

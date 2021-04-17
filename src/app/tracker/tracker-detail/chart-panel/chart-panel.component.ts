@@ -39,8 +39,8 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
   }
   changeDisplay() {
       if (this.form.valid) {
-          let data: ChartCoordinate[] = [];
-            switch(this.form.get('displayBy').value){
+          const data: ChartCoordinate[] = [];
+          switch (this.form.get('displayBy').value) {
                 case 'Amount':
                     for (const rec of this.filteredRecords) {
                         data.push({ x: differenceInSeconds(new Date(rec.date), new Date(this.filteredRecords[0].date)), y: rec.amount as unknown as number });
@@ -48,14 +48,14 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
                     break;
                 case 'Average':
                     for (let i = 0; i < this.filteredRecords.length; i++) {
-                        if(i < this.filteredRecords.length-1){
-                            const diff = TrackerRecord.calculateDifference(this.filteredRecords[i], this.filteredRecords[i+1]);
+                        if (i < this.filteredRecords.length - 1) {
+                            const diff = TrackerRecord.calculateDifference(this.filteredRecords[i], this.filteredRecords[i + 1]);
                             data.push({ x: differenceInSeconds(new Date(this.filteredRecords[i].date), new Date(this.filteredRecords[0].date)), y: diff.averageDiff });
                         }
                     }
                     break;
             }
-            this.initCustomChart(data);
+          this.initCustomChart(data);
       }
   }
   windowResize() {
@@ -104,7 +104,7 @@ export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
               lineColor: this.tracker.color,
               fontSize: 15,
               tooltipFontSize: 20,
-              showAverage: this.form.get("displayBy").value === "Amount" ? false : true
+              showAverage: this.form.get('displayBy').value === 'Amount' ? false : true
           },
           data);
       this.charts.initChart(chartOptions);

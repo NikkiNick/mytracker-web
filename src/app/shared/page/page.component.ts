@@ -8,8 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PageComponent implements OnInit {
 
   @Input() title: string;
-  @Input() showTitleDivider?: boolean = true;
-  @Input() showBreadcrumbs?: boolean = false;
+  @Input() showTitleDivider = true;
+  @Input() showBreadcrumbs = false;
 
   constructor() { }
 

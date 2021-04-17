@@ -18,22 +18,22 @@ export class ProfileComponent {
   authenticatedUser: User;
 
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private snackbarService: SnackBarService,
     private dialog: MatDialog,
-    private router: Router) { 
+    private router: Router) {
     this.userService.getAuthenticatedUser().subscribe(
       (user) => this.authenticatedUser = user,
-      (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User`+" ")
-    )
+      (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User` + ' ')
+    );
   }
 
   openDialog_editUser() {
     this.dialog.closeAll();
-    this.dialog.open(UserManipulationDialogComponent, { data: { modelId: this.authenticatedUser.id } as ManipulationDialogData})
+    this.dialog.open(UserManipulationDialogComponent, { data: { modelId: this.authenticatedUser.id } as ManipulationDialogData});
   }
 
-  openDialog_changePassword(){
+  openDialog_changePassword() {
     this.dialog.closeAll();
     this.dialog.open(ChangePasswordComponent, { data: { model: this.authenticatedUser, navigateTo: this.router.url } });
   }

@@ -31,16 +31,15 @@ export class TrackerDetailComponent implements OnInit {
           this.tracker.records.sort((d1, d2) => compareAsc(new Date(d1.date), new Date(d2.date)));
         },
         (err: HttpErrorResponse) => {
-          this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker`+' ');
+          this.snackbarService.showHttpError(err, $localize`:@@tracker:Tracker` + ' ');
           this.router.navigate(['/trackers/overview']);
         }
       );
     });
   }
 
-  ngOnInit(): void {
-    this.tracker;
-  }
+  ngOnInit(): void {}
+
   setFilteredData(data: TrackerRecord[]) {
     this.filteredRecords = data;
   }

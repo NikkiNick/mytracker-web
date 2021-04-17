@@ -21,24 +21,24 @@ export class LoginComponent {
     private snackbarService: SnackBarService,
     private router: Router
   ) {
-    
+
     this.form = this.fb.group({
       email: [, [ Validators.required, Validators.email ] ],
       password: [, [ Validators.required ] ]
-    })
+    });
   }
 
-  login(){
-    if(this.form.valid){
-      let email = this.form.get('email').value;
-      let password = this.form.get('password').value;
+  login() {
+    if (this.form.valid) {
+      const email = this.form.get('email').value;
+      const password = this.form.get('password').value;
       this.authService.authenticate(email, password).subscribe(
         (res: AuthResponse) => {
           this.authService.setToken(res.token);
           this.router.navigateByUrl('');
         },
-        (err) => this.snackbarService.showHttpError(err, $localize`:@@user-login:Login`+" ")
-      )
+        (err) => this.snackbarService.showHttpError(err, $localize`:@@user-login:Login` + ' ')
+      );
     }
   }
 

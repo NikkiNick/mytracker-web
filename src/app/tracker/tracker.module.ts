@@ -39,11 +39,11 @@ import { TrackerManipulationDialogComponent } from './tracker-manipulation-dialo
     TrackerRecordModule
   ],
   providers: [
-    {   
-      provide: "TrackerServiceConfig", 
+    {
+      provide: 'TrackerServiceConfig',
       useValue: {
         model: Tracker,
-        apiUrl: "http://localhost:54980/api" 
+        apiUrl: 'http://localhost:54980/api'
       }
     },
     TrackerService

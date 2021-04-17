@@ -15,19 +15,19 @@ export class TrackerRecordDifferenceDisplayComponent implements OnInit, OnChange
   @Input() smallSize = true;
   difference: TrackerRecordDifference;
 
-  constructor() { 
-    
+  constructor() {
+
   }
 
   ngOnInit(): void {
       this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);
   }
-  
-  ngOnChanges(changes: SimpleChanges){
-      if(changes.firstRecord && changes.firstRecord.currentValue !== changes.firstRecord.previousValue){
+
+  ngOnChanges(changes: SimpleChanges) {
+      if (changes.firstRecord && changes.firstRecord.currentValue !== changes.firstRecord.previousValue) {
         this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);
       }
-      if(changes.secondRecord && changes.secondRecord.currentValue !== changes.secondRecord.previousValue){ 
+      if (changes.secondRecord && changes.secondRecord.currentValue !== changes.secondRecord.previousValue) {
         this.difference = TrackerRecord.calculateDifference(this.firstRecord, this.secondRecord);
       }
   }

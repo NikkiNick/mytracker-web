@@ -10,12 +10,12 @@ import { UserSerializer } from './user.serializer';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService implements ICrudService<User>{
+export class UserService implements ICrudService<User> {
 
   apiUrl = `${environment.apiUrl}user/`;
   serializer: UserSerializer;
 
-  constructor(private httpClient: HttpClient) { 
+  constructor(private httpClient: HttpClient) {
     this.serializer = new UserSerializer();
   }
   getAll(): Observable<User[]> {
@@ -47,6 +47,6 @@ export class UserService implements ICrudService<User>{
   }
   updatePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.httpClient
-              .put(`${this.apiUrl}password`, { oldPassword: oldPassword, newPassword: newPassword });
+              .put(`${this.apiUrl}password`, { oldPassword, newPassword });
   }
 }

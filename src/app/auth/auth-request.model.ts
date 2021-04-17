@@ -6,6 +6,6 @@ export class AuthRequest {
         return {
             Email: object.email,
             Password: object.password
-        }
+        };
     }
 }

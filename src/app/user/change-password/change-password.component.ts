@@ -32,23 +32,22 @@ export class ChangePasswordComponent implements OnInit {
       oldPassword: [ , [ Validators.required ] ],
       newPassword: [ , [ Validators.required ] ],
       newPasswordConfirm: [ , [ Validators.required, Validators.required ] ]
-    }, { validators: [ this.passwordValidator ] })
+    }, { validators: [ this.passwordValidator ] });
   }
   onSubmit() {
     if (this.form.valid) {
-      const oldPassword = this.form.get("oldPassword").value;
-      const newPassword = this.form.get("newPassword").value;
-        this.userService.updatePassword(oldPassword, newPassword).subscribe(
+      const oldPassword = this.form.get('oldPassword').value;
+      const newPassword = this.form.get('newPassword').value;
+      this.userService.updatePassword(oldPassword, newPassword).subscribe(
           (res) => {
             this.router.navigateByUrl(this.data.navigateTo);
             this.closeDialog();
           },
           (err: HttpErrorResponse) => {
-            if(err.status === 413){
-              this.form.get("oldPassword").setErrors({ oldPasswordNotCorrect: true});
-            }
-            else{
-              this.snackbarService.showHttpError(err, $localize`:@@user-password:Password`+" ");
+            if (err.status === 413) {
+              this.form.get('oldPassword').setErrors({ oldPasswordNotCorrect: true});
+            } else {
+              this.snackbarService.showHttpError(err, $localize`:@@user-password:Password` + ' ');
               this.closeDialog();
             }
           }

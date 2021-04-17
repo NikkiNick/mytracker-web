@@ -20,14 +20,14 @@ export class FilterPanelComponent implements OnInit {
   compareFn: ((f1: TrackerRecord, f2: TrackerRecord) => boolean) | null = this.compareByValue;
 
   ngOnInit(): void {
-    let validators: ValidatorFn[] = [];
-    if(this.tracker.records.length > 1){
+    const validators: ValidatorFn[] = [];
+    if (this.tracker.records.length > 1) {
       validators.push(this.intervalValidator);
     }
     this.form = this.fb.group({
       intervalFrom: [ this.tracker.breakpoint || (this.tracker.records.length > 0 ? this.tracker.records[0] : null) ] ,
       intervalTo: [ this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null ]
-    }, { validators: validators });
+    }, { validators });
     this.selectChange();
   }
 
@@ -59,7 +59,7 @@ export class FilterPanelComponent implements OnInit {
     fg.get('intervalTo').setErrors(null);
     fg.get('intervalFrom').setErrors(null);
 
-    if(to && from){
+    if (to && from) {
 
       if (isBefore(new Date(to.date), new Date(from.date))) {
         fg.get('intervalTo').setErrors({ toIsBeforeFrom: true });

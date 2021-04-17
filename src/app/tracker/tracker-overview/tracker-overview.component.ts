@@ -19,8 +19,8 @@ export class TrackerOverviewComponent {
     public service: TrackerService,
     private router: Router,
     private dialog: MatDialog) {}
-    
-  openAddRecordDialog(tracker: Tracker){
+
+  openAddRecordDialog(tracker: Tracker) {
     this.dialog.closeAll();
     this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: tracker }});
   }

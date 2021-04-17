@@ -1,9 +1,9 @@
-import { BaseSerializer } from "../shared/crud/serializer/base.serializer";
-import { Tracker } from "./tracker.model";
+import { BaseSerializer } from '../shared/crud/serializer/base.serializer';
+import { Tracker } from './tracker.model';
 
-export class TrackerSerializer extends BaseSerializer<Tracker>{
-    
-    constructor(){
+export class TrackerSerializer extends BaseSerializer<Tracker> {
+
+    constructor() {
         super();
     }
 
@@ -17,7 +17,7 @@ export class TrackerSerializer extends BaseSerializer<Tracker>{
             records: object.records,
             unitType: object.unitType,
             breakpoint: object.breakpoint
-        } as Tracker
+        } as Tracker;
     }
     public toJson(object: Tracker): any {
         return {
@@ -29,7 +29,7 @@ export class TrackerSerializer extends BaseSerializer<Tracker>{
             records: object.records,
             unitTypeId: object.unitType.id,
             breakpointRecordId: object.breakpoint?.id
-        }
+        };
     }
-    
+
 }

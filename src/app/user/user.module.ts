@@ -12,9 +12,9 @@ import { UserManipulationDialogComponent } from './user-manipulation-dialog/user
 
 @NgModule({
   declarations: [
-    LoginComponent, 
-    ProfileComponent, 
-    ChangePasswordComponent, 
+    LoginComponent,
+    ProfileComponent,
+    ChangePasswordComponent,
     UserManipulationDialogComponent
   ],
   imports: [

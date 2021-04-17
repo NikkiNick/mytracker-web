@@ -13,7 +13,7 @@ import { DialogComponent } from './dialog.component';
     CommonModule,
     MaterialModule
   ],
-  exports:[
+  exports: [
     DialogComponent
   ]
 })

@@ -87,12 +87,12 @@ export class ChartComponent implements OnInit {
 
       // Draw Average
       if (this.options.dataPoints.length > 1 && this.options.graph.showAverage === true) {
-          //const average = this.options.dataPoints.map(d => d.y).reduce((prev, curr, _, array) => prev + (curr/array.length), 0);
-          let total: number = 0;
-          for(let datapoint of this.options.dataPoints){
-              total += Math.floor(datapoint.y)
+          // const average = this.options.dataPoints.map(d => d.y).reduce((prev, curr, _, array) => prev + (curr/array.length), 0);
+          let total = 0;
+          for (const datapoint of this.options.dataPoints) {
+              total += Math.floor(datapoint.y);
           }
-          const average = total / this.options.dataPoints.length
+          const average = total / this.options.dataPoints.length;
           const startTransformedX = 0;
           const startTransformedY = graphHeightMargin - ((average - yRangeMin) * yRatio);
           const endTransformedX = graphWidthMargin;
@@ -106,13 +106,13 @@ export class ChartComponent implements OnInit {
           };
           this.drawLine(this.ctx, startCoordinate, endCoordinate, lineOptions);
           const textOptions: TextOptions = {
-            color: "red",
-            alignment: "right",
-            direction: "horizontal",
+            color: 'red',
+            alignment: 'right',
+            direction: 'horizontal',
             fontSize: this.options.graph.fontSize,
             font: this.options.graph.font,
           };
-          const text = `${average.toFixed(2)} ${this.options.axisY.suffix}`
+          const text = `${average.toFixed(2)} ${this.options.axisY.suffix}`;
           this.drawText(this.ctx, endCoordinate, text, textOptions);
       }
 

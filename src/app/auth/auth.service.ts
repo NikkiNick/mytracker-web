@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthRequest } from './auth-request.model';
-import jwt_decode from "jwt-decode";
+import jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { map } from 'rxjs/operators';
@@ -15,17 +15,17 @@ import { AuthResponse } from './auth-response.model';
 })
 export class AuthService {
 
-  storageTokenName = "MyTrackerToken";
+  storageTokenName = 'MyTrackerToken';
   apiUrl = `${environment.apiUrl}user/authenticate`;
   isAuthenticated$: Subject<boolean>;
 
-  constructor(private http: HttpClient, private router: Router) { 
+  constructor(private http: HttpClient, private router: Router) {
     this.isAuthenticated$ = new BehaviorSubject<boolean>(!this.isTokenExpired());
     this.isAuthenticated$.asObservable();
   }
 
   authenticate(email: string, password: string): Observable<any> {
-    let req: AuthRequest = new AuthRequest();
+    const req: AuthRequest = new AuthRequest();
     req.email = email;
     req.password = password;
     return this.http.post(this.apiUrl, req).pipe(map((res: AuthResponse) => AuthResponse.fromJson(res)));
@@ -43,23 +43,23 @@ export class AuthService {
   getTokenExpirationDate(token: string): Date {
     const decoded = jwt_decode(token) as any;
 
-    if (decoded.exp === undefined) return null;
+    if (decoded.exp === undefined) { return null; }
 
-    const date = new Date(0); 
+    const date = new Date(0);
     date.setUTCSeconds(decoded.exp);
     return date;
   }
 
   isTokenExpired(token?: string): boolean {
-    if(!token) token = this.getToken();
-    if(!token) return true;
+    if (!token) { token = this.getToken(); }
+    if (!token) { return true; }
 
     const date = this.getTokenExpirationDate(token);
-    if(date === undefined) return false;
+    if (date === undefined) { return false; }
     return !(date.valueOf() > new Date().valueOf());
   }
 
-  logOut(){
+  logOut() {
     localStorage.removeItem(this.storageTokenName);
     this.router.navigateByUrl('');
     this.isAuthenticated$.next(false);
@@ -68,7 +68,7 @@ export class AuthService {
   getAuthenticatedUserId(token: string): number {
     const decoded = jwt_decode(token) as any;
 
-    if (decoded.id === undefined) return null;
+    if (decoded.id === undefined) { return null; }
 
     return decoded.id;
   }

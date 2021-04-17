@@ -12,7 +12,7 @@ import { IDialog } from './idialog.interface';
 export class DialogComponent implements OnInit, IDialog {
 
   @Input() heading?: string;
-  @Input() showButtons?: boolean = false;
+  @Input() showButtons = false;
   @Input() closeButton?: string;
   @Input() confirmButton?: string;
 
@@ -25,7 +25,7 @@ export class DialogComponent implements OnInit, IDialog {
     this.dialogRef.close(false);
   }
 
-  confirm(){
+  confirm() {
     this.dialogRef.close(true);
   }
 

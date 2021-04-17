@@ -16,45 +16,45 @@ export interface ICrudService<T extends IBaseModel> {
 export abstract class CrudService<T extends IBaseModel, U extends DtoModel<T>> implements ICrudService<T> {
 
   apiUrl: string;
-  endpoint: string
+  endpoint: string;
   className: string;
 
   constructor(
-    private _options: CrudServiceOptions<T>, 
-    protected readonly _httpClient: HttpClient,
-    protected readonly _serializer: BaseSerializer<T>) {
+    private options: CrudServiceOptions<T>,
+    protected readonly httpClient: HttpClient,
+    protected readonly serializer: BaseSerializer<T>) {
 
-    this.className = this._options.model.name.toLowerCase();
-    this.endpoint = this._options.altEndpoint || this.className;
-    this.apiUrl = `${this._options.apiUrl}/${this.endpoint}`
+    this.className = this.options.model.name.toLowerCase();
+    this.endpoint = this.options.altEndpoint || this.className;
+    this.apiUrl = `${this.options.apiUrl}/${this.endpoint}`;
   }
   getAll(): Observable<T[]> {
-    return this._httpClient
+    return this.httpClient
               .get<T[]>(this.apiUrl, {})
-              .pipe(map((data: any[]) => data.map((d: any) => this._serializer.fromJson(d))));
+              .pipe(map((data: any[]) => data.map((d: any) => this.serializer.fromJson(d))));
   }
   getById(id: number): Observable<T> {
-    return this._httpClient
-              .get<T>(this.apiUrl + "/" + id, {})
-              .pipe(map((data: any) => this._serializer.fromJson(data)));
+    return this.httpClient
+              .get<T>(this.apiUrl + '/' + id, {})
+              .pipe(map((data: any) => this.serializer.fromJson(data)));
   }
   insert(item: T): Observable<any> {
-    return this._httpClient
-              .post(this.apiUrl, this._serializer.toJson(item), {});
+    return this.httpClient
+              .post(this.apiUrl, this.serializer.toJson(item), {});
   }
   update(item: T): Observable<any> {
-    return this._httpClient
-              .put<any>(this.apiUrl + "/" + item.id, this._serializer.toJson(item), {});
+    return this.httpClient
+              .put<any>(this.apiUrl + '/' + item.id, this.serializer.toJson(item), {});
   }
   delete(id: number): Observable<any> {
-    return this._httpClient
-              .delete<any>(this.apiUrl + "/" + id, {});
+    return this.httpClient
+              .delete<any>(this.apiUrl + '/' + id, {});
   }
 
 }
 
-export declare type CrudServiceOptions<T> = {
-  model: new (...args:any[]) => T, 
-  apiUrl: string,
-  altEndpoint?: string, 
+export declare interface CrudServiceOptions<T> {
+  model: new (...args: any[]) => T;
+  apiUrl: string;
+  altEndpoint?: string;
 }

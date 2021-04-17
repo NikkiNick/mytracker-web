@@ -33,7 +33,7 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
       private snackbarService: SnackBarService,
       private router: Router) {}
 
-    ngOnInit(): void {  
+    ngOnInit(): void {
     }
     ngAfterViewInit(): void {
         this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
@@ -56,7 +56,7 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
         this.dialog.closeAll();
         this.recordService.getById(id).subscribe(
             (res) => this.dialog.open(TrackerRecordAddComponent, { data: { model: res, navigateTo: this.router.url, forEntity: this.tracker } }),
-            (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+' ')
+            (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record` + ' ')
         );
     }
     toggleContent() {
@@ -72,27 +72,27 @@ export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
                         this.snackbarService.show($localize`:@@record-deleted:Record deleted`);
                         this.router.navigateByUrl(this.router.url);
                     },
-                    (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+' '));
+                    (err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record` + ' '));
             }
         });
     }
 
     setBreakpoint(record: TrackerRecord) {
-        if(this.tracker.breakpoint?.id === record.id){
+        if (this.tracker.breakpoint?.id === record.id) {
             this.tracker.breakpoint = null;
-        } else{
+        } else {
 		    this.tracker.breakpoint = record;
         }
-		this.trackerService.update(this.tracker).subscribe(
+		      this.trackerService.update(this.tracker).subscribe(
 			() => {
-                if(this.tracker.breakpoint !== null){
+                if (this.tracker.breakpoint !== null) {
 				    this.snackbarService.show($localize`:@@tracker-breakpoint-registered:Breakpoint registered`);
-                } else{
+                } else {
 				    this.snackbarService.show($localize`:@@tracker-breakpoint-removed:Breakpoint removed`);
                 }
-				this.router.navigateByUrl(this.router.url);
+				            this.router.navigateByUrl(this.router.url);
 			},
-			(err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record`+' ')
+			(err) => this.snackbarService.showHttpError(err, $localize`:@@record:Record` + ' ')
 		);
     }
 

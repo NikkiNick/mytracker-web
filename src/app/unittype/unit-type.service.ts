@@ -8,11 +8,11 @@ import { UnitTypeSerializer } from './unittype.serializer';
 @Injectable({
   providedIn: 'root'
 })
-export class UnitTypeService extends CrudService<UnitType, UnitTypeDTO> implements ITrackerService{
+export class UnitTypeService extends CrudService<UnitType, UnitTypeDTO> implements ITrackerService {
 
-  constructor(@Inject("UnittypeServiceConfig") options: CrudServiceOptions<UnitType>, protected httpClient: HttpClient) {
+  constructor(@Inject('UnittypeServiceConfig') options: CrudServiceOptions<UnitType>, protected httpClient: HttpClient) {
       super(options, httpClient, new UnitTypeSerializer());
      }
 }
 
-export interface ITrackerService{}
+export interface ITrackerService {}

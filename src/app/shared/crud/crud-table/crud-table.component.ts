@@ -22,28 +22,28 @@ import { Template } from '@angular/compiler/src/render3/r3_ast';
     styleUrls: ['./crud-table.component.scss']
 })
 export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterContentInit {
-    
+
     columnsToDisplay: string[] = [];
-    tableDataSource: MatTableDataSource<T>
-    isLoading: boolean = true;
+    tableDataSource: MatTableDataSource<T>;
+    isLoading = true;
     currentDisplayMode: 'table' | 'grid';
     renderedItems: T[];
 
     @Input() heading?: string;
     @Input() service: ICrudService<T>;
     @Input() detailUrl: string;
-    @Input() showAddButton?: boolean = true;
+    @Input() showAddButton = true;
     @Input() itemsPerPage?: number[] = [10, 25, 50];
     @Input() displayModes?: Array<'table' | 'grid'> = ['table', 'grid'];
-    @Input() filter?: boolean = true;
+    @Input() filter = true;
     @Input() manipulationDialog: ComponentType<ManipulationDialogComponent<T>>;
     @ContentChildren(TableColumnDirective) columnTemplates: QueryList<TableColumnDirective>;
     @ContentChild(TableActionsColumnDirective) actionColumnTemplate: TableActionsColumnDirective;
     @ContentChild(GridCardTitleDirective) gridCardTitleTemplate: GridCardTitleDirective;
     @ContentChild(GridCardContentDirective) gridCardContentTemplate: GridCardTitleDirective;
     @ContentChild('gridCardContainer', { static: false, read: ViewContainerRef }) gcVcRef: ViewContainerRef;
-    @ViewChild('paginator', { static: false }) set paginator(pager:MatPaginator) {
-        if (pager) this.tableDataSource.paginator = pager;
+    @ViewChild('paginator', { static: false }) set paginator(pager: MatPaginator) {
+        if (pager) { this.tableDataSource.paginator = pager; }
     }
     @ViewChild('actions', { read: ViewContainerRef, static: false }) actions: ViewContainerRef;
     constructor(
@@ -61,17 +61,17 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
     //     }
     // }
 
-    ngAfterContentInit(): void {    
+    ngAfterContentInit(): void {
         this.initTable();
     }
-   
+
 
     ngOnInit(): void {
     }
 
-    private initTable(){
+    private initTable() {
         this.columnTemplates.forEach((col: TableColumnDirective) => this.columnsToDisplay.push(col.columnName));
-        if(this.service || this.detailUrl){
+        if (this.service || this.detailUrl) {
             this.columnsToDisplay.push('Actions');
         }
         this.currentDisplayMode = this.displayModes[0];
@@ -83,21 +83,21 @@ export class CrudTableComponent<T extends IBaseModel> implements OnInit, AfterCo
             },
             (err) => this.snackbarService.showHttpError(err),
          );
-        
+
     }
 
-    applyFilter(event: Event){
+    applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.tableDataSource.filter = filterValue.trim().toLowerCase();
     }
 
-    openManipulationDialog(id?: number){
+    openManipulationDialog(id?: number) {
         this.dialog.closeAll();
         const dialogRef = this.dialog.open(this.manipulationDialog, { data: { modelId: id } as unknown as ManipulationDialogData });
         dialogRef.componentInstance.service = this.service;
     }
 
-    openDeleteConfirmationDialog(id: number){
+    openDeleteConfirmationDialog(id: number) {
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: $localize`:@@delete-dialog-title:Please confirm`, message: $localize`:@@delete-dialog-message:Are you sure you want to delete this item?` } });
         dialogRef.afterClosed().subscribe((res) => {
             if (res) {

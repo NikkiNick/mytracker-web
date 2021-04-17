@@ -1,8 +1,8 @@
-import { BaseSerializer } from "../shared/crud/serializer/base.serializer";
-import { User } from "./user.model";
+import { BaseSerializer } from '../shared/crud/serializer/base.serializer';
+import { User } from './user.model';
 
-export class UserSerializer extends BaseSerializer<User>{
-    
+export class UserSerializer extends BaseSerializer<User> {
+
     public fromJson(object: any): User {
         return {
             id: object.Id,
@@ -21,5 +21,5 @@ export class UserSerializer extends BaseSerializer<User>{
             Email: object.email
         };
     }
-    
+
 }
