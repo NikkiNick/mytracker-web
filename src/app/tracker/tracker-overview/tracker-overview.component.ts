@@ -18,9 +18,8 @@ export class TrackerOverviewComponent {
   constructor(
     public service: TrackerService,
     private router: Router,
-    private dialog: MatDialog) {
-       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  }
+    private dialog: MatDialog) {}
+    
   openAddRecordDialog(tracker: Tracker){
     this.dialog.closeAll();
     this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: tracker }});

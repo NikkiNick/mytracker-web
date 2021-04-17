@@ -12,8 +12,6 @@ export class UnitTypeOverviewComponent {
   
   manipulationDialog = UnitTypeManipulationDialogComponent;
 
-  constructor(public service: UnitTypeService, private router: Router) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  }
+  constructor(public service: UnitTypeService) {}
 
 }

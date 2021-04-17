@@ -11,7 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TrackerModule } from './tracker/tracker.module';
 import { FormsModule } from '@angular/forms';
 import { UnitTypeModule } from './unittype/unit-type.module';
-import { RouterModule } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { TrackerRecordModule } from './tracker-record/tracker-record.module';
 import '@angular/common/locales/global/nl-BE';
 import { UserModule } from './user/user.module';
@@ -19,6 +19,7 @@ import { AuthModule } from './auth/auth.module';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { NavModule } from './nav/nav.module';
 import { SharedModule } from './shared/shared.module';
+import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy';
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import { SharedModule } from './shared/shared.module';
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'nl-BE' },
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }
     ],
     bootstrap: [AppComponent]
 })
