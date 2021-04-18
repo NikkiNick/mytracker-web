@@ -13,7 +13,7 @@ export interface ICrudService<T extends IBaseModel> {
   delete(id: number): Observable<any>;
 }
 
-export abstract class CrudService<T extends IBaseModel, U extends DtoModel<T>> implements ICrudService<T> {
+export abstract class CrudService<T extends IBaseModel> implements ICrudService<T> {
 
   apiUrl: string;
   endpoint: string;

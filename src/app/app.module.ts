@@ -20,6 +20,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { NavModule } from './nav/nav.module';
 import { SharedModule } from './shared/shared.module';
 import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy';
+import { BudgetTrackerModule } from './budget-tracker/budget-tracker.module';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy';
         TrackerRecordModule,
         UserModule,
         AuthModule,
-        NavModule
+        NavModule,
+        BudgetTrackerModule
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'nl-BE' },

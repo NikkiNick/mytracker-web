@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { BudgetTrackerDetailComponent } from './budget-tracker/budget-tracker-detail/budget-tracker-detail.component';
+import { BudgetTrackerOverviewComponent } from './budget-tracker/budget-tracker-overview/budget-tracker-overview.component';
 import { HomeComponent } from './main/home/home.component';
 import { NotFoundPageComponent } from './main/not-found-page/not-found-page.component';
 import { TrackerDetailComponent } from './tracker/tracker-detail/tracker-detail.component';
@@ -81,6 +83,28 @@ const routes: Routes = [
                 data: { breadCrumb: 'Profile' },
             },
             { path: '**', redirectTo: 'login', pathMatch: 'full'}
+        ]
+    },
+    {
+        path: 'budget-trackers',
+        data: { breadCrumb: 'Budget Trackers' },
+        canActivate: [AuthGuard],
+        children: [
+            {
+                path: '',
+                redirectTo: 'overview',
+                pathMatch: 'full'
+            },
+            {
+                path: 'detail/:id',
+                component: BudgetTrackerDetailComponent,
+                data: { breadCrumb: 'Detail' },
+            },
+            {
+                path: 'overview',
+                component: BudgetTrackerOverviewComponent,
+                data: { breadCrumb: 'Overview' },
+            }
         ]
     },
     {

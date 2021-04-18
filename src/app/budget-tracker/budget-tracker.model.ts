@@ -1,10 +1,11 @@
+import { IBaseModel } from "../shared/crud/models/ibase-model";
 import { UnitType } from "../unittype/unit-type.model";
 
-export class BudgetTracker {
+export class BudgetTracker implements IBaseModel{
     id: number;
     name: string;
     created: Date;
     color?: string;
-    unitType?: UnitType;
+    currency: string;
     //records: BugetTrackerRecord[];
 }

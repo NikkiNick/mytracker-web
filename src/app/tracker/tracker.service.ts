@@ -6,12 +6,11 @@ import { map, tap } from 'rxjs/operators';
 import { CrudService, CrudServiceOptions } from '../shared/crud/crud.service';
 import { Tracker } from './tracker.model';
 import { TrackerSerializer } from './tracker.serializer';
-import { TrackerDTO } from './trackerDTO.model';
 
 @Injectable({
     providedIn: 'root'
 })
-export class TrackerService extends CrudService<Tracker, TrackerDTO> implements ITrackerService {
+export class TrackerService extends CrudService<Tracker> implements ITrackerService {
 
     constructor(@Inject('TrackerServiceConfig') options: CrudServiceOptions<Tracker>, protected httpClient: HttpClient) {
         super(options, httpClient, new TrackerSerializer());
