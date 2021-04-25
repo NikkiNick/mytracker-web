@@ -1,3 +1,23 @@
-<app-page title="BudgetTracker detail" i18n-title="@@budgetTracker-detail">
-
-</app-page>
+<div *ngIf="!tracker" class="d-flex flex-column align-items-center justify-content-center vh-100">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <span class="mt-3" i18n="@@tracker-fetching">Fetching tracker...</span>
+</div>
+<div *ngIf="tracker">
+    <app-page [title]="tracker.name">
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <!-- <div class="col-12 col-md-6 mb-2">
+                    <app-settings-panel [tracker]="tracker"></app-settings-panel>
+                </div> -->
+                <div class="col-12 col-md-6 mb-2">
+                    <app-filter-panel [tracker]="tracker" (filteredData)="setFilteredData($event)"></app-filter-panel>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 mb-2">
+                    <app-record-panel [tracker]="tracker" [filteredRecords]="filteredRecords"></app-record-panel>
+                </div>
+            </div>
+        </div>
+    </app-page>
+</div>

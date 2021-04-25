@@ -6,11 +6,11 @@ import { BaseSerializer } from './serializer/base.serializer';
 import { map } from 'rxjs/operators';
 
 export interface ICrudService<T extends IBaseModel> {
-  getAll(): Observable<T[]>;
-  getById(id: number): Observable<T>;
-  insert(item: T): Observable<any>;
-  update(item: T): Observable<any>;
-  delete(id: number): Observable<any>;
+  getAll(parentId?: number): Observable<T[]>;
+  getById(id: number, parentId?: number): Observable<T>;
+  insert(item: T, parentId?: number): Observable<any>;
+  update(item: T, parentId?: number): Observable<any>;
+  delete(id: number, parentId?: number): Observable<any>;
 }
 
 export abstract class CrudService<T extends IBaseModel> implements ICrudService<T> {

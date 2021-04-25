@@ -1,0 +1,64 @@
+<mat-card [ngStyle]="{ 'background-color': tracker.color+'60', 'min-height': '100%'}" class="position-relative">
+    <h2 class="text-center font-weight-bold" i18n="@@records">Records</h2>
+    <mat-card-content [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <ng-container *ngIf="filteredRecords; else loading">
+                        <table mat-table [dataSource]="tableDataSource" class="w-100" [ngStyle]="{ 'background-color': '#ff000000'}">
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-date" width="20%">Date</th>
+                                <td mat-cell *matCellDef="let record">{{ record.date | date: 'shortDate'}}</td>
+                                <th mat-footer-cell *matFooterCellDef></th>
+                            </ng-container>
+                            <ng-container matColumnDef="amount">
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-amount" width="10%">Amount</th>
+                                <td mat-cell *matCellDef="let record" class="pt-2 pr-2 pb-2">{{ record.amount }}
+                                </td>
+                                <th mat-footer-cell *matFooterCellDef></th>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-name" width="20%">Name</th>
+                                <td mat-cell *matCellDef="let record" class="pt-2 pr-2 pb-2">{{ record.name }}
+                                </td>
+                                <th mat-footer-cell *matFooterCellDef></th>
+                            </ng-container>
+                            <ng-container matColumnDef="description">
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-description" width="30%">Description</th>
+                                <td mat-cell *matCellDef="let record" class="pt-2 pr-2 pb-2">{{ record.description }}
+                                </td>
+                                <th mat-footer-cell *matFooterCellDef></th>
+                            </ng-container>
+                            <ng-container matColumnDef="actions">
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-actions" width="20%">Actions</th>
+                                <td mat-cell *matCellDef="let record; let i = index;">
+                                    <button mat-raised-button class="mx-1" (click)="editRecord(record.id)" matTooltip="Edit record" i18n-matTooltip="@@record-edit"><mat-icon>create</mat-icon></button>
+                                    <button mat-raised-button class="mx-1" color="warn" (click)="deleteRecord(record.id)" matTooltip="Delete record" i18n-matTooltip="@@record-delete"><mat-icon>delete_forever</mat-icon></button>
+                                </td>
+                                <th mat-footer-cell *matFooterCellDef></th>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="tableColumnsToDisplay"></tr>
+                            <tr mat-row *matRowDef="let rowData; columns: tableColumnsToDisplay" [ngClass]="{'income-row': rowData.type === recordTypes.INCOME, 'expense-row': rowData.type === recordTypes.EXPENSE}"></tr>
+                            <tr mat-footer-row *matFooterRowDef="tableColumnsToDisplay"></tr>
+                        </table>
+
+                        <div class="row justify-content-center p-2" *ngIf="tableDataSource.data.length === 0" i18n="@@tracker-norecords">
+                            No records
+                        </div>
+                    </ng-container>
+                    <ng-template #loading>
+                        <div  class="d-flex flex-column align-items-center justify-content-center">
+                            <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+                            <span class="mt-3" i18n="@@loading">Loading...</span>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+    <div class="floatingButtonRight m-3">
+        <button mat-raised-button (click)="addRecord()" matTooltip="Add record" i18n-matTooltip="@@record-add"><mat-icon>add</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="showContent" matTooltip="Minimize panel" i18n-matTooltip="@@record-minimize-panel"><mat-icon>minimize</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="!showContent" matTooltip="Maximize panel" i18n-matTooltip="@@record-maximize-panel"><mat-icon>maximize</mat-icon></button>
+    </div>
+</mat-card>

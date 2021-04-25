@@ -3,4 +3,5 @@ import { IBaseModel } from '../models/ibase-model';
 
 export class ManipulationDialogData extends DialogData {
     modelId?: number;
+    parentId?: number;
 }

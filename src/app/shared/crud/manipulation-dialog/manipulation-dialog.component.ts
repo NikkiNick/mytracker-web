@@ -42,7 +42,7 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
   }
   loadModel() {
     if (this.data.modelId) {
-      this.service.getById(this.data.modelId).subscribe(
+      this.service.getById(this.data.modelId, this.data.parentId).subscribe(
         (model) => {
           this.model.next(model);
           this.isLoading = false;
@@ -59,7 +59,7 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
   confirm(): void {
     this.model = this.dialogRef.componentInstance.model;
     if (this.data.modelId) {
-      this.service.update(this.model.value).subscribe(
+      this.service.update(this.model.value, this.data.parentId).subscribe(
         (res) => {
           console.log('ok');
           this.snackbarService.show('Succesfully updated item');
@@ -69,7 +69,7 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
         (err) => this.snackbarService.showHttpError(err),
       );
     } else {
-      this.service.insert(this.model.value).subscribe(
+      this.service.insert(this.model.value, this.data.parentId).subscribe(
         (res) => {
           this.snackbarService.show('Succesfully added item');
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);

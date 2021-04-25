@@ -8,7 +8,8 @@ export class BudgetTrackerSerializer implements BaseSerializer<BudgetTracker> {
             name: object.name,
             created: object.created,
             color: object.color,
-            currency: object.currency
+            currency: object.currency,
+            records: object.records
         } as BudgetTracker;
     }
     public toJson(object: BudgetTracker) {

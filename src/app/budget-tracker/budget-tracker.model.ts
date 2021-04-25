@@ -1,5 +1,5 @@
 import { IBaseModel } from "../shared/crud/models/ibase-model";
-import { UnitType } from "../unittype/unit-type.model";
+import { BudgetRecord } from "./budget-record/budget-record.model";
 
 export class BudgetTracker implements IBaseModel{
     id: number;
@@ -7,5 +7,5 @@ export class BudgetTracker implements IBaseModel{
     created: Date;
     color?: string;
     currency: string;
-    //records: BugetTrackerRecord[];
+    records: BudgetRecord[];
 }
