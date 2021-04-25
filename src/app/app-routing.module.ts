@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
+import { BudgetRecordCategoryOverviewComponent } from './budget-tracker/budget-record-category/budget-record-category-overview/budget-record-category-overview.component';
 import { BudgetTrackerDetailComponent } from './budget-tracker/budget-tracker-detail/budget-tracker-detail.component';
 import { BudgetTrackerOverviewComponent } from './budget-tracker/budget-tracker-overview/budget-tracker-overview.component';
 import { HomeComponent } from './main/home/home.component';
@@ -104,6 +105,23 @@ const routes: Routes = [
                 path: 'overview',
                 component: BudgetTrackerOverviewComponent,
                 data: { breadCrumb: 'Overview' },
+            }
+        ]
+    },
+    {
+        canActivate: [ AuthGuard ],
+        path: 'budgetcategories',
+        data: { breadCrumb: 'Budget Record Categories' },
+        children: [
+            {
+                path: '',
+                redirectTo: 'overview',
+                pathMatch: 'full'
+            },
+            {
+                path: 'overview',
+                component: BudgetRecordCategoryOverviewComponent,
+                data: { breadCrumb: 'Overview' }
             }
         ]
     },

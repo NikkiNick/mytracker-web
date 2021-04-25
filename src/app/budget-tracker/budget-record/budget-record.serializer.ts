@@ -11,7 +11,8 @@ export class BudgetRecordSerializer implements BaseSerializer<BudgetRecord> {
             amount: object.amount,
             type: BudgetRecordType[object.type] as unknown as BudgetRecordType,
             description: object.description,
-            name: object.name
+            name: object.name,
+            category: object.category
         } as BudgetRecord;
     }
     public toJson(object: BudgetRecord) {
@@ -21,7 +22,8 @@ export class BudgetRecordSerializer implements BaseSerializer<BudgetRecord> {
             Amount: object.amount,
             Type: BudgetRecordType[object.type],
             Description: object.description,
-            Name: object.name
+            Name: object.name,
+            CategoryId: object.category.id
         }
     }
 

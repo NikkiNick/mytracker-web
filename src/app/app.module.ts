@@ -22,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
 import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy';
 import { BudgetTrackerModule } from './budget-tracker/budget-tracker.module';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { BudgetRecordCategoryModule } from './budget-tracker/budget-record-category/budget-record-category.module';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
         AuthModule,
         NavModule,
         BudgetTrackerModule,
-        MatNativeDateModule
+        MatNativeDateModule, 
+        BudgetRecordCategoryModule
     ],
     providers: [
         { provide: LOCALE_ID, useValue: 'nl-BE' },

@@ -14,6 +14,17 @@
             <div class="row">
                 <div class="col">
                     <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@recordCategory">Category</mat-label>
+                        <mat-select formControlName="recordCategory" [compareWith]="compareFnCategory" [(ngModel)]="model.value.category">
+                            <mat-option *ngFor="let category of recordCategories" [value]="category">{{ category.name }}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls['recordCategory'].errors?.required" i18n="@@record-category-error-required">Please select a category for this record</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
                         <mat-label i18n="@@tracker-name">Name</mat-label>
                         <input matInput type="text" formControlName="recordName" [(ngModel)]="model.value.name">
                         <mat-error *ngIf="form.controls['recordName'].errors?.required" i18n="@@tracker-name-error-required">Please enter a record name</mat-error>

@@ -68,5 +68,20 @@
                 <div class="align-middle" i18n="@@overview">Overview</div>
             </div>
         </a>
+        <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
+            <small i18n="@@recordCategories">BUDGETRECORDCATEGORIES</small>
+        </div>
+        <a routerLink="/budgetcategories/overview" class="nav-link d-flex align-items-center">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <mat-icon class="mr-2">list</mat-icon>
+                <div class="align-middle" i18n="@@overview">Overview</div>
+            </div>
+        </a>
+        <a (click)="openDialog_addBudgetRecordCategory()" class="nav-link d-flex align-items-center" type="button">
+            <div class="d-flex w-100 justify-content-start align-items-center">
+                <mat-icon class="mr-2">add_circle_outline</mat-icon>
+                <span class="align-middle" i18n="@@unittype-add-new">Add new Category</span>
+            </div>
+        </a>
     </div>
 </nav>

@@ -6,13 +6,20 @@
                 <div class="col">
                     <ng-container *ngIf="filteredRecords; else loading">
                         <table mat-table [dataSource]="tableDataSource" class="w-100" [ngStyle]="{ 'background-color': '#ff000000'}">
+                            <ng-container matColumnDef="category">
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-category" width="10%">Category</th>
+                                <td mat-cell *matCellDef="let record">
+                                    <div [ngStyle]="{'background-color': record.category.color+''}" class="p-3 m-2 rounded shadow text-center font-weight-bold">{{ record.category.name }}</div>
+                                </td>
+                                <th mat-footer-cell *matFooterCellDef></th>
+                            </ng-container>
                             <ng-container matColumnDef="date">
-                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-date" width="20%">Date</th>
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-date" width="10%">Date</th>
                                 <td mat-cell *matCellDef="let record">{{ record.date | date: 'shortDate'}}</td>
                                 <th mat-footer-cell *matFooterCellDef></th>
                             </ng-container>
                             <ng-container matColumnDef="amount">
-                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-amount" width="10%">Amount</th>
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-amount" width="7.5%">Amount</th>
                                 <td mat-cell *matCellDef="let record" class="pt-2 pr-2 pb-2">{{ record.amount }}
                                 </td>
                                 <th mat-footer-cell *matFooterCellDef></th>
@@ -24,7 +31,7 @@
                                 <th mat-footer-cell *matFooterCellDef></th>
                             </ng-container>
                             <ng-container matColumnDef="description">
-                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-description" width="30%">Description</th>
+                                <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-description" width="25%">Description</th>
                                 <td mat-cell *matCellDef="let record" class="pt-2 pr-2 pb-2">{{ record.description }}
                                 </td>
                                 <th mat-footer-cell *matFooterCellDef></th>

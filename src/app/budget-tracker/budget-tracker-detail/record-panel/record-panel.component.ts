@@ -25,7 +25,7 @@ import { BudgetTrackerService } from '../../budget-tracker.service';
 export class RecordPanelComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() filteredRecords: BudgetRecord[];
   @Input() tracker: BudgetTracker;
-  tableColumnsToDisplay = [ 'date', 'amount', 'name', 'description', 'actions' ];
+  tableColumnsToDisplay = [ 'category', 'date', 'amount', 'name', 'description', 'actions' ];
   tableDataSource: MatTableDataSource<BudgetRecord>;
   showContent = true;
   recordTypes = BudgetRecordType;

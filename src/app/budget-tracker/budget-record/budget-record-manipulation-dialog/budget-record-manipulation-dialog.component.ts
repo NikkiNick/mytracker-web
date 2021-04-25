@@ -6,6 +6,8 @@ import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/
 import { ManipulationDialogComponent } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog.component';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
 import { UnitType } from 'src/app/unittype/unit-type.model';
+import { BudgetRecordCategory } from '../../budget-record-category/budget-record-category.model';
+import { BudgetRecordCategoryService } from '../../budget-record-category/budget-record-category.service';
 import { BudgetTracker } from '../../budget-tracker.model';
 import { BudgetRecordType } from '../budget-record-type.enum';
 import { BudgetRecord } from '../budget-record.model';
@@ -18,12 +20,14 @@ import { BudgetRecordService } from '../budget-record.service';
 })
 export class BudgetRecordManipulationDialogComponent extends ManipulationDialogComponent<BudgetRecord> implements AfterContentChecked {
 
+  recordCategories: BudgetRecordCategory[];
   recordType = BudgetRecordType;
   recordTypes: any[];
 
   constructor(
       public router: Router,
       public recordService: BudgetRecordService,
+      public recordCategoryService: BudgetRecordCategoryService,
       public snackbarService: SnackBarService,
       private fb: FormBuilder,
       public dialogRef: MatDialogRef<BudgetRecordManipulationDialogComponent>,
@@ -34,8 +38,13 @@ export class BudgetRecordManipulationDialogComponent extends ManipulationDialogC
           recordDescription: [, [ ]],
           recordDate: [ ],
           recordType: [, [ Validators.required ]],
+          recordCategory: [, [ Validators.required ] ],
           recordAmount: [, [Validators.required, ]]
       });
+      this.recordCategoryService.getAll().subscribe(
+        (categories) => this.recordCategories = categories,
+        (err) => this.snackbarService.showHttpError(err, $localize`:@@recordCategory:RecordCategory `)
+      );
   }
   ngAfterContentChecked(): void {
     if(!this.isEdit){
@@ -51,7 +60,10 @@ export class BudgetRecordManipulationDialogComponent extends ManipulationDialogC
   compareByValue(f1: any, f2: any) {
       return f1 && f2 && f1 === f2;
   }
-
+  compareFnCategory: ((f1: BudgetRecordCategory, f2: BudgetRecordCategory) => boolean) | null = this.compareByValueCategory;
+  compareByValueCategory(f1: BudgetRecordCategory, f2: BudgetRecordCategory) {
+      return f1 && f2 && f1.id === f2.id;
+  }
   ngOnInit(): void {
   }
 }
