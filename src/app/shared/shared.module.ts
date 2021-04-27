@@ -8,6 +8,7 @@ import { ChartComponent } from './chart/chart.component';
 import { CrudModule } from './crud/crud.module';
 import { DialogModule } from './dialog/dialog.module';
 import { PageComponent } from './page/page.component';
+import { ToggleButtonComponent } from './components/toggle-button/toggle-button.component';
 
 
 
@@ -17,6 +18,7 @@ import { PageComponent } from './page/page.component';
     ConfirmationDialogComponent,
     ChartComponent,
     PageComponent,
+    ToggleButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { PageComponent } from './page/page.component';
   exports: [
     BreadCrumbsComponent,
     ConfirmationDialogComponent,
+    ToggleButtonComponent,
     ChartComponent,
     MaterialModule,
     CrudModule,

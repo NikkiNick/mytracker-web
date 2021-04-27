@@ -2,6 +2,7 @@
     <h2 class="text-center font-weight-bold" i18n="@@record-filter">Filter</h2>
     <mat-card-content class="text-center" [ngClass]="{'d-none': !showContent, 'd-block': showContent}"> 
         <form [formGroup]="form" class="container-fluid" *ngIf="tracker.records.length > 1">
+            <!-- DATE FILTER -->
             <div class="row d-flex justify-content-center align-items-center">
                 <mat-form-field appearance="outline" class="m-0 mx-2">
                     <mat-label i18n="@@record-from">From</mat-label>
@@ -19,15 +20,22 @@
                     <mat-error *ngIf="form.controls['intervalTo'].errors?.toIsBeforeFrom" i18n="@@record-filterFrom-error-toIsBeforeFrom">'To' can not be before 'From'</mat-error>
                 </mat-form-field>
             </div>
-            
+            <!-- DISPLAY FILTER -->
             <h2 class="text-center font-weight-bold" i18n="@@record-display">Display</h2>
             <div class="row d-flex justify-content-center align-items-center">
-                <div class="rounded shadow m-1 p-2 income">
-                    <mat-checkbox formControlName="displayIncome" (change)="selectChange()">Income</mat-checkbox>
-                </div>                
-                <div class="rounded shadow m-1 p-2 expense">
-                    <mat-checkbox formControlName="displayExpense" (change)="selectChange()">Expense</mat-checkbox>
-                </div>
+                <app-toggle-button color="#ceff95" [isActive]="incomeFilter" (active)="toggleIncomeFilter()">
+                    <span class="font-weight-bold">INCOME</span>
+                </app-toggle-button>
+                <app-toggle-button color="#ff9898" [isActive]="expenseFilter" (active)="toggleExpenseFilter()">
+                    <span class="font-weight-bold">EXPENSE</span>
+                </app-toggle-button>
+            </div> 
+            <!-- CATEGORY FILTER -->
+            <h2 class="text-center font-weight-bold" i18n="@@record-categories">Categories</h2>
+            <div class="row d-flex justify-content-center align-items-center">
+                <app-toggle-button *ngFor="let filterCategory of filterCategories" [color]="filterCategory.category.color" [isActive]="filterCategory.isActive" (active)="toggleCategoryFilter(filterCategory.category)">
+                    <span class="font-weight-bold">{{filterCategory.category.name}}</span>
+                </app-toggle-button>
             </div> 
         </form>
         <div *ngIf="tracker.records.length === 0" i18n="@@record-filter-norecords">No records to filter</div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IncomePanelComponent } from './income-panel.component';
+import { ToggleButtonComponent } from './toggle-button.component';
 
-describe('IncomePanelComponent', () => {
-  let component: IncomePanelComponent;
-  let fixture: ComponentFixture<IncomePanelComponent>;
+describe('ToggleButtonComponent', () => {
+  let component: ToggleButtonComponent;
+  let fixture: ComponentFixture<ToggleButtonComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IncomePanelComponent ]
+      declarations: [ ToggleButtonComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IncomePanelComponent);
+    fixture = TestBed.createComponent(ToggleButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

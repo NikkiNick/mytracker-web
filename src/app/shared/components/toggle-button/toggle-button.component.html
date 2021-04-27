@@ -1,0 +1,6 @@
+<div class="py-3 px-5 m-2 text-center shadow rounded position-relative" [ngStyle]="{'background-color': color+''}" (click)="toggleActive()">
+    <ng-content></ng-content>
+    <mat-icon class="material-icons-outlined floatingButtonRight m-1" *ngIf="isActive">
+        check_circle
+    </mat-icon>
+</div>

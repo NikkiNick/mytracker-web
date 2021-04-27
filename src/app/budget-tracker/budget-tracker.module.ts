@@ -11,13 +11,16 @@ import { BudgetRecord } from './budget-record/budget-record.model';
 import { BudgetRecordService } from './budget-record/budget-record.service';
 import { BudgetRecordManipulationDialogComponent } from './budget-record/budget-record-manipulation-dialog/budget-record-manipulation-dialog.component';
 import { RecordPanelComponent } from './budget-tracker-detail/record-panel/record-panel.component';
-import { IncomePanelComponent } from './budget-tracker-detail/income-panel/income-panel.component';
-import { ExpensePanelComponent } from './budget-tracker-detail/expense-panel/expense-panel.component';
 import { FilterPanelComponent } from './budget-tracker-detail/filter-panel/filter-panel.component';
 
 @NgModule({
   declarations: [ 
-    BudgetTrackerOverviewComponent, BudgetTrackerManipulationDialogComponent, BudgetTrackerDetailComponent, BudgetRecordManipulationDialogComponent, RecordPanelComponent, IncomePanelComponent, ExpensePanelComponent, FilterPanelComponent
+    BudgetTrackerOverviewComponent, 
+    BudgetTrackerManipulationDialogComponent, 
+    BudgetTrackerDetailComponent, 
+    BudgetRecordManipulationDialogComponent, 
+    RecordPanelComponent,
+    FilterPanelComponent
   ],
   imports: [
     CommonModule,
