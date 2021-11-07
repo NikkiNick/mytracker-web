@@ -54,7 +54,7 @@
                             <tr mat-row *matRowDef="let rowData; columns: tableColumnsToDisplay" [ngClass]="{'income-row': rowData.type === recordTypes.INCOME, 'expense-row': rowData.type === recordTypes.EXPENSE}"></tr>
                             <tr mat-footer-row *matFooterRowDef="tableColumnsToDisplay"></tr>
                         </table>
-
+                        <app-plot-panel [tracker]="tracker" [filteredRecords]="filteredRecords"></app-plot-panel>
                         <div class="row justify-content-center p-2" *ngIf="tableDataSource.data.length === 0" i18n="@@tracker-norecords">
                             No records
                         </div>
