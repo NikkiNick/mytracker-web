@@ -12,7 +12,7 @@
 				"ecmaVersion": 2020,
 				"sourceType": "module"
 			},
-			"plugins": ["@typescript-eslint"],
+			"plugins": ["@typescript-eslint/eslint-plugin"],
 			"extends": [
 				"eslint:recommended",
 				"plugin:@typescript-eslint/eslint-recommended",
@@ -25,7 +25,9 @@
 				"no-console": "warn",
 				"no-empty": "warn",
 				"no-sparse-arrays": "off",
-				"@typescript-eslint/no-explicit-any": "off",
+				"@typescript-eslint/no-unused-vars": [ "warn", { "args": "all"}],
+				"@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
+				"@typescript-eslint/no-explicit-any": "off", // temp
 				"@typescript-eslint/no-empty-interface": "off"
 			}
 		},

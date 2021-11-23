@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartOptions } from 'src/app/shared/chart/chart-options.model.js';
 import { ChartComponent } from 'src/app/shared/chart/chart.component.js';
 import { Tracker } from '../../tracker.model.js';
@@ -13,7 +13,7 @@ import { ChartCoordinate } from 'src/app/shared/chart/chart.types.js';
   templateUrl: './chart-panel.component.html',
   styleUrls: ['./chart-panel.component.scss']
 })
-export class ChartPanelComponent implements OnInit, OnChanges, AfterViewInit {
+export class ChartPanelComponent implements OnChanges, AfterViewInit {
   @Input() tracker?: Tracker;
   @Input() filteredRecords: TrackerRecord[];
   @ViewChild('chart', { static: false }) charts: ChartComponent;

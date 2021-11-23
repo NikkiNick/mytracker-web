@@ -1,35 +1,35 @@
 <app-page title="Trackers overview" i18n-title="@@tracker-overview">
     <app-crud-table detailUrl="/trackers/detail" [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[5,10,15]">
-        <ng-template tableColumn="Name" width="17.5%" let-model i18n-tableColumn="@@tracker-name">
+        <ng-template tableColumn="Name" width="20%" let-model i18n-tableColumn="@@tracker-name">
             <span class="h4">{{ model.name }}</span>
         </ng-template>
-        <ng-template tableColumn="Latest record" width="15%"  [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-latest-record">
+        <ng-template tableColumn="Latest record" width="15%" alignment="center" let-model i18n-tableColumn="@@tracker-latest-record">
             <span *ngIf="model.records.length === 0" i18n="@@tracker-norecords">No records</span>
-            <div *ngIf="model.records.length > 0" class="m-1">
+            <div *ngIf="model.records.length > 0" class="m-2 mx-3">
                 <app-tracker-record-display [record]="model.records[0]" [suffix]="model.unitType.shortName" [color]="model.color"></app-tracker-record-display>
             </div>
         </ng-template>            
-        <ng-template tableColumn="Since breakpoint" let-model i18n-tableColumn="@@tracker-since-breakpoint">
+        <ng-template tableColumn="Since breakpoint" width="15%" let-model i18n-tableColumn="@@tracker-since-breakpoint">
             <app-tracker-record-difference-display *ngIf="model.breakpoint" [firstRecord]="model.records[0]" [secondRecord]="model.breakpoint" [tracker]="model" [smallSize]="true"></app-tracker-record-difference-display>
             <span *ngIf="!model.breakpoint" i18n="@@tracker-nobreakpoint">No breakpoint set</span>
         </ng-template>            
-        <ng-template tableColumn="Unittype" let-model i18n-tableColumn="@@unittype">
+        <ng-template tableColumn="Unittype" width="10%" let-model i18n-tableColumn="@@unittype" alignment="center" >
             {{ model.unitType.longName }} ({{ model.unitType.shortName }})
         </ng-template>            
-        <ng-template tableColumn="Created" let-model  [centeredColumn]="true"  i18n-tableColumn="@@tracker-created">
+        <ng-template tableColumn="Created" let-model width="10%" i18n-tableColumn="@@tracker-created" alignment="center" >
             {{ model.created | date: 'shortDate' }}
         </ng-template>
-        <ng-template tableColumn="Color" width="5%"  [centeredColumn]="true"  let-model i18n-tableColumn="@@tracker-color">
+        <!-- <ng-template tableColumn="Color" width="2%"  [centeredColumn]="true"  let-model i18n-tableColumn="@@tracker-color">
             <div *ngIf="model.color" [ngStyle]="{ 'background-color': model.color, 'border': '1px solid '+model.color, 'min-height': '22px'}" class="rounded text-center p-1 shadow"></div>
         </ng-template>
         <ng-template tableColumn="Record precision" [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-record-precision">
             {{ model.recordPrecision }}
-        </ng-template>
-        <ng-template tableActionsColumn let-model>
+        </ng-template> -->
+        <ng-template tableActionsColumn let-model alignment="right">
             <button mat-raised-button class="mx-1" color="success" (click)="openAddRecordDialog(model)" matTooltip="Add record" i18n-matTooltip="@@add-record"><mat-icon>add</mat-icon></button>
         </ng-template>
         <ng-template gridCardTitle let-model>
-            <div class="text-center h2">{{model.name}}</div>
+            <div class="text-center h2 m-0">{{model.name}}</div>
         </ng-template>
         <ng-template gridCardContent let-model>
             <div *ngIf="model.records.length > 0" class="d-flex flex-column align-items-center text-center">

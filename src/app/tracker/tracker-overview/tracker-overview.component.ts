@@ -19,7 +19,7 @@ export class TrackerOverviewComponent {
     private router: Router,
     private dialog: MatDialog) {}
 
-  openAddRecordDialog(tracker: Tracker) {
+  openAddRecordDialog(tracker: Tracker): void {
     this.dialog.closeAll();
     this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: tracker } });
   }
