@@ -1,31 +1,23 @@
-import { HttpClient } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { ICrudService } from "./crud.service";
-import { IBaseModel } from "./models/ibase-model";
-import { BaseSerializer } from "./serializer/base.serializer";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ICrudService } from './crud.service';
+import { IBaseModel } from './models/ibase-model';
+import { BaseSerializer } from './serializer/base.serializer';
 
-export interface INestedCrudService<U extends IBaseModel> {
-    getAll(parentId: number): Observable<U[]>;
-    getById(parentId: number, id: number): Observable<U>;
-    insert(parentId: number, item: U): Observable<any>;
-    update(parentId: number, item: U): Observable<any>;
-    delete(parentId: number, id: number): Observable<any>;
-}
-  
 export abstract class NestedCrudService<T extends IBaseModel, U extends IBaseModel> implements ICrudService<U> {
-  
+
     apiUrl: string;
     endpoint: string;
     nestedEndpoint: string;
     className: string;
     nestedClassName: string;
-  
+
     constructor(
       private options: NestedCrudServiceOptions<T, U>,
       protected readonly httpClient: HttpClient,
       protected readonly serializer: BaseSerializer<U>) {
-  
+
       this.className = this.options.model.name.toLowerCase();
       this.nestedClassName = this.options.nestedModel.name.toLowerCase();
       this.endpoint = this.options.altEndpoint || this.className;
@@ -55,9 +47,9 @@ export abstract class NestedCrudService<T extends IBaseModel, U extends IBaseMod
         return this.httpClient
                 .delete<any>(`${this.apiUrl}/${parentId}/${this.nestedEndpoint}/${id}`, {});
     }
-  
+
 }
-  
+
 export declare interface NestedCrudServiceOptions<T, U> {
     model: new (...args: any[]) => T;
     nestedModel: new (...args: any[]) => U;
@@ -65,4 +57,4 @@ export declare interface NestedCrudServiceOptions<T, U> {
     altEndpoint?: string;
     altNestedEndpoint?: string;
 }
-  
+

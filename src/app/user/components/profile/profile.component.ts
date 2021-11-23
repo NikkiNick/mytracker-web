@@ -3,10 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
+import { UserManipulationDialogComponent } from '../../dialogs/user-manipulation-dialog/user-manipulation-dialog.component';
+import { User } from '../../user.model';
+import { UserService } from '../../user.service';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
-import { UserManipulationDialogComponent } from '../user-manipulation-dialog/user-manipulation-dialog.component';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +25,10 @@ export class ProfileComponent {
     private router: Router) {
     this.userService.getAuthenticatedUser().subscribe(
       (user) => this.authenticatedUser = user,
-      (err) => this.snackbarService.showHttpError(err, $localize`:@@user:User` + ' ')
+      (err) => { 
+		  console.log(err);
+		  this.snackbarService.showHttpError(err, $localize`:@@user:User` + ' ');
+	  }
     );
   }
 

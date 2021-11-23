@@ -1,17 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './auth.service';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule,
-    HttpClientModule
+    RouterModule
   ],
-  providers: [ AuthService ]
+  providers: []
 })
 
 export class AuthModule { }

@@ -35,7 +35,6 @@ export class LoginComponent {
       this.authService.authenticate(email, password).subscribe(
         (res: AuthResponse) => {
           this.authService.setToken(res.token);
-          this.router.navigateByUrl('');
         },
         (err) => this.snackbarService.showHttpError(err, $localize`:@@user-login:Login` + ' ')
       );

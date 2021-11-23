@@ -9,8 +9,6 @@ import { TrackerDetailComponent } from './tracker-detail/tracker-detail.componen
 import { ColorPickerModule } from 'ngx-color-picker';
 import { SettingsPanelComponent } from './tracker-detail/settings-panel/settings-panel.component';
 import { RecordPanelComponent } from './tracker-detail/record-panel/record-panel.component';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
 import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
 import { ChartPanelComponent } from './tracker-detail/chart-panel/chart-panel.component';
 import { FilterPanelComponent } from './tracker-detail/filter-panel/filter-panel.component';
@@ -29,9 +27,7 @@ import { TrackerManipulationDialogComponent } from './tracker-manipulation-dialo
   ],
   imports: [
     CommonModule,
-    BrowserModule,
     RouterModule,
-    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     ColorPickerModule,

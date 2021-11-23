@@ -9,7 +9,7 @@ import { BudgetTrackerService } from '../budget-tracker.service';
 })
 export class BudgetTrackerOverviewComponent implements OnInit {
 
-  manipulationDialog = BudgetTrackerManipulationDialogComponent
+  manipulationDialog = BudgetTrackerManipulationDialogComponent;
 
   constructor(public service: BudgetTrackerService) { }
 

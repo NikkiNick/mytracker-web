@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
 import { BudgetRecordCategoryManipulationDialogComponent } from 'src/app/budget-tracker/budget-record-category/budget-record-category-manipulation-dialog/budget-record-category-manipulation-dialog.component';
 import { BudgetRecordCategoryService } from 'src/app/budget-tracker/budget-record-category/budget-record-category.service';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
@@ -16,8 +17,9 @@ import { TrackerRecordAddComponent } from '../../tracker-record/tracker-record-a
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
-  isAuthenticated: boolean;
+export class SidebarComponent {
+
+	isAuthenticated$: Observable<boolean>;
 
   constructor(
     private dialog: MatDialog,
@@ -25,10 +27,8 @@ export class SidebarComponent implements OnInit {
     private authService: AuthService,
     private trackerService: TrackerService,
     private unitTypeService: UnitTypeService,
-    private budgetRecordCategoryService: BudgetRecordCategoryService) { }
-
-  ngOnInit(): void {
-    this.authService.isAuthenticated$.subscribe(auth => this.isAuthenticated = auth);
+    private budgetRecordCategoryService: BudgetRecordCategoryService) { 
+	this.isAuthenticated$ = this.authService.isAuthenticated.asObservable();
   }
 
   openDialog_addTracker(): void {

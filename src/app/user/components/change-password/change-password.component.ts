@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
+import { User } from '../../user.model';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-change-password',
@@ -14,7 +14,6 @@ import { UserService } from '../user.service';
 })
 export class ChangePasswordComponent implements OnInit {
 
-  currentUser: User;
   form: FormGroup;
 
   constructor(
@@ -23,15 +22,14 @@ export class ChangePasswordComponent implements OnInit {
     private snackbarService: SnackBarService,
     private userService: UserService,
     private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: { model?: User, navigateTo?: string }) {
-      this.currentUser = data.model;
+    @Inject(MAT_DIALOG_DATA) public data: { navigateTo?: string }) {
      }
 
   ngOnInit(): void {
     this.form = this.fb.group({
       oldPassword: [ , [ Validators.required ] ],
       newPassword: [ , [ Validators.required ] ],
-      newPasswordConfirm: [ , [ Validators.required, Validators.required ] ]
+      newPasswordConfirm: [ , [ Validators.required ] ]
     }, { validators: [ this.passwordValidator ] });
   }
   onSubmit() {

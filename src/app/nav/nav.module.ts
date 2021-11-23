@@ -8,7 +8,6 @@ import { TrackerModule } from '../tracker/tracker.module';
 import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
 import { UnitTypeModule } from '../unittype/unit-type.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -20,8 +19,6 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     BrowserModule,
     RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
     AuthModule,
     SharedModule,
     TrackerModule,

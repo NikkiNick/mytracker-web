@@ -12,12 +12,15 @@ import { IBaseModel } from '../models/ibase-model';
 import { IManipulationDialog } from './imanipulation-dialog.interface';
 import { ManipulationDialogData } from './manipulation-dialog-data.model';
 
+/**
+	* Component voor het manipuleren van data in een {@link Dialog} component.
+*/
 @Component({
   selector: 'app-manipulation-dialog',
   templateUrl: './manipulation-dialog.component.html',
   styleUrls: ['./manipulation-dialog.component.scss']
 })
-export class ManipulationDialogComponent<T extends IBaseModel> extends DialogComponent implements OnInit, AfterContentInit, IManipulationDialog<T> {
+export class ManipulationDialogComponent<T extends IBaseModel> extends DialogComponent implements AfterContentInit, IManipulationDialog<T> {
 
   isLoading = true;
   isEdit = true;
@@ -38,9 +41,8 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
   ngAfterContentInit(): void {
     this.loadModel();
   }
-  ngOnInit(): void {
-  }
   loadModel() {
+	// Edit
     if (this.data.modelId) {
       this.service.getById(this.data.modelId, this.data.parentId).subscribe(
         (model) => {
@@ -58,10 +60,10 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
 
   confirm(): void {
     this.model = this.dialogRef.componentInstance.model;
-    if (this.data.modelId) {
+	// Edit
+    if (this.isEdit) {
       this.service.update(this.model.value, this.data.parentId).subscribe(
         (res) => {
-          console.log('ok');
           this.snackbarService.show('Succesfully updated item');
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);
           this.dialogRef.close();

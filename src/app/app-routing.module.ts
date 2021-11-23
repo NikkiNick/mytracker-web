@@ -9,8 +9,7 @@ import { NotFoundPageComponent } from './main/not-found-page/not-found-page.comp
 import { TrackerDetailComponent } from './tracker/tracker-detail/tracker-detail.component';
 import { TrackerOverviewComponent } from './tracker/tracker-overview/tracker-overview.component';
 import { UnitTypeOverviewComponent } from './unittype/unit-type-overview/unit-type-overview.component';
-import { LoginComponent } from './user/login/login.component';
-import { ProfileComponent } from './user/profile/profile.component';
+
 
 
 export class RoutingData {
@@ -63,28 +62,7 @@ const routes: Routes = [
         ]
     },
     {
-        path: 'user',
-        data: { breadCrumb: 'User' },
-        children: [
-            {
-                path: '',
-                redirectTo: 'profile',
-                pathMatch: 'full'
-            },
-            {
-                path: 'login',
-                component: LoginComponent,
-                data: { breadCrumb: 'Login' },
-
-            },
-            {
-                path: 'profile',
-                component: ProfileComponent,
-                canActivate: [ AuthGuard ],
-                data: { breadCrumb: 'Profile' },
-            },
-            { path: '**', redirectTo: 'login', pathMatch: 'full'}
-        ]
+        path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)
     },
     {
         path: 'budget-trackers',

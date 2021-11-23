@@ -17,11 +17,12 @@ export class AuthService {
 
   storageTokenName = 'MyTrackerToken';
   apiUrl = `${environment.apiUrl}user/authenticate`;
-  isAuthenticated$: Subject<boolean>;
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isAuthenticated$: Observable<boolean>;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.isAuthenticated$ = new BehaviorSubject<boolean>(!this.isTokenExpired());
-    this.isAuthenticated$.asObservable();
+    this.isAuthenticated.next(!this.isTokenExpired());
+	   this.isAuthenticated$ = this.isAuthenticated.asObservable();
   }
 
   authenticate(email: string, password: string): Observable<any> {
@@ -37,7 +38,8 @@ export class AuthService {
 
   setToken(token: string): void {
     localStorage.setItem(this.storageTokenName, token);
-    this.isAuthenticated$.next(true);
+    this.isAuthenticated.next(true);
+    this.router.navigateByUrl('');
   }
 
   getTokenExpirationDate(token: string): Date {
@@ -61,8 +63,8 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem(this.storageTokenName);
+	   this.isAuthenticated.next(false);
     this.router.navigateByUrl('');
-    this.isAuthenticated$.next(false);
   }
 
   getAuthenticatedUserId(token: string): number {

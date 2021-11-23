@@ -20,10 +20,6 @@ import { BudgetRecordService } from '../budget-record.service';
 })
 export class BudgetRecordManipulationDialogComponent extends ManipulationDialogComponent<BudgetRecord> implements AfterContentChecked {
 
-  recordCategories: BudgetRecordCategory[];
-  recordType = BudgetRecordType;
-  recordTypes: any[];
-
   constructor(
       public router: Router,
       public recordService: BudgetRecordService,
@@ -46,21 +42,25 @@ export class BudgetRecordManipulationDialogComponent extends ManipulationDialogC
         (err) => this.snackbarService.showHttpError(err, $localize`:@@recordCategory:RecordCategory `)
       );
   }
-  ngAfterContentChecked(): void {
-    if(!this.isEdit){
-      this.model.value.date = new Date();
-    }
-    this.recordTypes = Object.values(this.recordType).filter(k => isNaN(Number(k)));
-  }
+
+  recordCategories: BudgetRecordCategory[];
+  recordType = BudgetRecordType;
+  recordTypes: any[];
 
   form: FormGroup;
 
 
   compareFn: ((f1: any, f2: any) => boolean) | null = this.compareByValue;
+  compareFnCategory: ((f1: BudgetRecordCategory, f2: BudgetRecordCategory) => boolean) | null = this.compareByValueCategory;
+  ngAfterContentChecked(): void {
+    if (!this.isEdit) {
+      this.model.value.date = new Date();
+    }
+    this.recordTypes = Object.values(this.recordType).filter(k => isNaN(Number(k)));
+  }
   compareByValue(f1: any, f2: any) {
       return f1 && f2 && f1 === f2;
   }
-  compareFnCategory: ((f1: BudgetRecordCategory, f2: BudgetRecordCategory) => boolean) | null = this.compareByValueCategory;
   compareByValueCategory(f1: BudgetRecordCategory, f2: BudgetRecordCategory) {
       return f1 && f2 && f1.id === f2.id;
   }

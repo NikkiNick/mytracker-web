@@ -15,7 +15,7 @@ export class UserService extends CrudService<User> implements IUserService {
   constructor(@Inject('UserServiceConfig') options: CrudServiceOptions<User>, protected httpClient: HttpClient) {
     super(options, httpClient, new UserSerializer());
    }
-  
+
   getAuthenticatedUser(): Observable<User> {
     return this.httpClient
               .get<User>(`${this.apiUrl}`)
@@ -23,7 +23,7 @@ export class UserService extends CrudService<User> implements IUserService {
   }
   updatePassword(oldPassword: string, newPassword: string): Observable<any> {
     return this.httpClient
-              .put(`${this.apiUrl}password`, { oldPassword, newPassword });
+              .put(`${this.apiUrl}/password`, { oldPassword, newPassword });
   }
 }
 export interface IUserService {

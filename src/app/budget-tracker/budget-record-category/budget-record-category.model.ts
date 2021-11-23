@@ -1,4 +1,4 @@
-import { IBaseModel } from "src/app/shared/crud/models/ibase-model";
+import { IBaseModel } from 'src/app/shared/crud/models/ibase-model';
 
 export class BudgetRecordCategory implements IBaseModel {
     id: number;

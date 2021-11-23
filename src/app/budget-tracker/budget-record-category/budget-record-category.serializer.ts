@@ -1,5 +1,5 @@
-import { BaseSerializer } from "src/app/shared/crud/serializer/base.serializer";
-import { BudgetRecordCategory } from "./budget-record-category.model";
+import { BaseSerializer } from 'src/app/shared/crud/serializer/base.serializer';
+import { BudgetRecordCategory } from './budget-record-category.model';
 
 export class BudgetRecordCategorySerializer implements BaseSerializer<BudgetRecordCategory> {
     public fromJson(object: any): BudgetRecordCategory {
@@ -16,7 +16,7 @@ export class BudgetRecordCategorySerializer implements BaseSerializer<BudgetReco
             name: object.name,
             description: object.description,
             color: object.color
-        }
+        };
     }
 
 }

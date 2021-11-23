@@ -1,15 +1,36 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
 import { AuthModule } from '../auth/auth.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
-import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './user.service';
-import { ProfileComponent } from './profile/profile.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { UserManipulationDialogComponent } from './user-manipulation-dialog/user-manipulation-dialog.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { UserManipulationDialogComponent } from './dialogs/user-manipulation-dialog/user-manipulation-dialog.component';
 import { User } from './user.model';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../auth/auth.guard';
+
+const routes: Routes = [
+	{
+		path: '',
+		redirectTo: 'profile',
+		pathMatch: 'full'
+	},
+	{
+		path: 'login',
+		component: LoginComponent,
+		data: { breadCrumb: 'Login' },
+
+	},
+	{
+		path: 'profile',
+		component: ProfileComponent,
+		canActivate: [ AuthGuard ],
+		data: { breadCrumb: 'Profile' },
+	},
+	{ path: '**', redirectTo: 'login', pathMatch: 'full'}
+]
+
 
 @NgModule({
   declarations: [
@@ -19,12 +40,12 @@ import { User } from './user.model';
     UserManipulationDialogComponent
   ],
   imports: [
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedModule,
     AuthModule,
-    SharedModule
+	RouterModule.forChild(routes)
+  ],
+  exports: [
+	  RouterModule
   ],
   providers: [ 
     {

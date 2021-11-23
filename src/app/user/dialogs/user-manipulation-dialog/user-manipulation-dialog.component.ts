@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
 import { ManipulationDialogComponent } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog.component';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
+import { User } from '../../user.model';
+import { UserService } from '../../user.service';
 
 @Component({
   selector: 'app-user-manipulation-dialog',

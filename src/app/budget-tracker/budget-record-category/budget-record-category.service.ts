@@ -7,7 +7,7 @@ import { BudgetRecordCategorySerializer } from './budget-record-category.seriali
 @Injectable({
   providedIn: 'root'
 })
-export class BudgetRecordCategoryService extends CrudService<BudgetRecordCategory> implements IBudgetRecordCategoryService{
+export class BudgetRecordCategoryService extends CrudService<BudgetRecordCategory> implements IBudgetRecordCategoryService {
 
   constructor(@Inject('BudgetRecordCategoryServiceConfig') options: CrudServiceOptions<BudgetRecordCategory>, protected httpClient: HttpClient) {
       super(options, httpClient, new BudgetRecordCategorySerializer());
