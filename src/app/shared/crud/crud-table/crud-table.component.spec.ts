@@ -10,7 +10,7 @@ describe('CrudTableComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CrudTableComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

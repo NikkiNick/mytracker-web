@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
-import { isBefore, isAfter, isWithinInterval, compareDesc, compareAsc } from 'date-fns';
+import { isBefore, isWithinInterval, compareDesc } from 'date-fns';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
 import { Tracker } from '../../tracker.model';
 
@@ -10,7 +10,6 @@ import { Tracker } from '../../tracker.model';
   styleUrls: ['./filter-panel.component.scss']
 })
 export class FilterPanelComponent implements OnInit {
-
   constructor(private fb: FormBuilder) { }
 
   @Input() tracker: Tracker;
@@ -25,23 +24,23 @@ export class FilterPanelComponent implements OnInit {
       validators.push(this.intervalValidator);
     }
     this.form = this.fb.group({
-      intervalFrom: [ this.tracker.breakpoint || (this.tracker.records.length > 0 ? this.tracker.records[0] : null) ] ,
+      intervalFrom: [ this.tracker.breakpoint || (this.tracker.records.length > 0 ? this.tracker.records[0] : null) ],
       intervalTo: [ this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null ]
     }, { validators });
     this.selectChange();
   }
 
-  selectChange() {
+  selectChange(): void {
     if (this.form.valid) {
       const from = this.form.get('intervalFrom').value as TrackerRecord;
       const to = this.form.get('intervalTo').value as TrackerRecord;
       const data = this.tracker.records
-                  .filter(r => isWithinInterval(new Date(r.date), {start: new Date(from.date), end: new Date(to.date)})).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-                  .sort((r1, r2) => compareDesc(new Date(r1.date), new Date(r2.date)));
+        .filter((r) => isWithinInterval(new Date(r.date), { start: new Date(from.date), end: new Date(to.date) })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .sort((r1, r2) => compareDesc(new Date(r1.date), new Date(r2.date)));
       this.filteredData.emit(data);
     }
   }
-  resetChartInterval() {
+  resetChartInterval(): void {
     this.form.setValue({
       intervalFrom: this.tracker.breakpoint || this.tracker.records[0],
       intervalTo: this.tracker.records.length > 0 ? this.tracker.records[this.tracker.records.length - 1] : null
@@ -49,7 +48,7 @@ export class FilterPanelComponent implements OnInit {
     this.selectChange();
   }
 
-  toggleContent() {
+  toggleContent(): void {
     this.showContent = !this.showContent;
   }
   intervalValidator: ValidatorFn = (fg: FormGroup) => {
@@ -60,7 +59,6 @@ export class FilterPanelComponent implements OnInit {
     fg.get('intervalFrom').setErrors(null);
 
     if (to && from) {
-
       if (isBefore(new Date(to.date), new Date(from.date))) {
         fg.get('intervalTo').setErrors({ toIsBeforeFrom: true });
         fg.get('intervalFrom').setErrors({ toIsBeforeFrom: true });
@@ -70,13 +68,12 @@ export class FilterPanelComponent implements OnInit {
         fg.get('intervalFrom').setErrors({ sameFromAndTo: true });
         fg.get('intervalTo').setErrors({ sameFromAndTo: true });
       }
-
     }
 
-    return from !== null && to !== null && isBefore(new Date(from.date), new Date(to.date)) ? null : {interval: true};
-  }
+    return from !== null && to !== null && isBefore(new Date(from.date), new Date(to.date)) ? null : { interval: true };
+  };
 
-  compareByValue(f1: TrackerRecord, f2: TrackerRecord) {
+  compareByValue(f1: TrackerRecord, f2: TrackerRecord): boolean {
     return f1 && f2 && f1.id === f2.id;
   }
 }

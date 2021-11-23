@@ -7,15 +7,15 @@ import { User } from '../../user/user.model';
 import { UserService } from '../../user/user.service';
 
 @Component({
-    selector: 'app-navigation',
-    templateUrl: './navigation.component.html',
-    styleUrls: ['./navigation.component.scss']
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
   menuItems: { name: string, url: string }[] = [
-      { name: $localize`:@@nav-home:Home`, url: '' },
-      { name: $localize`:@@nav-trackers:Trackers`, url: '/trackers' },
-      { name: $localize`:@@nav-unittypes:Unittypes`, url: '/unittypes' }
+    { name: $localize`:@@nav-home:Home`, url: '' },
+    { name: $localize`:@@nav-trackers:Trackers`, url: '/trackers' },
+    { name: $localize`:@@nav-unittypes:Unittypes`, url: '/unittypes' }
   ];
   isAuthenticated: Observable<boolean>;
   authenticatedUser?: User;

@@ -10,7 +10,7 @@ describe('ToggleButtonComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ToggleButtonComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

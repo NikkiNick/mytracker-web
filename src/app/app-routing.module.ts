@@ -11,106 +11,105 @@ import { TrackerOverviewComponent } from './tracker/tracker-overview/tracker-ove
 import { UnitTypeOverviewComponent } from './unittype/unit-type-overview/unit-type-overview.component';
 
 
-
 export class RoutingData {
   name: string;
   url: string;
 }
 
 const routes: Routes = [
-    {
-        path: '', component: HomeComponent,
-        data: { breadCrumb: 'Home' }
-    },
-    {
-        path: 'trackers',
-        data: { breadCrumb: 'Trackers' },
-        canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                redirectTo: 'overview',
-                pathMatch: 'full'
-            },
-            {
-                path: 'detail/:id',
-                component: TrackerDetailComponent,
-                data: { breadCrumb: 'Detail' },
-            },
-            {
-                path: 'overview',
-                component: TrackerOverviewComponent,
-                data: { breadCrumb: 'Overview' },
-            }
-        ]
-    },
-    {
-        canActivate: [ AuthGuard ],
-        path: 'unittypes',
-        data: { breadCrumb: 'Unittypes' },
-        children: [
-            {
-                path: '',
-                redirectTo: 'overview',
-                pathMatch: 'full'
-            },
-            {
-                path: 'overview',
-                component: UnitTypeOverviewComponent,
-                data: { breadCrumb: 'Overview' }
-            }
-        ]
-    },
-    {
-        path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)
-    },
-    {
-        path: 'budget-trackers',
-        data: { breadCrumb: 'Budget Trackers' },
-        canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                redirectTo: 'overview',
-                pathMatch: 'full'
-            },
-            {
-                path: 'detail/:id',
-                component: BudgetTrackerDetailComponent,
-                data: { breadCrumb: 'Detail' },
-            },
-            {
-                path: 'overview',
-                component: BudgetTrackerOverviewComponent,
-                data: { breadCrumb: 'Overview' },
-            }
-        ]
-    },
-    {
-        canActivate: [ AuthGuard ],
-        path: 'budgetcategories',
-        data: { breadCrumb: 'Budget Record Categories' },
-        children: [
-            {
-                path: '',
-                redirectTo: 'overview',
-                pathMatch: 'full'
-            },
-            {
-                path: 'overview',
-                component: BudgetRecordCategoryOverviewComponent,
-                data: { breadCrumb: 'Overview' }
-            }
-        ]
-    },
-    {
-        path: '**',
-        component: NotFoundPageComponent,
-        data: { breadcrumb: 'Not found' }
-    }
+  {
+    path: '', component: HomeComponent,
+    data: { breadCrumb: 'Home' }
+  },
+  {
+    path: 'trackers',
+    data: { breadCrumb: 'Trackers' },
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full'
+      },
+      {
+        path: 'detail/:id',
+        component: TrackerDetailComponent,
+        data: { breadCrumb: 'Detail' },
+      },
+      {
+        path: 'overview',
+        component: TrackerOverviewComponent,
+        data: { breadCrumb: 'Overview' },
+      }
+    ]
+  },
+  {
+    canActivate: [ AuthGuard ],
+    path: 'unittypes',
+    data: { breadCrumb: 'Unittypes' },
+    children: [
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full'
+      },
+      {
+        path: 'overview',
+        component: UnitTypeOverviewComponent,
+        data: { breadCrumb: 'Overview' }
+      }
+    ]
+  },
+  {
+    path: 'user', loadChildren: () => import('./user/user.module').then((m) => m.UserModule)
+  },
+  {
+    path: 'budget-trackers',
+    data: { breadCrumb: 'Budget Trackers' },
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full'
+      },
+      {
+        path: 'detail/:id',
+        component: BudgetTrackerDetailComponent,
+        data: { breadCrumb: 'Detail' },
+      },
+      {
+        path: 'overview',
+        component: BudgetTrackerOverviewComponent,
+        data: { breadCrumb: 'Overview' },
+      }
+    ]
+  },
+  {
+    canActivate: [ AuthGuard ],
+    path: 'budgetcategories',
+    data: { breadCrumb: 'Budget Record Categories' },
+    children: [
+      {
+        path: '',
+        redirectTo: 'overview',
+        pathMatch: 'full'
+      },
+      {
+        path: 'overview',
+        component: BudgetRecordCategoryOverviewComponent,
+        data: { breadCrumb: 'Overview' }
+      }
+    ]
+  },
+  {
+    path: '**',
+    component: NotFoundPageComponent,
+    data: { breadcrumb: 'Not found' }
+  }
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
-    exports: [ RouterModule ] })
+  imports: [ RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  exports: [ RouterModule ] })
 export class AppRoutingModule { }

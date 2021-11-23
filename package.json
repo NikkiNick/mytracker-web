@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "extract-i18n": "npm run build:prod && npx locl extract -s=dist/**/*.js -f=json -o=./src/assets/i18n/en.json && npm run sync-i18n",
     "sync-i18n": "sync-i18n --files ./src/assets/i18n/*.json --primary en --languages nl --space 2",
-	"compodoc": "npx compodoc -p tsconfig.doc.json -s"
+    "compodoc": "npx compodoc -p tsconfig.doc.json -s"
   },
   "private": true,
   "dependencies": {
@@ -41,7 +41,12 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.900.1",
-    "@angular/cli": "~9.0.1",
+    "@angular-eslint/builder": "13.0.1",
+    "@angular-eslint/eslint-plugin": "13.0.1",
+    "@angular-eslint/eslint-plugin-template": "13.0.1",
+    "@angular-eslint/schematics": "13.0.1",
+    "@angular-eslint/template-parser": "13.0.1",
+    "@angular/cli": "^13.0.3",
     "@angular/compiler-cli": "~9.0.0",
     "@angular/language-service": "~9.0.0",
     "@compodoc/compodoc": "^1.1.15",
@@ -50,10 +55,9 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
-    "@typescript-eslint/eslint-plugin": "^4.20.0",
-    "@typescript-eslint/parser": "^4.20.0",
-    "codelyzer": "^5.1.2",
-    "eslint": "^7.23.0",
+    "@typescript-eslint/eslint-plugin": "5.3.0",
+    "@typescript-eslint/parser": "5.3.0",
+    "eslint": "^8.2.0",
     "eslint-config-google": "^0.14.0",
     "i18next-json-sync": "^2.3.1",
     "jasmine-core": "~3.5.0",
@@ -65,7 +69,6 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
-    "tslint": "~5.18.0",
     "typescript": "~3.7.5"
   }
 }

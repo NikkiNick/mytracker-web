@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BudgetRecordCategoryManipulationDialogComponent } from '../budget-record-category-manipulation-dialog/budget-record-category-manipulation-dialog.component';
 import { BudgetRecordCategoryService } from '../budget-record-category.service';
 
@@ -8,10 +8,7 @@ import { BudgetRecordCategoryService } from '../budget-record-category.service';
   styleUrls: ['./budget-record-category-overview.component.scss']
 })
 export class BudgetRecordCategoryOverviewComponent {
-
-
   manipulationDialog = BudgetRecordCategoryManipulationDialogComponent;
 
   constructor(public service: BudgetRecordCategoryService) {}
-
 }

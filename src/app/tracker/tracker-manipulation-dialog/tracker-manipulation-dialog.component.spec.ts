@@ -10,7 +10,7 @@ describe('TrackerManipulationDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TrackerManipulationDialogComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

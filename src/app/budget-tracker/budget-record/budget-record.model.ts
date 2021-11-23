@@ -3,11 +3,11 @@ import { BudgetRecordCategory } from '../budget-record-category/budget-record-ca
 import { BudgetRecordType } from './budget-record-type.enum';
 
 export class BudgetRecord implements IBaseModel {
-    id: number;
-    date: Date;
-    type: BudgetRecordType;
-    amount: number;
-    name: string;
-    description: string;
-    category: BudgetRecordCategory;
+  id: number;
+  date: Date;
+  type: BudgetRecordType;
+  amount: number;
+  name: string;
+  description: string;
+  category: BudgetRecordCategory;
 }

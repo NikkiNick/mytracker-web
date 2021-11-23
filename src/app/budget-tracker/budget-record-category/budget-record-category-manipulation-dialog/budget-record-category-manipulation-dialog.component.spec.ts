@@ -10,7 +10,7 @@ describe('BudgetRecordCategoryManipulationDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BudgetRecordCategoryManipulationDialogComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

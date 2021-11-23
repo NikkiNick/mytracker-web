@@ -10,7 +10,7 @@ describe('BudgetRecordCategoryOverviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BudgetRecordCategoryOverviewComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

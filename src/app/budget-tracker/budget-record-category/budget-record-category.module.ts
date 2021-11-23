@@ -9,10 +9,9 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
-
 @NgModule({
   declarations: [
-    BudgetRecordCategoryOverviewComponent, 
+    BudgetRecordCategoryOverviewComponent,
     BudgetRecordCategoryManipulationDialogComponent
   ],
   imports: [
@@ -28,7 +27,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
       useValue: {
         model: BudgetRecordCategory,
         apiUrl: 'http://localhost:54980/api',
-        altEndpoint: "budget-record-categories"
+        altEndpoint: 'budget-record-categories'
       }
     },
     BudgetRecordCategoryService

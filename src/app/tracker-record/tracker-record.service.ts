@@ -9,7 +9,6 @@ import { TrackerRecordDTO } from './tracker-recordDTO.model';
   providedIn: 'root'
 })
 export class TrackerRecordService {
-
   apiUrl = `${environment.apiUrl}trackerrecord/`;
 
   constructor(private httpClient: HttpClient) {}
@@ -29,5 +28,4 @@ export class TrackerRecordService {
   delete(id: number): Observable<any> {
     return this.httpClient.delete(`${this.apiUrl}${id}`);
   }
-
 }

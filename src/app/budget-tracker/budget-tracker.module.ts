@@ -16,11 +16,11 @@ import { SettingsPanelComponent } from './budget-tracker-detail/settings-panel/s
 import { PlotPanelComponent } from './budget-tracker-detail/plot-panel/plot-panel.component';
 
 @NgModule({
-  declarations: [ 
-    BudgetTrackerOverviewComponent, 
-    BudgetTrackerManipulationDialogComponent, 
-    BudgetTrackerDetailComponent, 
-    BudgetRecordManipulationDialogComponent, 
+  declarations: [
+    BudgetTrackerOverviewComponent,
+    BudgetTrackerManipulationDialogComponent,
+    BudgetTrackerDetailComponent,
+    BudgetRecordManipulationDialogComponent,
     RecordPanelComponent,
     FilterPanelComponent,
     SettingsPanelComponent,
@@ -32,13 +32,13 @@ import { PlotPanelComponent } from './budget-tracker-detail/plot-panel/plot-pane
     ReactiveFormsModule,
     SharedModule
   ],
-  providers: [ 
+  providers: [
     {
       provide: 'BudgetTrackerServiceConfig',
       useValue: {
         model: BudgetTracker,
         apiUrl: 'http://localhost:54980/api',
-        altEndpoint: "budget-tracker"
+        altEndpoint: 'budget-tracker'
       }
     },
     {
@@ -47,8 +47,8 @@ import { PlotPanelComponent } from './budget-tracker-detail/plot-panel/plot-pane
         model: BudgetTracker,
         nestedModel: BudgetRecord,
         apiUrl: 'http://localhost:54980/api',
-        altEndpoint: "budget-tracker",
-        altNestedEndpoint: "records"
+        altEndpoint: 'budget-tracker',
+        altNestedEndpoint: 'records'
       }
     },
     BudgetTrackerService,

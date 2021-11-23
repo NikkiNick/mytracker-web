@@ -10,7 +10,7 @@ describe('UnitTypeOverviewComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UnitTypeOverviewComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

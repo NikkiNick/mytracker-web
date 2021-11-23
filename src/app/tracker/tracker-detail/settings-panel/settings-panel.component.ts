@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
 import { TrackerManipulationDialogComponent } from '../../tracker-manipulation-dialog/tracker-manipulation-dialog.component';
@@ -10,15 +10,12 @@ import { TrackerService } from '../../tracker.service';
   templateUrl: './settings-panel.component.html',
   styleUrls: ['./settings-panel.component.scss']
 })
-export class SettingsPanelComponent implements OnInit {
-
+export class SettingsPanelComponent{
   @Input() tracker: Tracker;
   showContent = true;
 
   constructor(private dialog: MatDialog, private service: TrackerService) { }
 
-  ngOnInit(): void {
-  }
   editTracker() {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(TrackerManipulationDialogComponent, { data: { modelId: this.tracker.id } as unknown as ManipulationDialogData });

@@ -1,5 +1,4 @@
-import { Component, ContentChild, Inject, Input, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogData } from './dialog-data.model';
 import { IDialog } from './idialog.interface';
@@ -9,8 +8,7 @@ import { IDialog } from './idialog.interface';
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.scss']
 })
-export class DialogComponent implements OnInit, IDialog {
-
+export class DialogComponent implements IDialog {
   @Input() heading?: string;
   @Input() showButtons = false;
   @Input() closeButton?: string;
@@ -27,9 +25,6 @@ export class DialogComponent implements OnInit, IDialog {
 
   confirm() {
     this.dialogRef.close(true);
-  }
-
-  ngOnInit(): void {
   }
 
 }

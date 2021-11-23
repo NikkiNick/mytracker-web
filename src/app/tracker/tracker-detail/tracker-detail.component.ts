@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { compareAsc } from 'date-fns';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
@@ -12,8 +12,7 @@ import { TrackerService } from '../tracker.service';
   templateUrl: './tracker-detail.component.html',
   styleUrls: ['./tracker-detail.component.scss']
 })
-export class TrackerDetailComponent implements OnInit {
-
+export class TrackerDetailComponent {
   tracker: Tracker;
   filteredRecords: TrackerRecord[];
 
@@ -22,8 +21,7 @@ export class TrackerDetailComponent implements OnInit {
     private router: Router,
     private service: TrackerService,
     private snackbarService: SnackBarService) {
-
-    this.route.params.subscribe(p => {
+    this.route.params.subscribe((p) => {
       const id: number = +p.id;
       this.service.getById(id).subscribe(
         (data: Tracker) => {
@@ -38,10 +36,7 @@ export class TrackerDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
   setFilteredData(data: TrackerRecord[]) {
     this.filteredRecords = data;
   }
-
 }

@@ -7,12 +7,11 @@ import { Tracker } from '../tracker.model';
 import { TrackerService } from '../tracker.service';
 
 @Component({
-    selector: 'app-tracker-overview',
-    templateUrl: './tracker-overview.component.html',
-    styleUrls: ['./tracker-overview.component.scss']
+  selector: 'app-tracker-overview',
+  templateUrl: './tracker-overview.component.html',
+  styleUrls: ['./tracker-overview.component.scss']
 })
 export class TrackerOverviewComponent {
-
   manipulationDialog = TrackerManipulationDialogComponent;
 
   constructor(
@@ -22,6 +21,6 @@ export class TrackerOverviewComponent {
 
   openAddRecordDialog(tracker: Tracker) {
     this.dialog.closeAll();
-    this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: tracker }});
+    this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: tracker } });
   }
 }

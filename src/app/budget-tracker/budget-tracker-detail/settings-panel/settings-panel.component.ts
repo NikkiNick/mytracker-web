@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
 import { BudgetTrackerManipulationDialogComponent } from '../../budget-tracker-manipulation-dialog/budget-tracker-manipulation-dialog.component';
@@ -10,15 +10,12 @@ import { BudgetTrackerService } from '../../budget-tracker.service';
   templateUrl: './settings-panel.component.html',
   styleUrls: ['./settings-panel.component.scss']
 })
-export class SettingsPanelComponent implements OnInit {
-
+export class SettingsPanelComponent {
   @Input() tracker: BudgetTracker;
   showContent = true;
 
   constructor(private dialog: MatDialog, private service: BudgetTrackerService) { }
 
-  ngOnInit(): void {
-  }
   editTracker() {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(BudgetTrackerManipulationDialogComponent, { data: { modelId: this.tracker.id } as unknown as ManipulationDialogData });

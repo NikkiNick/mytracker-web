@@ -11,25 +11,25 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
-	{
-		path: '',
-		redirectTo: 'profile',
-		pathMatch: 'full'
-	},
-	{
-		path: 'login',
-		component: LoginComponent,
-		data: { breadCrumb: 'Login' },
+  {
+    path: '',
+    redirectTo: 'profile',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { breadCrumb: 'Login' },
 
-	},
-	{
-		path: 'profile',
-		component: ProfileComponent,
-		canActivate: [ AuthGuard ],
-		data: { breadCrumb: 'Profile' },
-	},
-	{ path: '**', redirectTo: 'login', pathMatch: 'full'}
-]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [ AuthGuard ],
+    data: { breadCrumb: 'Profile' },
+  },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
+];
 
 
 @NgModule({
@@ -42,12 +42,12 @@ const routes: Routes = [
   imports: [
     SharedModule,
     AuthModule,
-	RouterModule.forChild(routes)
+    RouterModule.forChild(routes)
   ],
   exports: [
-	  RouterModule
+    RouterModule
   ],
-  providers: [ 
+  providers: [
     {
       provide: 'UserServiceConfig',
       useValue: {

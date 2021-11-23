@@ -4,7 +4,6 @@ import { MaterialModule } from '../material/material.module';
 import { DialogComponent } from './dialog.component';
 
 
-
 @NgModule({
   declarations: [
     DialogComponent

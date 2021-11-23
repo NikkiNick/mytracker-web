@@ -10,7 +10,7 @@ describe('SidebarComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SidebarComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

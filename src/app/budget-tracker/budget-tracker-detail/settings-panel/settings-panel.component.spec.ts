@@ -10,7 +10,7 @@ describe('SettingsPanelComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SettingsPanelComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

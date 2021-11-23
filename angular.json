@@ -45,12 +45,16 @@
               "./src/assets/CanvasJS/canvasjs.min.js"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": [
+                "src/styles"
+              ]
             }
           },
           "configurations": {
             "nl": {
-              "localize": ["nl"]
+              "localize": [
+                "nl"
+              ]
             },
             "production": {
               "fileReplacements": [
@@ -124,15 +128,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts"
             ]
           }
         },
@@ -151,5 +150,8 @@
       }
     }
   },
-  "defaultProject": "mytracker-web"
+  "defaultProject": "mytracker-web",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }

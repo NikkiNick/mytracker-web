@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import jwtDecode from 'jwt-decode';
 import { AuthResponse } from 'src/app/auth/auth-response.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
@@ -12,7 +11,6 @@ import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
   form: FormGroup;
 
   constructor(
@@ -21,7 +19,6 @@ export class LoginComponent {
     private snackbarService: SnackBarService,
     private router: Router
   ) {
-
     this.form = this.fb.group({
       email: [, [ Validators.required, Validators.email ] ],
       password: [, [ Validators.required ] ]
@@ -40,5 +37,4 @@ export class LoginComponent {
       );
     }
   }
-
 }

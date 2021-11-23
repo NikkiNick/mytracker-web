@@ -8,11 +8,9 @@ import { BudgetRecordCategorySerializer } from './budget-record-category.seriali
   providedIn: 'root'
 })
 export class BudgetRecordCategoryService extends CrudService<BudgetRecordCategory> implements IBudgetRecordCategoryService {
-
   constructor(@Inject('BudgetRecordCategoryServiceConfig') options: CrudServiceOptions<BudgetRecordCategory>, protected httpClient: HttpClient) {
-      super(options, httpClient, new BudgetRecordCategorySerializer());
+    super(options, httpClient, new BudgetRecordCategorySerializer());
   }
-
 }
 
 export interface IBudgetRecordCategoryService {}

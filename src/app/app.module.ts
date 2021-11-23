@@ -24,33 +24,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NotFoundPageComponent,
-        HomeComponent
-    ],
-    imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		HttpClientModule,
-        SharedModule,
-        AppRoutingModule,
-        TrackerModule,
-        UnitTypeModule,
-        TrackerRecordModule,
-        UserModule,
-        AuthModule,
-        NavModule,
-        BudgetTrackerModule,
-        MatNativeDateModule, 
-        BudgetRecordCategoryModule
-    ],
-    providers: [
-        { provide: LOCALE_ID, useValue: 'nl-BE' },
-        { provide: MAT_DATE_LOCALE, useValue: 'nl-BE'},
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NotFoundPageComponent,
+    HomeComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    SharedModule,
+    AppRoutingModule,
+    TrackerModule,
+    UnitTypeModule,
+    TrackerRecordModule,
+    UserModule,
+    AuthModule,
+    NavModule,
+    BudgetTrackerModule,
+    MatNativeDateModule,
+    BudgetRecordCategoryModule
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'nl-BE' },
+    { provide: MAT_DATE_LOCALE, useValue: 'nl-BE' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

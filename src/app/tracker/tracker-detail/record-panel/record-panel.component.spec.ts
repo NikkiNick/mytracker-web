@@ -10,7 +10,7 @@ describe('RecordPanelComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ RecordPanelComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
@@ -15,7 +15,6 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-
   authenticatedUser: User;
 
   constructor(
@@ -25,21 +24,19 @@ export class ProfileComponent {
     private router: Router) {
     this.userService.getAuthenticatedUser().subscribe(
       (user) => this.authenticatedUser = user,
-      (err) => { 
-		  console.log(err);
-		  this.snackbarService.showHttpError(err, $localize`:@@user:User` + ' ');
-	  }
+      (err) => {
+        this.snackbarService.showHttpError(err, $localize`:@@user:User` + ' ');
+      }
     );
   }
 
   openDialog_editUser() {
     this.dialog.closeAll();
-    this.dialog.open(UserManipulationDialogComponent, { data: { modelId: this.authenticatedUser.id } as ManipulationDialogData});
+    this.dialog.open(UserManipulationDialogComponent, { data: { modelId: this.authenticatedUser.id } as ManipulationDialogData });
   }
 
   openDialog_changePassword() {
     this.dialog.closeAll();
     this.dialog.open(ChangePasswordComponent, { data: { model: this.authenticatedUser, navigateTo: this.router.url } });
   }
-
 }

@@ -9,7 +9,6 @@ import { UnitType } from './unit-type.model';
 import { UnitTypeManipulationDialogComponent } from './unit-type-manipulation-dialog/unit-type-manipulation-dialog.component';
 
 
-
 @NgModule({
   declarations: [
     UnitTypeOverviewComponent,

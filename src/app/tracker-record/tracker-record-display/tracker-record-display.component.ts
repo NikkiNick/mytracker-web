@@ -1,17 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TrackerRecord } from '../tracker-record.model';
 
 @Component({
-    selector: 'app-tracker-record-display',
-    templateUrl: './tracker-record-display.component.html',
-    styleUrls: ['./tracker-record-display.component.scss']
+  selector: 'app-tracker-record-display',
+  templateUrl: './tracker-record-display.component.html',
+  styleUrls: ['./tracker-record-display.component.scss']
 })
-export class TrackerRecordDisplayComponent implements OnInit {
+export class TrackerRecordDisplayComponent {
     @Input() record: TrackerRecord;
     @Input() suffix?: string;
     @Input() color?: string;
-
-    constructor() { }
-
-    ngOnInit(): void {}
 }

@@ -10,7 +10,7 @@ describe('BreadCrumbsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BreadCrumbsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,14 +1,12 @@
-import { AfterContentChecked, Component, Inject, OnInit } from '@angular/core';
+import { AfterContentChecked, Component, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ManipulationDialogData } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog-data.model';
 import { ManipulationDialogComponent } from 'src/app/shared/crud/manipulation-dialog/manipulation-dialog.component';
 import { SnackBarService } from 'src/app/shared/snackbar/snack-bar.service';
-import { UnitType } from 'src/app/unittype/unit-type.model';
 import { BudgetRecordCategory } from '../../budget-record-category/budget-record-category.model';
 import { BudgetRecordCategoryService } from '../../budget-record-category/budget-record-category.service';
-import { BudgetTracker } from '../../budget-tracker.model';
 import { BudgetRecordType } from '../budget-record-type.enum';
 import { BudgetRecord } from '../budget-record.model';
 import { BudgetRecordService } from '../budget-record.service';
@@ -19,7 +17,6 @@ import { BudgetRecordService } from '../budget-record.service';
   styleUrls: ['./budget-record-manipulation-dialog.component.scss']
 })
 export class BudgetRecordManipulationDialogComponent extends ManipulationDialogComponent<BudgetRecord> implements AfterContentChecked {
-
   constructor(
       public router: Router,
       public recordService: BudgetRecordService,
@@ -28,19 +25,19 @@ export class BudgetRecordManipulationDialogComponent extends ManipulationDialogC
       private fb: FormBuilder,
       public dialogRef: MatDialogRef<BudgetRecordManipulationDialogComponent>,
       @Inject(MAT_DIALOG_DATA) public data: ManipulationDialogData) {
-      super(router, snackbarService, dialogRef, data);
-      this.form = this.fb.group({
-          recordName: [, [ Validators.required ]],
-          recordDescription: [, [ ]],
-          recordDate: [ ],
-          recordType: [, [ Validators.required ]],
-          recordCategory: [, [ Validators.required ] ],
-          recordAmount: [, [Validators.required, ]]
-      });
-      this.recordCategoryService.getAll().subscribe(
-        (categories) => this.recordCategories = categories,
-        (err) => this.snackbarService.showHttpError(err, $localize`:@@recordCategory:RecordCategory `)
-      );
+    super(router, snackbarService, dialogRef, data);
+    this.form = this.fb.group({
+      recordName: [, [ Validators.required ]],
+      recordDescription: [, [ ]],
+      recordDate: [ ],
+      recordType: [, [ Validators.required ]],
+      recordCategory: [, [ Validators.required ] ],
+      recordAmount: [, [Validators.required, ]]
+    });
+    this.recordCategoryService.getAll().subscribe(
+      (categories) => this.recordCategories = categories,
+      (err) => this.snackbarService.showHttpError(err, $localize`:@@recordCategory:RecordCategory `)
+    );
   }
 
   recordCategories: BudgetRecordCategory[];
@@ -56,14 +53,12 @@ export class BudgetRecordManipulationDialogComponent extends ManipulationDialogC
     if (!this.isEdit) {
       this.model.value.date = new Date();
     }
-    this.recordTypes = Object.values(this.recordType).filter(k => isNaN(Number(k)));
+    this.recordTypes = Object.values(this.recordType).filter((k) => isNaN(Number(k)));
   }
   compareByValue(f1: any, f2: any) {
-      return f1 && f2 && f1 === f2;
+    return f1 && f2 && f1 === f2;
   }
   compareByValueCategory(f1: BudgetRecordCategory, f2: BudgetRecordCategory) {
-      return f1 && f2 && f1.id === f2.id;
-  }
-  ngOnInit(): void {
+    return f1 && f2 && f1.id === f2.id;
   }
 }

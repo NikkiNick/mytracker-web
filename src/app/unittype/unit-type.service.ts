@@ -8,10 +8,9 @@ import { UnitTypeSerializer } from './unittype.serializer';
   providedIn: 'root'
 })
 export class UnitTypeService extends CrudService<UnitType> implements ITrackerService {
-
   constructor(@Inject('UnittypeServiceConfig') options: CrudServiceOptions<UnitType>, protected httpClient: HttpClient) {
-      super(options, httpClient, new UnitTypeSerializer());
-     }
+    super(options, httpClient, new UnitTypeSerializer());
+  }
 }
 
 export interface ITrackerService {}

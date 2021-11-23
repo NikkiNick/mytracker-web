@@ -10,7 +10,7 @@ describe('UserManipulationDialogComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UserManipulationDialogComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

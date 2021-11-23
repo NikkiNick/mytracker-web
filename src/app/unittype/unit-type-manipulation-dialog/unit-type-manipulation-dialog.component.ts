@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -14,7 +14,6 @@ import { UnitTypeService } from '../unit-type.service';
   styleUrls: ['./unit-type-manipulation-dialog.component.scss']
 })
 export class UnitTypeManipulationDialogComponent extends ManipulationDialogComponent<UnitType> {
-
   form: FormGroup;
 
   constructor(
@@ -24,15 +23,14 @@ export class UnitTypeManipulationDialogComponent extends ManipulationDialogCompo
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<UnitTypeManipulationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ManipulationDialogData) {
-      super(router, snackbarService, dialogRef, data);
-      this.form = this.fb.group({
-        unitType_shortName: [, [ Validators.required ]],
-        unitType_longName: [, [ Validators.required ]]
-      });
+    super(router, snackbarService, dialogRef, data);
+    this.form = this.fb.group({
+      unitType_shortName: [, [ Validators.required ]],
+      unitType_longName: [, [ Validators.required ]]
+    });
   }
 
   confirm(): void {
     alert('lol');
   }
-
 }

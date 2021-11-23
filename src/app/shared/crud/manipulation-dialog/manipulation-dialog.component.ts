@@ -1,10 +1,8 @@
-import { trigger } from '@angular/animations';
-import { AfterContentChecked, AfterContentInit, Component, ContentChild, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, Inject, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { DialogData } from 'src/app/dialog-data.model';
+import { BehaviorSubject } from 'rxjs';
 import { DialogComponent } from '../../dialog/dialog.component';
 import { SnackBarService } from '../../snackbar/snack-bar.service';
 import { ICrudService } from '../crud.service';
@@ -21,7 +19,6 @@ import { ManipulationDialogData } from './manipulation-dialog-data.model';
   styleUrls: ['./manipulation-dialog.component.scss']
 })
 export class ManipulationDialogComponent<T extends IBaseModel> extends DialogComponent implements AfterContentInit, IManipulationDialog<T> {
-
   isLoading = true;
   isEdit = true;
 
@@ -35,14 +32,14 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
     public snackbarService: SnackBarService,
     public dialogRef: MatDialogRef<ManipulationDialogComponent<T>>,
     @Inject(MAT_DIALOG_DATA) public data: ManipulationDialogData) {
-      super(dialogRef, data);
-      this.model = new BehaviorSubject<T>(null);
+    super(dialogRef, data);
+    this.model = new BehaviorSubject<T>(null);
   }
   ngAfterContentInit(): void {
     this.loadModel();
   }
   loadModel() {
-	// Edit
+    // Edit
     if (this.data.modelId) {
       this.service.getById(this.data.modelId, this.data.parentId).subscribe(
         (model) => {
@@ -60,7 +57,7 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
 
   confirm(): void {
     this.model = this.dialogRef.componentInstance.model;
-	// Edit
+    // Edit
     if (this.isEdit) {
       this.service.update(this.model.value, this.data.parentId).subscribe(
         (res) => {
@@ -76,10 +73,9 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
           this.snackbarService.show('Succesfully added item');
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);
           this.dialogRef.close();
-      },
+        },
         (err) => this.snackbarService.showHttpError(err),
       );
     }
   }
-
 }

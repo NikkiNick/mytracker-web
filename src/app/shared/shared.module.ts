@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 
-
 @NgModule({
   declarations: [
     BreadCrumbsComponent,
@@ -22,18 +21,18 @@ import { RouterModule } from '@angular/router';
     ToggleButtonComponent,
   ],
   imports: [
-	CommonModule,
-	RouterModule,
-	FormsModule,
-	ReactiveFormsModule,
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
     CrudModule
   ],
-  exports: [      
-	CommonModule,
-	RouterModule,
-	FormsModule,
-	ReactiveFormsModule,
+  exports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
     BreadCrumbsComponent,
     ConfirmationDialogComponent,
     ToggleButtonComponent,

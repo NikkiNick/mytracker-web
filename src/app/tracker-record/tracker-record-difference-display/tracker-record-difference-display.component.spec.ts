@@ -10,7 +10,7 @@ describe('TrackerRecordDifferenceDisplayComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TrackerRecordDifferenceDisplayComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

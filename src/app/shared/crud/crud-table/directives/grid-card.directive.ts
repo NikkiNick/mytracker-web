@@ -1,4 +1,4 @@
-import { ContentChild, Directive, Input, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { GridCardContentDirective } from './grid-card-content.directive';
 import { GridCardTitleDirective } from './grid-card-title.directive';
 
@@ -11,5 +11,4 @@ export class GridCardDirective {
   @ViewChild(GridCardContentDirective) content: GridCardContentDirective;
 
   constructor(public templateRef: TemplateRef<any>, public vcr: ViewContainerRef) { }
-
 }

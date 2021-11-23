@@ -10,7 +10,7 @@ describe('ChartPanelComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ChartPanelComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

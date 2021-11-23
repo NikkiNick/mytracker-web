@@ -10,7 +10,7 @@ describe('PageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ PageComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

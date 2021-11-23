@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -14,7 +14,6 @@ import { BudgetRecordCategoryService } from '../budget-record-category.service';
   styleUrls: ['./budget-record-category-manipulation-dialog.component.scss']
 })
 export class BudgetRecordCategoryManipulationDialogComponent extends ManipulationDialogComponent<BudgetRecordCategory> {
-
   form: FormGroup;
 
   constructor(
@@ -24,11 +23,11 @@ export class BudgetRecordCategoryManipulationDialogComponent extends Manipulatio
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<BudgetRecordCategoryManipulationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ManipulationDialogData) {
-      super(router, snackbarService, dialogRef, data);
-      this.form = this.fb.group({
-        recordCategory_name: [, [ Validators.required ]],
-        recordCategory_description: [ ],
-        recordCategory_color: [, [ Validators.required ]]
-      });
+    super(router, snackbarService, dialogRef, data);
+    this.form = this.fb.group({
+      recordCategory_name: [, [ Validators.required ]],
+      recordCategory_description: [ ],
+      recordCategory_color: [, [ Validators.required ]]
+    });
   }
 }

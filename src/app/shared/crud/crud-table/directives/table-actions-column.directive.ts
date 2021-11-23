@@ -4,7 +4,5 @@ import { Directive, TemplateRef } from '@angular/core';
   selector: '[tableActionsColumn]'
 })
 export class TableActionsColumnDirective {
-
   constructor(public templateRef: TemplateRef<any>) { }
-
 }

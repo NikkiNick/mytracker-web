@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -14,7 +14,6 @@ import { UserService } from '../../user.service';
   styleUrls: ['./user-manipulation-dialog.component.scss']
 })
 export class UserManipulationDialogComponent extends ManipulationDialogComponent<User> {
-
   form: FormGroup;
 
   constructor(
@@ -24,12 +23,12 @@ export class UserManipulationDialogComponent extends ManipulationDialogComponent
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<UserManipulationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ManipulationDialogData) {
-      super(router, snackbarService, dialogRef, data);
-      this.service = userService;
-      this.form = this.fb.group({
-        firstName: [ , [ Validators.required ] ],
-        lastName: [ , [ Validators.required ] ],
-        email: [ , [ Validators.required, Validators.email ] ]
-      });
-    }
+    super(router, snackbarService, dialogRef, data);
+    this.service = userService;
+    this.form = this.fb.group({
+      firstName: [ , [ Validators.required ] ],
+      lastName: [ , [ Validators.required ] ],
+      email: [ , [ Validators.required, Validators.email ] ]
+    });
+  }
 }

@@ -6,11 +6,10 @@ import { BudgetRecord } from './budget-record.model';
 import { BudgetRecordSerializer } from './budget-record.serializer';
 
 @Injectable({
-  	providedIn: 'root'
+	providedIn: 'root'
 })
 export class BudgetRecordService extends NestedCrudService<BudgetTracker, BudgetRecord> {
-
-  	constructor(@Inject('BudgetRecordServiceConfig') options: NestedCrudServiceOptions<BudgetTracker, BudgetRecord>, protected httpClient: HttpClient) {
-		super(options, httpClient, new BudgetRecordSerializer());
-	}
+  constructor(@Inject('BudgetRecordServiceConfig') options: NestedCrudServiceOptions<BudgetTracker, BudgetRecord>, protected httpClient: HttpClient) {
+    super(options, httpClient, new BudgetRecordSerializer());
+  }
 }
