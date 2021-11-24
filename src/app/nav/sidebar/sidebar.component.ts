@@ -11,6 +11,7 @@ import { UnitTypeManipulationDialogComponent } from 'src/app/unittype/unit-type-
 import { UnitTypeService } from 'src/app/unittype/unit-type.service';
 import { AuthService } from '../../auth/auth.service';
 import { TrackerRecordAddComponent } from '../../tracker-record/tracker-record-add/tracker-record-add.component';
+import { NavigationLink } from './navigation-link.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,10 +20,28 @@ import { TrackerRecordAddComponent } from '../../tracker-record/tracker-record-a
 })
 export class SidebarComponent {
   isAuthenticated$: Observable<boolean>;
+  navigationLinks: NavigationLink[] = [
+    { 
+      display: 'Trackers',
+      children: [
+        { display: "Overview", path: "/trackers/overview", icon: "list" },
+        { display: "Unittypes", path: "/unittypes/overview", icon: "list" },
+		{ display: "Add new Tracker record", method: () => this.openDialog_addTrackerRecord(), icon: "add" },
+		{ display: "Add new Unittype", method: () => this.openDialog_addUnitType(), icon: "add" },
+      ] 
+    },
+    {
+      display: "BudgetTrackers",
+      children: [
+        { display: "Overview", path: "/budget-trackers/overview", icon: "list" },
+        { display: "Budget categories", path: "/budgetcategories/overview", icon: "list" },
+		{ display: "Add new BudgetTracker category", method: () => this.openDialog_addBudgetRecordCategory(), icon: "add" },
+      ]
+    }
+  ];
 
   constructor(
     private dialog: MatDialog,
-    private router: Router,
     private authService: AuthService,
     private trackerService: TrackerService,
     private unitTypeService: UnitTypeService,
@@ -44,7 +63,7 @@ export class SidebarComponent {
     this.dialog.closeAll();
     this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: '/trackers/detail/', forEntity: null } });
   }
-  openDialog_addBudgetRecordCategory():void {
+  openDialog_addBudgetRecordCategory(): void {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(BudgetRecordCategoryManipulationDialogComponent, { data: { modelId: null, navigateTo: '/budgetcategories/overview' } as unknown as ManipulationDialogData });
     dialogRef.componentInstance.service = this.budgetRecordCategoryService;

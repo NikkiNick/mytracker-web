@@ -4,31 +4,35 @@
 </div>
 <div class="container-fluid mt-2">
     <ng-container *ngIf="!isLoading; else loading">
-        <div class="row d-flex justify-content-between mx-1">
-            <ng-container *ngIf="filter">
-                <mat-form-field appearance="outline" class="w-25">
-                    <mat-label i18n="@@filter">Filter</mat-label>
-                    <input matInput type="text" (keyup)="applyFilter($event)">
-                </mat-form-field>
-            </ng-container>
-            <div class="d-flex justify-content-end align-items-center p-1">
-                <mat-paginator #paginator [pageSizeOptions]="itemsPerPage" showFirstLastButtons></mat-paginator>
-                <ng-container *ngIf="displayModes.length > 1">
-                    <mat-button-toggle-group [(ngModel)]="currentDisplayMode" name="currentDisplayMode" aria-label="displayModes mode">
-                        <mat-button-toggle *ngIf="displayModes.includes('grid')" [value]="'grid'" matTooltip="Grid view" i18n-matTooltip="@@gridview" class="m-auto">
-                            <mat-icon>view_module</mat-icon>
-                        </mat-button-toggle>
-                        <mat-button-toggle *ngIf="displayModes.includes('grid')" [value]="'table'" matTooltip="Table view" i18n-matTooltip="@@tableview" class="m-auto">
-                            <mat-icon>table_rows</mat-icon>
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>          
-                </ng-container>
-                <mat-button-toggle-group *ngIf="showAddButton && manipulationDialog" class="ml-2">
-                    <mat-button-toggle class="m-auto" (click)="openManipulationDialog()" class="bg-primary2">
-                        <mat-icon>add</mat-icon><span i18n="@@add-new">Add new</span>
-                    </mat-button-toggle>
-                </mat-button-toggle-group>  
-            </div>
+        <div class="row">
+			<div class="col-12 col-lg-3">
+				<ng-container *ngIf="filter">
+					<mat-form-field appearance="outline" class="w-100">
+						<mat-label i18n="@@filter">Filter</mat-label>
+						<input matInput type="text" (keyup)="applyFilter($event)">
+					</mat-form-field>
+				</ng-container>
+			</div>
+			<div class="col-12 col-lg-9">
+				<div class="d-flex justify-content-end align-items-center p-1">
+					<mat-paginator #paginator [pageSizeOptions]="itemsPerPage" showFirstLastButtons></mat-paginator>
+					<ng-container *ngIf="displayModes.length > 1">
+						<mat-button-toggle-group [(ngModel)]="currentDisplayMode" name="currentDisplayMode" aria-label="displayModes mode" class="mx-2">
+							<mat-button-toggle *ngIf="displayModes.includes('grid')" [value]="'grid'" matTooltip="Grid view" i18n-matTooltip="@@gridview" class="m-auto">
+								<mat-icon>view_module</mat-icon>
+							</mat-button-toggle>
+							<mat-button-toggle *ngIf="displayModes.includes('grid')" [value]="'table'" matTooltip="Table view" i18n-matTooltip="@@tableview" class="m-auto">
+								<mat-icon>table_rows</mat-icon>
+							</mat-button-toggle>
+						</mat-button-toggle-group>          
+					</ng-container>
+					<mat-button-toggle-group *ngIf="showAddButton && manipulationDialog" class="ml-2">
+						<mat-button-toggle class="m-auto" (click)="openManipulationDialog()" class="bg-primary2">
+							<mat-icon>add</mat-icon><span i18n="@@add-new">Add new</span>
+						</mat-button-toggle>
+					</mat-button-toggle-group>  
+				</div>
+			</div>
         </div>
         <ng-container *ngIf="currentDisplayMode === 'table'">
             <table mat-table class="w-100" [dataSource]="tableDataSource">                
@@ -50,7 +54,7 @@
         </ng-container>
         <ng-container *ngIf="currentDisplayMode === 'grid'">
             <ng-container *ngIf="gridCardTitleTemplate && gridCardContentTemplate">
-                <div class="row d-flex justify-content-center align-items-stretch">
+                <div class="row d-flex justify-content-center">
                     <div class="col-12 col-md-6 col-lg-3 p-2 align-self-stretch" *ngFor="let item of renderedItems">
 						<div class="d-flex flex-column shadow h-100" [ngStyle]="{ 'background-color': item.color?(item.color+60):null}">
 							<div class="p-2">

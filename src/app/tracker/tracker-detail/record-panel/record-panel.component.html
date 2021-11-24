@@ -12,7 +12,7 @@
                         </ng-container>
                         <ng-container matColumnDef="amount">
                             <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-amount">Amount</th>
-                            <td mat-cell *matCellDef="let record" class="pt-2 pr-2 pb-2">
+                            <td mat-cell *matCellDef="let record" class="p-2 pr-3">
                                 <app-tracker-record-display [record]="record" [suffix]="tracker.unitType.shortName" [color]="tracker.color"></app-tracker-record-display>
                             </td>
                             <th mat-footer-cell *matFooterCellDef></th>

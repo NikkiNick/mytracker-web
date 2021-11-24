@@ -1,0 +1,13 @@
+@import "theme";
+
+$primary-color: #b3edff;
+$primary-color-dark: #004a61;
+$primary-color-highlight: #44d3ff;
+// SideNav
+$sidenav-bg: mat-color($blue-gray, 800);
+$sidenav-text-color: mat-color($blue-gray, 50);
+$sidenav-navItem-bg: mat-color($blue-gray, 800);
+$sidenav-navItem-bg-hover: mat-color($blue-gray, 900);
+$sidenav-subNavItem-bg: mat-color($blue-gray, 600);
+$sidenav-subNavItem-bg-hover: mat-color($blue-gray, 700);
+$sidenav-navItem-divider-color: mat-color($blue-gray, 400);

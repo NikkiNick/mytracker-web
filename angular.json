@@ -34,20 +34,19 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ],
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+			  "src/app/shared/styles/styles.scss"
+			],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.min.js",
-              "./node_modules/popper.js/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "./src/assets/CanvasJS/canvasjs.min.js"
+				"./node_modules/jquery/dist/jquery.min.js",
+				"./node_modules/@popperjs/core/dist/umd/popper.min.js",
+				"./node_modules/bootstrap/dist/js/bootstrap.min.js",
+              	"./src/assets/CanvasJS/canvasjs.min.js"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles"
-              ]
+
+				"includePaths": ["../node_modules/bootstrap/scss", "src/app/shared/styles"]
             }
           },
           "configurations": {

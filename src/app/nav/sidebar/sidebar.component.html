@@ -1,8 +1,5 @@
-<nav id="subnav" class="col-2 d-none d-lg-block min-vh-100 bg-dark fixed-top nav flex-column p-0">
-    <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
-        <small i18n="@@user">USER</small> 
-    </div>
-    <div *ngIf="!(isAuthenticated$ | async)">
+<div  class="sidenav shadow d-flex flex-column">
+	<div *ngIf="(isAuthenticated$ | async) === false">
         <a routerLink="/user/login" class="nav-link d-flex align-items-center">
             <div class="d-flex w-100 justify-content-start align-items-center">
                 <mat-icon class="mr-2">login</mat-icon>
@@ -10,29 +7,45 @@
             </div>
         </a>
     </div>
-    <div *ngIf="isAuthenticated$ | async">
-        <a routerLink="/user/profile" class="nav-link d-flex align-items-center">
-            <div class="d-flex w-100 justify-content-start align-items-center">
-                <mat-icon class="mr-2">account_circle</mat-icon>
-                <div class="align-middle" i18n="@@user-profile">Profile</div>
-            </div>
+	<ul *ngIf="isAuthenticated$ | async" class="flex-fill">
+		<li *ngFor="let navLink of navigationLinks; let mainLevel = index" class="fs-5">
+			<div
+				class="d-flex justify-content-between align-items-center"
+				*ngIf="!navLink.path"
+				role="button"
+				data-bs-toggle="collapse"
+				[attr.data-bs-target]="'#collapseSubnav_' + mainLevel"
+				aria-expanded="false">
+				<span>{{ navLink.display }}</span>
+				<mat-icon *ngIf="navLink.children" class="expand-icon">expand_more</mat-icon>
+			</div>
+			<ul *ngIf="navLink.children" class="collapse" [id]="'collapseSubnav_' + mainLevel">
+				<li *ngFor="let subNavLink of navLink.children">
+					<a [routerLink]="subNavLink.path" class="subnavItem fs-6" *ngIf="subNavLink.path">
+						<div class="d-flex align-items-center">
+							<mat-icon *ngIf="subNavLink.icon">{{ subNavLink.icon }}</mat-icon>
+							<span class="ms-2 overflowz">{{ subNavLink.display }}</span>
+						</div>
+					</a>
+					<a (click)="subNavLink.method()" class="subnavItem fs-6" *ngIf="subNavLink.method">
+						<div class="d-flex align-items-center w-100">
+							<mat-icon *ngIf="subNavLink.icon">{{ subNavLink.icon }}</mat-icon>
+							<span class="ms-2 overflowz">{{ subNavLink.display }}</span>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+    <div *ngIf="isAuthenticated$ | async" class="d-flex w-100 justify-content-center align-self-end">
+        <a routerLink="/user/profile" class="m-2" matTooltip="My profile">
+        	<mat-icon class="sidenav-icon">account_circle</mat-icon>
         </a>
-        <a class="nav-link d-flex align-items-center" (click)="logOut()" type="button">
-            <div class="d-flex w-100 justify-content-start align-items-center">
-                <mat-icon class="mr-2">logout</mat-icon>
-                <div class="align-middle" i18n="@@user-logout">Logout</div>
-            </div>
+        <a class="m-2" (click)="logOut()" type="button" matTooltip="Logout">
+            <mat-icon class="sidenav-icon">logout</mat-icon>
         </a>
-        <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
-            <small i18n="@@trackers">TRACKERS</small>
-        </div>
-        <a routerLink="/trackers/overview" class="nav-link d-flex align-items-center">
-            <div class="d-flex w-100 justify-content-start align-items-center">
-                <mat-icon class="mr-2">list</mat-icon>
-                <div class="align-middle" i18n="@@overview">Overview</div>
-            </div>
-        </a>
-        <a (click)="openDialog_addTracker()" class="nav-link d-flex align-items-center" type="button">
+	</div>
+        <!-- <a (click)="openDialog_addTracker()" class="nav-link d-flex align-items-center" type="button">
             <div class="d-flex w-100 justify-content-start align-items-center">
                 <mat-icon class="mr-2">add_circle_outline</mat-icon>
                 <span class="align-middle" i18n="@@tracker-add-new">Add new Tracker</span>
@@ -41,40 +54,13 @@
         <a (click)="openDialog_addTrackerRecord()" class="nav-link d-flex align-items-center" type="button">
             <div class="d-flex w-100 justify-content-start align-items-center">
                 <mat-icon class="mr-2">add_circle_outline</mat-icon>
-                <span class="align-middle" i18n="@@record-add-new">Add new Record</span>
+                <span class="align-middle" i18n="@@record-add-new">Add new TrackerRecord</span>
             </div>
         </a>
-        <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
-            <small i18n="@@unittypes">UNITTYPES</small>
-        </div>
-        <a routerLink="/unittypes/overview" class="nav-link d-flex align-items-center">
-            <div class="d-flex w-100 justify-content-start align-items-center">
-                <mat-icon class="mr-2">list</mat-icon>
-                <div class="align-middle" i18n="@@overview">Overview</div>
-            </div>
-        </a>
-        <a (click)="openDialog_addUnitType()" class="nav-link d-flex align-items-center" type="button">
+		<a (click)="openDialog_addUnitType()" class="nav-link d-flex align-items-center" type="button">
             <div class="d-flex w-100 justify-content-start align-items-center">
                 <mat-icon class="mr-2">add_circle_outline</mat-icon>
                 <span class="align-middle" i18n="@@unittype-add-new">Add new UnitType</span>
-            </div>
-        </a>
-        <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
-            <small i18n="@@budget-trackers">BUDGET TRACKERS</small>
-        </div>
-        <a routerLink="/budget-trackers/overview" class="nav-link d-flex align-items-center">
-            <div class="d-flex w-100 justify-content-start align-items-center">
-                <mat-icon class="mr-2">list</mat-icon>
-                <div class="align-middle" i18n="@@overview">Overview</div>
-            </div>
-        </a>
-        <div class="seperator w-100 text-muted d-flex align-items-center pl-2">
-            <small i18n="@@recordCategories">BUDGETRECORDCATEGORIES</small>
-        </div>
-        <a routerLink="/budgetcategories/overview" class="nav-link d-flex align-items-center">
-            <div class="d-flex w-100 justify-content-start align-items-center">
-                <mat-icon class="mr-2">list</mat-icon>
-                <div class="align-middle" i18n="@@overview">Overview</div>
             </div>
         </a>
         <a (click)="openDialog_addBudgetRecordCategory()" class="nav-link d-flex align-items-center" type="button">
@@ -82,6 +68,5 @@
                 <mat-icon class="mr-2">add_circle_outline</mat-icon>
                 <span class="align-middle" i18n="@@unittype-add-new">Add new Category</span>
             </div>
-        </a>
-    </div>
-</nav>
+        </a> -->
+</div>
