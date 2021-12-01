@@ -1,7 +1,7 @@
 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="position-relative">
-    <h2 class="text-center font-weight-bold" i18n="@@tracker-settings">Settings</h2>
+    <h2 class="text-center fw-bold" i18n="@@tracker-settings">Settings</h2>
     <mat-card-content [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
-        <table class="table">
+        <table class="table table-borderless">
             <tr>
                 <th scope="row" i18n="@@unittype">UnitType</th>
                 <td>{{ tracker.unitType.longName }} ({{ tracker.unitType.shortName }})</td>

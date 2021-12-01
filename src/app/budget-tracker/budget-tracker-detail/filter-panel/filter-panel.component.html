@@ -1,5 +1,5 @@
 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="position-relative">
-    <h2 class="text-center font-weight-bold" i18n="@@record-filter">Filter</h2>
+    <h2 class="text-center fw-bold" i18n="@@record-filter">Filter</h2>
     <mat-card-content class="text-center" [ngClass]="{'d-none': !showContent, 'd-block': showContent}"> 
         <form [formGroup]="form" class="container-fluid" *ngIf="tracker.records.length > 1">
             <!-- DATE FILTER -->
@@ -21,20 +21,20 @@
                 </mat-form-field>
             </div>
             <!-- DISPLAY FILTER -->
-            <h2 class="text-center font-weight-bold" i18n="@@record-display">Display</h2>
-            <div class="row d-flex justify-content-center align-items-center">
-                <app-toggle-button color="#ceff95" [isActive]="incomeFilter" (active)="toggleIncomeFilter()">
-                    <span class="font-weight-bold">INCOME</span>
+            <h2 class="text-center fw-bold" i18n="@@record-display">Display</h2>
+            <div class="row justify-content-center">
+                <app-toggle-button color="#ceff95" [isActive]="incomeFilter" (active)="toggleIncomeFilter()" class="col-4">
+                    <span class="fw-bold">INCOME</span>
                 </app-toggle-button>
-                <app-toggle-button color="#ff9898" [isActive]="expenseFilter" (active)="toggleExpenseFilter()">
-                    <span class="font-weight-bold">EXPENSE</span>
+                <app-toggle-button color="#ff9898" [isActive]="expenseFilter" (active)="toggleExpenseFilter()" class="col-4">
+                    <span class="fw-bold">EXPENSE</span>
                 </app-toggle-button>
             </div> 
             <!-- CATEGORY FILTER -->
-            <h2 class="text-center font-weight-bold" i18n="@@record-categories">Categories</h2>
-            <div class="row d-flex justify-content-center align-items-center">
-                <app-toggle-button *ngFor="let filterCategory of filterCategories" [color]="filterCategory.category.color" [isActive]="filterCategory.isActive" (active)="toggleCategoryFilter(filterCategory.category)">
-                    <span class="font-weight-bold">{{filterCategory.category.name}}</span>
+            <h2 class="text-center fw-bold" i18n="@@record-categories">Categories</h2>
+            <div class="row  justify-content-center">
+                <app-toggle-button *ngFor="let filterCategory of filterCategories" [color]="filterCategory.category.color" [isActive]="filterCategory.isActive" (active)="toggleCategoryFilter(filterCategory.category)" class="col-4">
+                    <div class="fw-bold text-wrap">{{filterCategory.category.name}}</div>
                 </app-toggle-button>
             </div> 
         </form>

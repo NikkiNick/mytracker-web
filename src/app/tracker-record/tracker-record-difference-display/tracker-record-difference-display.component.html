@@ -1,7 +1,7 @@
 <div *ngIf="smallSize" class="d-flex flex-column">
     <div>
         <small i18n="@@record-days">Days: </small>
-        <small><span [ngStyle]="{ 'color': dayDifference().color }" i18n="@@record-days-diff">{{ dayDifference().prefix }}{{ dayDifference().difference }} { dayDifference().difference, plural, 1={day} other={days} }</span></small>
+        <small><span [ngStyle]="{ 'color': dayDifference().color }" i18n="@@record-days-diff">{{ dayDifference().prefix }} {{ dayDifference().difference }} { dayDifference().difference, plural, 1={day} other={days} }</span></small>
     </div>
     <div>
         <small i18n="@@record-amount">Amount: </small>
@@ -14,15 +14,15 @@
 </div>
 <div *ngIf="!smallSize" class="d-flex flex-column">
     <div>
-        <span class="font-weight-bold mr-2" i18n="@@record-days">Days:</span>
-        <span [ngStyle]="{ 'color': dayDifference().color }" i18n="@@record-days-diff">{{ dayDifference().prefix }}{{ dayDifference().difference }}  { dayDifference().difference, plural, 1={day} other={days} }</span>
+        <span class="fw-bold mr-2" i18n="@@record-days">Days: </span>
+        <span [ngStyle]="{ 'color': dayDifference().color }" i18n="@@record-days-diff">{{ dayDifference().prefix }} {{ dayDifference().difference }}  { dayDifference().difference, plural, 1={day} other={days} }</span>
     </div>
     <div>
-        <span class="font-weight-bold mr-2" i18n="@@record-amount">Amount:</span>
+        <span class="fw-bold mr-2" i18n="@@record-amount">Amount: </span>
         <span [ngStyle]="{ 'color': amountDifference().color }" i18n="@@record-amount-diff">{{ amountDifference().prefix }} {{amountDifference().difference}} {{tracker.unitType.shortName }}</span>
     </div>
     <div>
-        <span class="font-weight-bold mr-2" i18n="@@record-average">Average:</span>
+        <span class="fw-bold mr-2" i18n="@@record-average">Average: </span>
         <span [ngStyle]="{ 'color': averageDifference().color }" i18n="@@record-average-diff">{{ averageDifference().prefix }} {{averageDifference().difference}} {{tracker.unitType.shortName }}/day</span>
     </div>
 </div>

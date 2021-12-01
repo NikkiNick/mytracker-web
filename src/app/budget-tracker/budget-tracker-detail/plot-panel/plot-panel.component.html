@@ -1,42 +1,45 @@
 <ng-container *ngIf="incomeRecordsPlotData && expenseRecordsPlotData; else loading">
-    <table class="w-100">
-        <tr>
-            <td width="20%">
+    <div class="d-flex flex-column w-100">
+        <div class="row align-items-center">
+            <div class="col-2">
                 <app-toggle-button color="#ceff95" [isActive]="false">
-                    <span class="font-weight-bold">INCOME</span>
+                    <span class="fw-bold">INCOME</span>
                 </app-toggle-button>
-            </td>
-            <td>
-                <div [style.width.%]="incomeRecordsPlotData.percentile" class="income rounded shadow font-weight-bold text-success p-3">
-                    + {{incomeRecordsPlotData.totalAmount}} {{tracker.currency}}
+            </div>
+			<div class="col-1">
+				<div  class="income rounded shadow fw-bold text-success p-3 w-100">
+					+ {{incomeRecordsPlotData.totalAmount}} {{tracker.currency}}
+				</div>
+			</div>
+            <div class="col-9">
+                <div [style.width.%]="incomeRecordsPlotData.percentile" *ngIf="incomeRecordsPlotData.totalAmount > 0" class="income rounded shadow fw-bold text-success p-3">
                 </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <!-- 
-                    20/04 > melding ontoereikend saldo
-                    26/04 > Betaald: be76 3350 5545 9895 : luminius voorschot 4272501567
-                    29/04 > dominiciliering opnieuw
-                 -->
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-2">
                 <app-toggle-button color="#ff9898" [isActive]="false">
-                    <span class="font-weight-bold">EXPENSE</span>
+                    <span class="fw-bold">EXPENSE</span>
                 </app-toggle-button>
-            </td>
-            <td class="d-flex justify-content-end">
-                <div [style.width.%]="expenseRecordsPlotData.percentile" class="expense rounded shadow font-weight-bold text-danger p-3">
+            </div>
+			<div class="col-1">
+				<div  class="expense rounded shadow fw-bold text-danger p-3 w-100">
                     - {{expenseRecordsPlotData.totalAmount}} {{tracker.currency}}
+				</div>
+			</div>
+            <div class="col-9">
+                <div [style.width.%]="expenseRecordsPlotData.percentile" *ngIf="expenseRecordsPlotData.totalAmount > 0" class="expense rounded shadow fw-bold text-danger p-3">
                 </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="m-3 text-center" colspan="2">
-                <div [style.width.%]="100" [ngClass]="{'income': totalRecordsPlotData > 0, 'expense': totalRecordsPlotData < 0}" class="rounded shadow font-weight-bold  p-3">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m-3 text-center">
+                <div [style.width.%]="100" [ngClass]="{'income': totalRecordsPlotData > 0, 'expense': totalRecordsPlotData < 0}" class="rounded shadow fw-bold  p-3">
                         TOTAL: {{totalRecordsPlotData}} {{tracker.currency}}
                 </div>
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
 </ng-container>
 <ng-template #loading>
     Loading...

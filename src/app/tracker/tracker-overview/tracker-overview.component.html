@@ -33,10 +33,10 @@
         </ng-template>
         <ng-template gridCardContent let-model>
             <div *ngIf="model.records.length > 0" class="d-flex flex-column align-items-center text-center">
-                <span class="font-weight-bold h6">Current</span>
+                <span class="fw-bold h6">Current</span>
                 <app-tracker-record-display [record]="model.records[0]" [suffix]="model.unitType.shortName" [color]="model.color" class="w-100"></app-tracker-record-display>
                 <div class="d-flex flex-column align-items-center mt-3" *ngIf="model.records.length > 1 && model.breakpoint">
-                    <span class="font-weight-bold h6" i18n="@@tracker-since-breakpoint-date">Since breakpoint ({{model.breakpoint.date | date: "shortDate"}})</span>
+                    <span class="fw-bold h6" i18n="@@tracker-since-breakpoint-date">Since breakpoint ({{model.breakpoint.date | date: "shortDate"}})</span>
                     <app-tracker-record-difference-display [firstRecord]="model.records[0]" [secondRecord]="model.breakpoint" [tracker]="model" [smallSize]="false"></app-tracker-record-difference-display>
                 </div>
             </div>

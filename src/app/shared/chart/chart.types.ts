@@ -1,6 +1,7 @@
 export declare interface LineOptions {
     thickness?: number;
     strokeColor?: string;
+	type?: "solid" | "dashed"
 }
 export declare interface TextOptions {
     direction?: 'horizontal' | 'vertical';
@@ -24,8 +25,7 @@ export declare interface RectOptions {
     strokeColor?: string;
     width: number;
     height: number;
-    alignment?: CanvasTextAlign;
-    text?: string;
-    fontSize?: number;
-    font?: string;
+	cornerRadius?: number;
+	shadowColor?: string;
+	shadowBlur?: number;
 }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BudgetRecordCategoryManipulationDialogComponent } from 'src/app/budget-tracker/budget-record-category/budget-record-category-manipulation-dialog/budget-record-category-manipulation-dialog.component';
 import { BudgetRecordCategoryService } from 'src/app/budget-tracker/budget-record-category/budget-record-category.service';

@@ -18,7 +18,8 @@ a {
 	background-color: $sidenav-bg;
 	border-right: 1px solid $sidenav-navItem-divider-color;
 	@media(min-width:992px){
-		height: calc(100vh - 52px);
+		min-height: calc(100vh - 52px);
+		height: 100%;
 	}
 }
 ul {

@@ -1,5 +1,5 @@
 <mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="position-relative">
-    <h2 class="text-center font-weight-bold" i18n="@@record-filter">Filter</h2>
+    <h2 class="text-center fw-bold" i18n="@@record-filter">Filter</h2>
     <mat-card-content class="text-center" [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
         <form [formGroup]="form" class="container-fluid" *ngIf="tracker.records.length > 1">
             <div class="row d-flex justify-content-center align-items-center">

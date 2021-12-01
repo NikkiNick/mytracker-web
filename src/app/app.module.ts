@@ -22,6 +22,7 @@ import { BudgetRecordCategoryModule } from './budget-tracker/budget-record-categ
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { HttpClientModule } from '@angular/common/http';
     { provide: LOCALE_ID, useValue: 'nl-BE' },
     { provide: MAT_DATE_LOCALE, useValue: 'nl-BE' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }
+    { provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy },
+	DatePipe
   ],
   bootstrap: [AppComponent]
 })
