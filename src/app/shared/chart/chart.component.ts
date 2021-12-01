@@ -19,16 +19,20 @@ export class ChartComponent implements OnInit {
   private ctxOverlay: CanvasRenderingContext2D;
 
   private options: ChartOptions;
+  private transformedDataPoints: { transformed: ChartCoordinate, original: ChartCoordinate}[];
 
   constructor(private datePipe: DatePipe){}
 
   ngOnInit(): void {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.ctxOverlay = this.canvasOverlay.nativeElement.getContext('2d');
+	this.transformedDataPoints = [];
   }
 
   initChart(options?: ChartOptions): void {
     this.options = options;
+
+	
 
     this.initCanvas();
     this.initAxisX();
@@ -55,34 +59,30 @@ export class ChartComponent implements OnInit {
   private initAxisX(): void {
     // Draw line
     const startCoordinate: ChartCoordinate = {
-      x: this.options.canvas.margin + (this.options.axisX.showAxisIntersect ? 0 : (this.options.axisY.title ? this.options.axisY.titleFontSize : 0)),
-      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisX.title ? this.options.axisX.titleFontSize : 0)
+      x: this.options.canvas.margin + (this.options.axisX.axisOptions.showAxisIntersect ? 0 : (this.options.axisY.title ? this.options.axisY.titleTextOptions.fontSize : 0)),
+      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisX.title ? this.options.axisX.titleTextOptions.fontSize : 0) - (this.options.axisX.axisValues.showAxisValues ? this.options.axisX.axisValues.axisValuesTextOptions.fontSize + 5 : 0)
     };
     const endCoordinate: ChartCoordinate = {
       x: this.canvas.nativeElement.width - this.options.canvas.margin,
-      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisX.title ? this.options.axisX.titleFontSize : 0)
+      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisX.title ? this.options.axisX.titleTextOptions.fontSize : 0) - (this.options.axisX.axisValues.showAxisValues ? this.options.axisX.axisValues.axisValuesTextOptions.fontSize + 5 : 0)
     };
-    const lineOptions: LineOptions = {
-      thickness: this.options.axisX.thickness,
-      strokeColor: this.options.axisX.color
-    };
-    this.drawLine(this.ctx, startCoordinate, endCoordinate, lineOptions);
+    this.drawLine(this.ctx, startCoordinate, endCoordinate, this.options.axisX.axisOptions.axisLineOptions);
     // Draw line arrow
-    if(this.options.axisX.showArrow){
+    if(this.options.axisX.axisOptions.arrowOptions.showArrow){
       this.ctx.save();
       this.ctx.moveTo(endCoordinate.x, endCoordinate.y);
-      this.ctx.lineTo(endCoordinate.x - this.options.axisX.arrowSize, endCoordinate.y - (this.options.axisX.arrowSize/2));
-      this.ctx.lineTo(endCoordinate.x - this.options.axisX.arrowSize, endCoordinate.y + (this.options.axisX.arrowSize/2));
+      this.ctx.lineTo(endCoordinate.x - this.options.axisX.axisOptions.arrowOptions.arrowSize, endCoordinate.y - (this.options.axisX.axisOptions.arrowOptions.arrowSize/2));
+      this.ctx.lineTo(endCoordinate.x - this.options.axisX.axisOptions.arrowOptions.arrowSize, endCoordinate.y + (this.options.axisX.axisOptions.arrowOptions.arrowSize/2));
       this.ctx.closePath();
-      this.ctx.fillStyle = this.options.axisX.color;
+      this.ctx.fillStyle = this.options.axisX.axisOptions.axisLineOptions.strokeColor;
       this.ctx.fill();
       this.ctx.restore();
     }
     // Draw title
     if(this.options.axisX.title){
       const xAxisTitleCoordinate: ChartCoordinate = { x: null, y: null };
-      xAxisTitleCoordinate.y = this.canvas.nativeElement.height - this.options.canvas.margin - this.options.axisX.titleFontSize + 5;
-      switch (this.options.axisX.titleAlignment) {
+      xAxisTitleCoordinate.y = this.canvas.nativeElement.height - this.options.canvas.margin - this.options.axisX.titleTextOptions.fontSize + 5;
+      switch (this.options.axisX.titleTextOptions.alignment) {
         case 'left':
           xAxisTitleCoordinate.x = this.options.canvas.margin;
           break;
@@ -90,51 +90,40 @@ export class ChartComponent implements OnInit {
           xAxisTitleCoordinate.x = this.canvas.nativeElement.width / 2;
           break;
         case 'right':
-          xAxisTitleCoordinate.x = this.canvas.nativeElement.width - this.options.canvas.margin - this.options.axisX.arrowSize - 5;
+          xAxisTitleCoordinate.x = this.canvas.nativeElement.width - this.options.canvas.margin - this.options.axisX.axisOptions.arrowOptions.arrowSize - 5;
           break;
       }
-      const text = `${this.options.axisX.title}${this.options.axisX.suffix ? ' ('+this.options.axisX.suffix+')':''}`;
-      const textOptions: TextOptions = {
-        direction: 'horizontal',
-        alignment: this.options.axisX.titleAlignment,
-        font: this.options.axisX.titleFont,
-        fontSize: this.options.axisX.titleFontSize,
-        color: this.options.axisX.color
-      };
-      this.drawText(this.ctx, xAxisTitleCoordinate, text, textOptions);
+      const text = `${this.options.axisX.title}${this.options.axisX.suffix ? ' ('+this.options.axisX.suffix+')':''}`; 
+      this.drawText(this.ctx, xAxisTitleCoordinate, text, this.options.axisX.titleTextOptions);
     }
   }
   private initAxisY(): void {
     // Draw line
     const startCoordinate: ChartCoordinate = {
-      x: this.options.canvas.margin + (this.options.axisY.title ? this.options.axisY.titleFontSize : 0),
+      x: this.options.canvas.margin + (this.options.axisY.title ? this.options.axisY.titleTextOptions.fontSize : 0),
       y: this.options.canvas.margin
     };
     const endCoordinate: ChartCoordinate = {
-      x: this.options.canvas.margin + (this.options.axisY.title ? this.options.axisY.titleFontSize : 0),
-      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisY.showAxisIntersect ? 0 : (this.options.axisY.title ? this.options.axisY.titleFontSize : 0))
+      x: this.options.canvas.margin + (this.options.axisY.title ? this.options.axisY.titleTextOptions.fontSize : 0),
+      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisY.axisOptions.showAxisIntersect ? 0 : (this.options.axisY.title ? this.options.axisY.titleTextOptions.fontSize : 0))
     };
-    const lineOptions: LineOptions = {
-      thickness: this.options.axisY.thickness,
-      strokeColor: this.options.axisY.color
-    };
-    this.drawLine(this.ctx, startCoordinate, endCoordinate, lineOptions);
+    this.drawLine(this.ctx, startCoordinate, endCoordinate, this.options.axisY.axisOptions.axisLineOptions);
     // Draw line arrow
-    if(this.options.axisY.showArrow){
+    if(this.options.axisY.axisOptions.arrowOptions.showArrow){
       this.ctx.save();
       this.ctx.moveTo(startCoordinate.x, startCoordinate.y);
-      this.ctx.lineTo(startCoordinate.x - (this.options.axisY.arrowSize/2), startCoordinate.y + this.options.axisY.arrowSize);
-      this.ctx.lineTo(startCoordinate.x + (this.options.axisY.arrowSize/2), startCoordinate.y + this.options.axisY.arrowSize);
+      this.ctx.lineTo(startCoordinate.x - (this.options.axisY.axisOptions.arrowOptions.arrowSize/2), startCoordinate.y + this.options.axisY.axisOptions.arrowOptions.arrowSize);
+      this.ctx.lineTo(startCoordinate.x + (this.options.axisY.axisOptions.arrowOptions.arrowSize/2), startCoordinate.y + this.options.axisY.axisOptions.arrowOptions.arrowSize);
       this.ctx.closePath();
-      this.ctx.fillStyle = this.options.axisY.color;
+      this.ctx.fillStyle = this.options.axisY.axisOptions.axisLineOptions.strokeColor;
       this.ctx.fill();
       this.ctx.restore();
     }
     // Draw title
     if(this.options.axisY.title){
       const yAxisTitleCoordinate: ChartCoordinate = { x: null, y: null };
-      yAxisTitleCoordinate.x = this.options.canvas.margin + this.options.axisY.titleFontSize - 5;
-      switch (this.options.axisY.titleAlignment) {
+      yAxisTitleCoordinate.x = this.options.canvas.margin + this.options.axisY.titleTextOptions.fontSize - 5;
+      switch (this.options.axisY.titleTextOptions.alignment) {
         case 'left':
           yAxisTitleCoordinate.y = this.canvas.nativeElement.height - this.options.canvas.margin;
           break;
@@ -142,29 +131,22 @@ export class ChartComponent implements OnInit {
           yAxisTitleCoordinate.y = this.canvas.nativeElement.height / 2;
           break;
         case 'right':
-          yAxisTitleCoordinate.y = this.options.canvas.margin + this.options.axisY.arrowSize + 5;
+          yAxisTitleCoordinate.y = this.options.canvas.margin + this.options.axisY.axisOptions.arrowOptions.arrowSize + 5;
           break;
       }
       const text = `${this.options.axisY.title}${this.options.axisY.suffix ? ' ('+this.options.axisY.suffix+')':''}`;
-      const textOptions: TextOptions = {
-        direction: 'vertical',
-        alignment: this.options.axisY.titleAlignment,
-        font: this.options.axisY.titleFont,
-        fontSize: this.options.axisY.titleFontSize,
-        color: this.options.axisY.color
-      };
-      this.drawText(this.ctx, yAxisTitleCoordinate, text, textOptions);
+      this.drawText(this.ctx, yAxisTitleCoordinate, text, this.options.axisY.titleTextOptions);
     }
   }
   private initDatapoints(): void{
     // Graph metric data (origin coordinate, width, height)
     // GraphOrigin = 0,0 with margins
     const graphOrigin: ChartCoordinate = {
-      x: this.options.canvas.margin + (this.options.axisY.title ? this.options.axisY.titleFontSize : 0) + this.options.graph.margin,
-      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisX.title ? this.options.axisX.titleFontSize : 0) - this.options.graph.margin
+      x: this.options.canvas.margin + (this.options.axisY.title ? this.options.axisY.titleTextOptions.fontSize : 0) + this.options.graph.margin,
+      y: this.canvas.nativeElement.height - this.options.canvas.margin - (this.options.axisX.title ? this.options.axisX.titleTextOptions.fontSize : 0) - this.options.graph.margin  - (this.options.axisX.axisValues.showAxisValues ? this.options.axisX.axisValues.axisValuesTextOptions.fontSize + 5 : 0)
     };
-    const graphWidth = this.canvas.nativeElement.width - ((this.options.canvas.margin + this.options.graph.margin)*2) - (this.options.axisY.title ? this.options.axisY.titleFontSize + 5 : 0);
-    const graphHeight = this.canvas.nativeElement.height - ((this.options.canvas.margin + this.options.graph.margin)*2) - (this.options.axisX.title ? this.options.axisX.titleFontSize + 5: 0);
+    const graphWidth = this.canvas.nativeElement.width - ((this.options.canvas.margin + this.options.graph.margin)*2) - (this.options.axisY.title ? this.options.axisY.titleTextOptions.fontSize + 5 : 0);
+    const graphHeight = this.canvas.nativeElement.height - ((this.options.canvas.margin + this.options.graph.margin)*2) - (this.options.axisX.title ? this.options.axisX.titleTextOptions.fontSize + 5: 0) - (this.options.axisX.axisValues.showAxisValues ? this.options.axisX.axisValues.axisValuesTextOptions.fontSize + 5 : 0);
 
     // calculate data ranges
     const xRangeMin = Math.min(...this.options.dataPoints.map((d) => d.x));
@@ -190,7 +172,7 @@ export class ChartComponent implements OnInit {
           original: this.options.dataPoints[i]
         });
     }
-    if(this.options.graph.showAverage){
+    if(this.options.graph.averageOptions.showAverage){
       const startCoordinateAvg: ChartCoordinate = {
         x: transformedDatapoints[0].transformed.x,
         y: transformedDatapoints[0].transformed.y
@@ -199,21 +181,17 @@ export class ChartComponent implements OnInit {
         x: transformedDatapoints[transformedDatapoints.length-1].transformed.x,
         y: transformedDatapoints[transformedDatapoints.length-1].transformed.y
       };
-      const avgOptions: LineOptions = {
-        thickness: this.options.graph.averageThickness,
-        strokeColor: this.options.graph.averageColor
-      };
-      this.drawLine(this.ctx, startCoordinateAvg, endCoordinateAvg, avgOptions);
+      this.drawLine(this.ctx, startCoordinateAvg, endCoordinateAvg, this.options.graph.averageOptions.averageLineOptions);
     }
     for(let i = 0; i < transformedDatapoints.length; i++){
-      const circleOptions: CircleOptions = {
-        radius: this.options.graph.pointRadius,
-        strokeColor: this.options.graph.pointStrokeColor,
-        fillColor: this.options.graph.pointFillColor,
-        lineThickness: this.options.graph.lineThickness
-      };
+    //   const circleOptions: CircleOptions = {
+    //     radius: this.options.graph.dataCircleOptions.radius,
+    //     strokeColor: this.options.graph.data,
+    //     fillColor: this.options.graph.pointFillColor,
+    //     lineThickness: this.options.graph.lineThickness
+    //   };
       // Draw Helperlines (yaxis)
-      if (this.options.axisY.showHelperLines) {
+      if (this.options.axisY.helperOptions.showHelperLines) {
         const startCoordinateHelperY: ChartCoordinate = {
           x: graphOrigin.x - this.options.graph.margin,
           y: transformedDatapoints[i].transformed.y
@@ -222,15 +200,10 @@ export class ChartComponent implements OnInit {
           x: transformedDatapoints[i].transformed.x,
           y: transformedDatapoints[i].transformed.y
         };
-        const helperOptionsY: LineOptions = {
-          thickness: this.options.axisY.helperLinesThickness,
-          strokeColor: this.options.axisY.helperLinesColor,
-          type: "dashed"
-        };
-        this.drawLine(this.ctx, startCoordinateHelperY, endCoordinateHelperY, helperOptionsY);
+        this.drawLine(this.ctx, startCoordinateHelperY, endCoordinateHelperY, this.options.axisY.helperOptions.helperLineOptions);
       }
       // Draw Helperlines (xAxis)
-      if (this.options.axisX.showHelperLines) {
+      if (this.options.axisX.helperOptions.showHelperLines) {
         const startCoordinateHelperX: ChartCoordinate = {
           x: transformedDatapoints[i].transformed.x,
           y: graphOrigin.y + this.options.graph.margin
@@ -239,12 +212,24 @@ export class ChartComponent implements OnInit {
           x: transformedDatapoints[i].transformed.x,
           y: transformedDatapoints[i].transformed.y
         };
-        const helperOptionsX: LineOptions = {
-          thickness: this.options.axisX.helperLinesThickness,
-          strokeColor: this.options.axisX.helperLinesColor,
-          type: "dashed"
-        };
-        this.drawLine(this.ctx, startCoordinateHelperX, endCoordinateHelperX, helperOptionsX);
+        this.drawLine(this.ctx, startCoordinateHelperX, endCoordinateHelperX, this.options.axisX.helperOptions.helperLineOptions);
+      }
+      // Draw axisValues (xAxis)
+      if(this.options.axisX.axisValues.showAxisValues){
+      const axisValueCoordinate: ChartCoordinate = {
+        x: transformedDatapoints[i].transformed.x,
+        y: graphOrigin.y + this.options.graph.margin + 5
+      };
+      const axisValue = this.datePipe.transform(new Date(transformedDatapoints[i].original.x), 'dd/MM/yyyy');
+      const axisValueSize = this.ctx.measureText(axisValue).width;
+      if((transformedDatapoints[i].transformed.x - graphOrigin.x < axisValueSize / 2) && (graphWidth - transformedDatapoints[i].transformed.x > axisValueSize / 2)){
+        this.options.axisX.axisValues.axisValuesTextOptions.alignment = "left";
+      } else if((transformedDatapoints[i].transformed.x - graphOrigin.x > axisValueSize / 2) && (graphWidth - transformedDatapoints[i].transformed.x < axisValueSize / 2)){
+        this.options.axisX.axisValues.axisValuesTextOptions.alignment = "right";
+      } else {
+        this.options.axisX.axisValues.axisValuesTextOptions.alignment = "center";
+      }
+      this.drawText(this.ctx, axisValueCoordinate, axisValue, this.options.axisX.axisValues.axisValuesTextOptions);
       }
       // Draw Connection
       if (i < this.options.dataPoints.length - 1) {
@@ -252,24 +237,20 @@ export class ChartComponent implements OnInit {
         const nextTransformedY = Math.floor(graphOrigin.y + - ((this.options.dataPoints[i+1].y - yRangeMin) * yRatio));
         const startCoordinate: ChartCoordinate = { x: transformedDatapoints[i].transformed.x, y: transformedDatapoints[i].transformed.y };
         const endCoordinate: ChartCoordinate = { x: nextTransformedX, y: nextTransformedY };
-        const options: LineOptions = {
-          thickness: this.options.graph.lineThickness,
-          strokeColor: this.options.graph.lineColor
-        };
-        this.drawLine(this.ctx, startCoordinate, endCoordinate, options);
+        this.drawLine(this.ctx, startCoordinate, endCoordinate, this.options.graph.dataLineOptions);
       }
       // Draw point
-      this.drawCircle(this.ctx, { x: transformedDatapoints[i].transformed.x, y: transformedDatapoints[i].transformed.y }, circleOptions);
+      this.drawCircle(this.ctx, { x: transformedDatapoints[i].transformed.x, y: transformedDatapoints[i].transformed.y }, this.options.graph.dataCircleOptions);
     }
     // Draw tooltips
     this.ctxOverlay.canvas.addEventListener('mousemove', (e) => {
       const transformedDatapointFound = transformedDatapoints
-        .find((t) => (this.calculateDistance(e.offsetX, e.offsetY, t.transformed.x, t.transformed.y) < this.options.graph.pointRadius * 2));
+        .find((t) => (this.calculateDistance(e.offsetX, e.offsetY, t.transformed.x, t.transformed.y) < this.options.graph.dataCircleOptions.radius * 2));
       if (transformedDatapointFound) {      
         this.ctxOverlay.clearRect(0, 0, this.ctxOverlay.canvas.width, this.ctxOverlay.canvas.height);
         // Highlight helper
         // Draw Helperlines (yaxis)
-        if (this.options.axisY.showHelperLines) {
+        if (this.options.axisY.helperOptions.showHelperLines) {
           const startCoordinateHelperY: ChartCoordinate = {
             x: graphOrigin.x - this.options.graph.margin,
             y: transformedDatapointFound.transformed.y
@@ -279,14 +260,14 @@ export class ChartComponent implements OnInit {
             y: transformedDatapointFound.transformed.y
           };
           const helperOptionsY: LineOptions = {
-            thickness: this.options.axisY.helperLinesThickness,
+            thickness: this.options.axisY.helperOptions.helperLineOptions.thickness,
             strokeColor: "black",
             type: "dashed"
           };
           this.drawLine(this.ctxOverlay, startCoordinateHelperY, endCoordinateHelperY, helperOptionsY);
         }
         // Draw Helperlines (xAxis)
-        if (this.options.axisX.showHelperLines) {
+        if (this.options.axisX.helperOptions.showHelperLines) {
           const startCoordinateHelperX: ChartCoordinate = {
             x: transformedDatapointFound.transformed.x,
             y: graphOrigin.y + this.options.graph.margin
@@ -296,7 +277,7 @@ export class ChartComponent implements OnInit {
             y: transformedDatapointFound.transformed.y
           };
           const helperOptionsX: LineOptions = {
-            thickness: this.options.axisX.helperLinesThickness,
+            thickness: this.options.axisX.helperOptions.helperLineOptions.thickness,
             strokeColor: "black",
             type: "dashed"
           };
@@ -305,33 +286,24 @@ export class ChartComponent implements OnInit {
         // Circle tooltip
         const circleCoordinate: ChartCoordinate = { x: transformedDatapointFound.transformed.x, y: transformedDatapointFound.transformed.y };
         const circleOptions: CircleOptions = {
-          radius: this.options.graph.pointRadius * 1.5,
-          fillColor: this.options.graph.pointFillColor,
-          lineThickness: this.options.graph.lineThickness * 1.5
+          radius: this.options.graph.dataCircleOptions.radius * 1.5,
+          fillColor: this.options.graph.dataCircleOptions.fillColor,
+          lineThickness: this.options.graph.dataCircleOptions.lineThickness * 1.5
         };
         this.drawCircle(this.ctxOverlay, circleCoordinate, circleOptions);
 
         // Rectangle tooltip
-        const tooltipText = `${transformedDatapointFound.original.y.toString()}${this.options.axisY.suffix ? ' '+this.options.axisY.suffix : ''}`;
-        const tooltipRectOptions: RectOptions = {
-          fillColor: this.options.graph.tooltipBackground,
-          width: 0,
-          height: 0,
-          cornerRadius: 10,
-          shadowColor: "gray",
-          shadowBlur: 15
-        };
-        const tooltipTextOptions: TextOptions = {
-          fontSize: 20, 
-          color: "black",
-          direction: "horizontal", 
-          alignment: "center"
-        };
+        const tooltipText = [
+			`${transformedDatapointFound.original.y.toString()}${this.options.axisY.suffix ? ' '+this.options.axisY.suffix : ''}`,
+			this.datePipe.transform(new Date(transformedDatapointFound.original.x), 'dd/MM/yyyy')
+		];
         const tooltipCoordinate: ChartCoordinate = {
           x: transformedDatapointFound.transformed.x,
           y: transformedDatapointFound.transformed.y + 20
         };
-        this.drawTooltip(this.ctxOverlay, tooltipCoordinate, [tooltipText, this.datePipe.transform(new Date(transformedDatapointFound.original.x), 'dd/MM/yyyy')], tooltipTextOptions,  tooltipRectOptions);
+		const tooltipTextOptions = this.options.graph.tooltipOptions.textOptions;
+		const tooltipRectOptions = this.options.graph.tooltipOptions.rectOptions;
+        this.drawTooltip(this.ctxOverlay, tooltipCoordinate, tooltipText, tooltipTextOptions, tooltipRectOptions);
       } 
       else {
         this.ctxOverlay.clearRect(0, 0, this.ctxOverlay.canvas.width, this.ctxOverlay.canvas.height);
@@ -362,7 +334,7 @@ export class ChartComponent implements OnInit {
         }
       }
       rectOptions.width = longestSize + 20;
-      rectOptions.height = (this.options.graph.tooltipFontSize * textLines.length) + (textLines.length > 1 ? 5 * (textLines.length -1) : 0) + 20;
+      rectOptions.height = (this.options.graph.tooltipOptions.textOptions.fontSize * textLines.length) + (textLines.length > 1 ? 5 * (textLines.length -1) : 0) + 20;
 
       // Moving canvas cursor to corner for rectangle to start
       if(pos.x - (rectOptions.width/2) > 0){
@@ -406,7 +378,7 @@ export class ChartComponent implements OnInit {
   private drawText(ctx: CanvasRenderingContext2D, pos: ChartCoordinate, text: string, options?: TextOptions): void {
     ctx.save();
     ctx.translate(pos.x, pos.y);
-    ctx.font = `${options.fontSize}px ${options.font}`;
+    ctx.font = `${options.fontWeight || 'bold'} ${options.fontSize}px ${options.font}`;
     ctx.fillStyle = options.color;
 
     if (options.alignment) {

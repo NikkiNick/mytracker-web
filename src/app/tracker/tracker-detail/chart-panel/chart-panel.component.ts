@@ -71,36 +71,106 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
       // xAxis
       {
         title: 'Tijd',
-        titleAlignment: 'right',
-        titleFontSize: 14,
-        thickness: 2,
-        showArrow: true,
-        arrowSize: 15,
-        showAxisIntersect: false
+		titleTextOptions: {
+			direction: "horizontal",
+			alignment: 'center',
+			fontSize: 20,
+			fontWeight: 'bold',
+		},
+		axisOptions: {
+			axisLineOptions: {
+				thickness: 2
+			},
+			showAxisIntersect: false,
+			arrowOptions: {
+				showArrow: true,
+				arrowSize: 15
+			}
+		},
+		axisValues: {
+			showAxisValues: true,
+			axisValuesTextOptions: {
+				alignment: 'center',
+				fontSize: 12,
+				fontWeight: "normal",
+				direction: "horizontal"
+			}
+		},
+		helperOptions: {
+			showHelperLines: true,
+			helperLineOptions: {
+				type: "dashed",
+				strokeColor: "grey",
+				thickness: 1
+			}
+		}
       },
       // yAxis
       {
         title: this.tracker.unitType.longName,
-        titleAlignment: 'right',
-        titleFontSize: 14,
-        thickness: 2,
         suffix: this.tracker.unitType.shortName,
-        showArrow: true,
-        arrowSize: 15,
-        showAxisIntersect: false
+		titleTextOptions: {
+			alignment: 'center',
+			fontSize: 20,
+			fontWeight: "bold"
+		},
+		axisOptions: {
+			axisLineOptions: {
+				thickness: 2
+			},
+			arrowOptions: {
+				showArrow: true,
+				arrowSize: 15
+			},
+			showAxisIntersect: false,
+		},
+		axisValues: {
+			showAxisValues: false,
+			axisValuesTextOptions: {}
+		},
+		helperOptions: {
+			showHelperLines: true,
+			helperLineOptions: {
+				type: "dashed",
+				strokeColor: "grey",
+				thickness: 1
+			}
+		}
       },
       // Graph
       {
         margin: 20,
-        pointRadius: 8,
-        pointStrokeColor: "black",
-        pointFillColor: this.tracker.color,
-        lineColor: "black",
-        lineThickness: 2,
-        fontSize: 15,
-        tooltipFontSize: 20,
-        tooltipBackground: this.tracker.color,
-        showAverage: true
+		textOptions: {
+			fontSize: 15
+		},
+		dataCircleOptions: {
+			radius: 8,
+			strokeColor: "black",
+			fillColor: this.tracker.color,
+			lineThickness: 2
+		},
+		dataLineOptions: {
+			thickness: 2,
+			strokeColor: "black"
+		},
+		tooltipOptions: {
+			textOptions: {
+				fontSize: 20,
+			},
+			rectOptions: {
+				fillColor: this.tracker.color,
+				cornerRadius: 15,
+				shadowColor: "gray",
+				shadowBlur: 15
+			}
+		},
+		averageOptions: {
+			showAverage: true,
+			averageLineOptions: {
+				strokeColor: "red",
+				thickness: 1
+			}
+		}
         // showAverage: this.form.get('displayBy').value === 'Amount' ? false : true
       },
       data);

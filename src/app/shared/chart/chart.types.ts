@@ -8,6 +8,7 @@ export declare interface TextOptions {
     alignment?: CanvasTextAlign;
     fontSize?: number;
     font?: string;
+	fontWeight?: 'normal' | 'bold' | 'lighter',
     color?: string;
 }
 export declare interface CircleOptions {
@@ -23,8 +24,8 @@ export declare interface ChartCoordinate {
 export declare interface RectOptions {
     fillColor?: string;
     strokeColor?: string;
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
 	cornerRadius?: number;
 	shadowColor?: string;
 	shadowBlur?: number;
