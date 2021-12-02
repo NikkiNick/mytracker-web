@@ -18,49 +18,33 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+
+const materialModules = [
+	MatCardModule,
+    MatSidenavModule,
+    MatButtonToggleModule,
+    MatIconModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatDatepickerModule,
+    MatCheckboxModule,
+	MatRadioModule
+];
 
 @NgModule({
-  imports: [
-    MatCardModule,
-    MatSidenavModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatMenuModule,
-    MatDatepickerModule,
-    MatCheckboxModule
-  ],
-  exports: [
-    MatCardModule,
-    MatSidenavModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    MatMenuModule,
-    MatDatepickerModule,
-    MatCheckboxModule
-  ]
+  imports: [ ...materialModules ],
+  exports: [ ...materialModules ]
 })
 export class MaterialModule { }

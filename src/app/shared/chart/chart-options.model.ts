@@ -38,7 +38,7 @@ export class ChartOptions {
         showAxisIntersect: xAxisOptions?.axisOptions?.showAxisIntersect === false ? false : true
       },
       helperOptions: {
-        showHelperLines: xAxisOptions?.helperOptions?.showHelperLines ? xAxisOptions.helperOptions.showHelperLines : true,
+        showHelperLines: xAxisOptions?.helperOptions?.showHelperLines === false ? false : true,
         helperLineOptions: {
           thickness: xAxisOptions?.helperOptions?.helperLineOptions?.thickness ? xAxisOptions.helperOptions.helperLineOptions.thickness : 1,
           strokeColor: xAxisOptions?.helperOptions?.helperLineOptions?.strokeColor ? xAxisOptions.helperOptions.helperLineOptions.strokeColor : "grey",
@@ -83,7 +83,7 @@ export class ChartOptions {
         showAxisIntersect: yAxisOptions?.axisOptions?.showAxisIntersect === false ? false : true
       },
       helperOptions: {
-        showHelperLines: yAxisOptions?.helperOptions?.showHelperLines ? yAxisOptions.helperOptions.showHelperLines : true,
+        showHelperLines: yAxisOptions?.helperOptions?.showHelperLines === false ? false : true,
         helperLineOptions: {
           thickness: yAxisOptions?.helperOptions?.helperLineOptions?.thickness ? yAxisOptions.helperOptions.helperLineOptions.thickness : 1,
           strokeColor: yAxisOptions?.helperOptions?.helperLineOptions?.strokeColor ? yAxisOptions.helperOptions.helperLineOptions.strokeColor : "grey",

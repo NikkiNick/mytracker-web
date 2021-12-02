@@ -22,23 +22,35 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
 
   constructor(private fb: FormBuilder, private datePipe: DatePipe) {
     this.form = this.fb.group({
-      displayBy: ['Amount', []]
+      displayBy: [ 'Amount', [] ],
+      options_showAverage: [ true, [] ],
+      options_showAxisValuesX: [ true, [] ],
+      options_showAxisValuesY: [ true, [] ],
+      options_showHelpers: [ true, [] ]
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes.filteredRecords.firstChange && changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
-      this.changeDisplay();
+      this.displayChart();
     }
   }
 
   ngAfterViewInit(): void {
-    this.changeDisplay();
+    this.displayChart();
   }
 
-	changeDisplay(): void {
+	displayChart(): void {
+    console.log("displaying chart");
     if (this.form.valid) {
       const data: ChartDataPoint[] = [];
-      switch (this.form.get('displayBy').value) {
+      // FormData
+      const displayBy_formValue = this.form.get('displayBy').value;
+      const options_showAverage_formValue = this.form.get('options_showAverage').value;
+      const options_showAxisValuesX_formValue = this.form.get('options_showAxisValuesX').value;
+      const options_showAxisValuesY_formValue = this.form.get('options_showAxisValuesY').value;
+      const options_showHelpers_formValue = this.form.get('options_showHelpers').value;
+      // Datapoints
+      switch (displayBy_formValue) {
         case 'Amount':
           for (const rec of this.filteredRecords) {
             const dataPoint: ChartDataPoint = {
@@ -61,96 +73,97 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
           }
           break;
       }
-      this.initCustomChart(data);
-    }
-  }
-  windowResize(): void {
-    this.changeDisplay();
-  }
 
-  private initCustomChart(data: ChartDataPoint[]): void {
-    const chartOptions: ChartOptions = new ChartOptions(
-      // Canvas
-      {
-        height: '600px',
-        width: '100%',
-        margin: 10,
-        backgroundColor: '#00000000'
-      },
-      // xAxis
-      {
-        title: 'Tijd',
-        axisOptions: {
-          axisLineOptions: {
-            thickness: 2
+      // Chart options config
+      const chartOptions: ChartOptions = new ChartOptions(
+        // Canvas
+        {
+          height: '600px',
+          width: '100%',
+          margin: 10,
+          backgroundColor: '#00000000'
+        },
+        // xAxis
+        {
+          title: 'Tijd',
+          axisOptions: {
+            axisLineOptions: {
+              thickness: 2
+            },
+            showAxisIntersect: false,
+            arrowOptions: {
+              arrowSize: 15
+            }
           },
-          showAxisIntersect: true,
-          arrowOptions: {
-            arrowSize: 15
+          axisValues: {
+            showAxisValues: options_showAxisValuesX_formValue,
+            axisValuesTextOptions: {
+              fontSize: 12,
+            },
+            marginFromAxis: 5
+          },
+          helperOptions: {
+            showHelperLines: options_showHelpers_formValue
           }
         },
-        axisValues: {
-          showAxisValues: true,
-          axisValuesTextOptions: {
-            fontSize: 12,
+        // yAxis
+        {
+          title: this.tracker.unitType.longName,
+          suffix: this.tracker.unitType.shortName,
+          axisOptions: {
+            axisLineOptions: {
+              thickness: 2
+            },
+            arrowOptions: {
+              arrowSize: 15
+            },
+            showAxisIntersect: false,
           },
-          marginFromAxis: 5
-        },
-      },
-      // yAxis
-      {
-        title: this.tracker.unitType.longName,
-        suffix: this.tracker.unitType.shortName,
-        axisOptions: {
-          axisLineOptions: {
-            thickness: 2
+          axisValues: {
+            showAxisValues: options_showAxisValuesY_formValue,
+            axisValuesTextOptions: {
+              fontSize: 12
+            },
+            marginFromAxis: 5
           },
-          arrowOptions: {
-            arrowSize: 15
-          },
-          showAxisIntersect: true,
+          helperOptions: {
+            showHelperLines: options_showHelpers_formValue
+          }
         },
-        axisValues: {
-          showAxisValues: true,
-          axisValuesTextOptions: {
-            fontSize: 12
-          },
-          marginFromAxis: 5
-        }
-      },
-      // Graph
-      {
-        margin: 20,
-        textOptions: {
-          fontSize: 15
-        },
-        dataCircleOptions: {
-          radius: 8,
-          fillColor: this.tracker.color,
-        },
-        tooltipOptions: {
+        // Graph
+        {
+          margin: 20,
           textOptions: {
-            fontSize: 20,
-            fontWeight: "bold"
+            fontSize: 15
           },
-          rectOptions: {
+          dataCircleOptions: {
+            radius: 8,
             fillColor: this.tracker.color,
-            cornerRadius: 15,
-            shadowColor: "gray",
-            shadowBlur: 15
           },
-          padding: 10,
-          marginFromPoint: 10
+          tooltipOptions: {
+            textOptions: {
+              fontSize: 20,
+              fontWeight: "bold"
+            },
+            rectOptions: {
+              fillColor: this.tracker.color,
+              cornerRadius: 15,
+              shadowColor: "gray",
+              shadowBlur: 15
+            },
+            padding: 10,
+            marginFromPoint: 10
+          },
+          averageOptions: {
+            showAverage: options_showAverage_formValue,
+          }
+          // showAverage: this.form.get('displayBy').value === 'Amount' ? false : true
         },
-        averageOptions: {
-          showAverage: true,
-        }
-        // showAverage: this.form.get('displayBy').value === 'Amount' ? false : true
-      },
-      data);
-    this.charts.initChart(chartOptions);
+        data);
+      // Init chart
+      this.charts.initChart(chartOptions);
+    }
   }
-
   compareByValue(f1: TrackerRecord, f2: TrackerRecord): boolean {
     return f1 && f2 && f1.id === f2.id;
   }

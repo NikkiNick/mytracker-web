@@ -51,7 +51,7 @@ export class ChartComponent implements OnInit {
     this.graphOrigin = {
       x: this.options.canvas.margin + xOffset + this.options.graph.margin,
       y: this.canvas.nativeElement.height - this.options.canvas.margin - yOffset - this.options.graph.margin
-    }; 
+    };   
     this.graphWidth = this.canvas.nativeElement.width - ((this.options.canvas.margin + this.options.graph.margin)*2) - xOffset;
     const graphHeight = this.canvas.nativeElement.height - ((this.options.canvas.margin + this.options.graph.margin)*2) - yOffset;
 
