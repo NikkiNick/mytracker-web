@@ -6,6 +6,7 @@ export declare interface LineOptions {
 export declare interface TextOptions {
     direction?: 'horizontal' | 'vertical';
     alignment?: CanvasTextAlign;
+	baseLine?: CanvasTextBaseline;
     fontSize?: number;
     font?: string;
 	fontWeight?: 'normal' | 'bold' | 'lighter',
