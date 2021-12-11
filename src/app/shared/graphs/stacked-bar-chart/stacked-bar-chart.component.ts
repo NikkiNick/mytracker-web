@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { config } from 'process';
 import { CanvasComponent } from '../canvas/canvas.component';
-import { CanvasCoordinate, StackedBarData } from '../canvas/canvas.types';
+import { CanvasCoordinate, StackedBarData, StackedBarStack } from '../canvas/canvas.types';
 import { StackedBarChartConfig } from './stacked-bar-chart-config';
 
 @Component({
@@ -11,11 +11,14 @@ import { StackedBarChartConfig } from './stacked-bar-chart-config';
 })
 export class StackedBarChartComponent extends CanvasComponent{
 
-  private transformedData: { name: string, stacks: { name: string, color: string, amount: number, width: number }[]}[];
-  private overlayContainers: { topLeft: CanvasCoordinate, topRight: CanvasCoordinate, bottomLeft: CanvasCoordinate, bottomRight: CanvasCoordinate }[] = [];
+  private transformedData: { name: string, stacks: { data: StackedBarStack, width: number }[]}[];
+  private overlayContainers: { data: StackedBarStack, width: number, pos: { topLeft: CanvasCoordinate, topRight: CanvasCoordinate, bottomLeft: CanvasCoordinate, bottomRight: CanvasCoordinate} }[] = [];
+  private barHeight: number;
+  
   init(config: StackedBarChartConfig): void {
     this.transformedData = [];
     this.overlayContainers = [];
+    this.barHeight = 0;
     super.initConfig(config);
     this.initData(config.data);
     this.initAxisX();
@@ -30,8 +33,8 @@ export class StackedBarChartComponent extends CanvasComponent{
     const yAxisValuesOffset = this.config.axisY.axisValues.showAxisValues ? (yLongestValue + this.config.axisY.axisValues.marginFromAxis) : 0;
     const xOffset = 	(this.config.axisY.title ? this.config.axisY.titleTextOptions.fontSize : 0) + yAxisValuesOffset;
     const yOffset = 	(this.config.axisX.title ? this.config.axisX.titleTextOptions.fontSize : 0) + xAxisValuesOffset;
-	const xTotalsSize = this.calculateLongestValue(data.map(d => `${d.stacks.reduce((s1, s2) => s1 + s2.amount, 0).toString()} ${this.config.stackedBarChart.totals.suffix}`), this.config.stackedBarChart.totals.textOptions) + this.config.stackedBarChart.totals.marginFromBar;
-	const xTotalSize = this.config.stackedBarChart.totals?.showTotals ? xTotalsSize : 0;
+    const xTotalsSize = this.calculateLongestValue(data.map(d => `${d.stacks.reduce((s1, s2) => s1 + s2.amount, 0).toString()} ${this.config.stackedBarChart.totals.suffix}`), this.config.stackedBarChart.totals.textOptions) + this.config.stackedBarChart.totals.marginFromBar;
+    const xTotalSize = this.config.stackedBarChart.totals?.showTotals ? xTotalsSize : 0;
     this.graphOrigin = {
       x: this.config.canvas.margin + xOffset + this.config.graph.margin,
       y: this.canvas.nativeElement.height - this.config.canvas.margin - yOffset - this.config.graph.margin
@@ -41,8 +44,7 @@ export class StackedBarChartComponent extends CanvasComponent{
 
     // calculate data ranges
     const xRangeMin = 0;
-    // const xRangeMax = Math.max(...data.map(d => d.stacks.map(s => s.amount).reduce((s1, s2): number => s1 + s2, 0)));
-	const xRangeMax = Math.max(...data.map(bar => bar.stacks.reduce((s1, s2) => s1 + s2.amount, 0)));
+    const xRangeMax = Math.max(...data.map(bar => bar.stacks.reduce((s1, s2) => s1 + s2.amount, 0)));
     const xRangeDiff = (xRangeMax - xRangeMin);
     const xRatio = this.graphWidth / xRangeDiff;
 
@@ -51,7 +53,7 @@ export class StackedBarChartComponent extends CanvasComponent{
       const bar = { name: data[barIndex].name, stacks: []};
       for(const stack of data[barIndex].stacks){
         const stackWidth = Math.floor(stack.amount * xRatio);
-        bar.stacks.push({ category: stack.category, amount: stack.amount, width: stackWidth, color: stack.color });
+        bar.stacks.push({ data: { category: stack.category, amount: stack.amount, color: stack.color }, width: stackWidth });
       }
       this.transformedData.push(bar);
     }
@@ -150,20 +152,28 @@ export class StackedBarChartComponent extends CanvasComponent{
     }
   }
   private initGraph(): void{
-    const gutterSize = 20;
-    const barHeight = (this.graphHeight - (gutterSize * (this.transformedData.length-1))) / this.transformedData.length;
-    let currentYLevel = this.graphOrigin.y - barHeight;
+    this.barHeight = (this.graphHeight - (this.config.stackedBarChart.gutterSize * (this.transformedData.length-1))) / this.transformedData.length;
+    let currentYLevel = this.graphOrigin.y - this.barHeight;
+    
     for(const bar of this.transformedData){
       let currentXLevel = this.graphOrigin.x;
       // Draw individual stacks
       for(const stack of bar.stacks){
         // Stack
-        this.drawRect(this.ctx, { x: currentXLevel, y: currentYLevel}, { height: barHeight, width: stack.width, fillColor: stack.color }); 
+        this.drawRect(this.ctx, { x: currentXLevel, y: currentYLevel}, { height: this.barHeight, width: stack.width, fillColor: stack.data.color}); 
         this.overlayContainers.push({
-          topLeft: { x: Math.floor(currentXLevel), y: Math.floor(currentYLevel)},
-          topRight: { x: Math.floor(currentXLevel + stack.width), y: Math.floor(currentYLevel) },
-          bottomLeft: { x: Math.floor(currentXLevel), y: Math.floor(currentYLevel + barHeight) },
-          bottomRight: { x: Math.floor(currentXLevel + stack.width), y: Math.floor(currentYLevel + barHeight)}
+          data: {
+            category: stack.data.category, 
+            color: stack.data.color,
+            amount: stack.data.amount
+          },
+          width: stack.width,
+          pos: { 
+            topLeft: { x: Math.floor(currentXLevel), y: Math.floor(currentYLevel)},
+            topRight: { x: Math.floor(currentXLevel + stack.width), y: Math.floor(currentYLevel) },
+            bottomLeft: { x: Math.floor(currentXLevel), y: Math.floor(currentYLevel + this.barHeight) },
+            bottomRight: { x: Math.floor(currentXLevel + stack.width), y: Math.floor(currentYLevel + this.barHeight)}
+          }
         });
         currentXLevel += stack.width;
       }
@@ -172,30 +182,32 @@ export class StackedBarChartComponent extends CanvasComponent{
         const axisValue = bar.name;
         const axisValueCoordinate: CanvasCoordinate = {
           x: this.graphOrigin.x - this.config.graph.margin - this.config.axisY.axisValues.marginFromAxis,
-          y: currentYLevel + barHeight / 2,
+          y: currentYLevel + this.barHeight / 2,
         };
         this.drawText(this.ctx, axisValueCoordinate, axisValue, this.config.axisY.axisValues.axisValuesTextOptions);
       }
       // Draw totals
       if(this.config.stackedBarChart.totals.showTotals){
-        const barTotal = bar.stacks.reduce((s1, s2) => s1 + s2.amount, 0).toString();
+        const barTotal = bar.stacks.reduce((s1, s2) => s1 + s2.data.amount, 0).toString();
         const totalText = `${barTotal} ${this.config.stackedBarChart.totals.suffix}`;
         const barTotalCoordinate: CanvasCoordinate = {
           x: this.graphOrigin.x + this.graphWidth + this.config.stackedBarChart.totals.marginFromBar,
-          y: currentYLevel + barHeight / 2
+          y: currentYLevel + this.barHeight / 2
         };
         this.drawText(this.ctx, barTotalCoordinate, totalText, this.config.stackedBarChart.totals.textOptions);
       }
-      console.log(currentYLevel);
-      currentYLevel -= barHeight + gutterSize;
+      currentYLevel -= this.barHeight + this.config.stackedBarChart.gutterSize;
     }
   }
   private initTooltipOverlay(): void{
     this.ctxOverlay.canvas.addEventListener('mousemove', (e) => {
       this.ctxOverlay.clearRect(0, 0, this.ctxOverlay.canvas.width, this.ctxOverlay.canvas.height);
-      const areaDetected = this.overlayContainers.find(c => e.offsetX >= c.bottomLeft.x && e.offsetX <= c.bottomRight.x && e.offsetY >= c.topLeft.y && e.offsetY <= c.bottomLeft.y);
+      const areaDetected = this.overlayContainers.find(c => e.offsetX >= c.pos.bottomLeft.x && e.offsetX <= c.pos.bottomRight.x && e.offsetY >= c.pos.topLeft.y && e.offsetY <= c.pos.bottomLeft.y);
       if(areaDetected){
-        this.drawTooltip(this.ctxOverlay, { x: e.offsetX, y: e.offsetY }, ["test", "123"], this.config.graph.tooltipOptions);
+        this.config.graph.tooltipOptions.rectOptions.fillColor = areaDetected.data.color;
+        const tooltipText = [areaDetected.data.category, `${areaDetected.data.amount} ${this.config.stackedBarChart.totals.suffix}`];
+        this.drawRect(this.ctxOverlay, { x: areaDetected.pos.topLeft.x - 3, y: areaDetected.pos.topLeft.y - 3 }, { width: areaDetected.width+6, height: this.barHeight+6, fillColor: areaDetected.data.color, shadowBlur: 5, shadowColor: "gray"});
+        this.drawTooltip(this.ctxOverlay, { x: e.offsetX, y: e.offsetY }, tooltipText, this.config.graph.tooltipOptions);
       }
     });
   }

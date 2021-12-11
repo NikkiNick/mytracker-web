@@ -134,9 +134,9 @@ export class CanvasConfig implements ICanvasConfig{
         rectOptions: {
           strokeColor: graphOptions?.tooltipOptions?.rectOptions?.strokeColor ? graphOptions.tooltipOptions.rectOptions.strokeColor : '#000000',
           fillColor: graphOptions?.tooltipOptions?.rectOptions?.fillColor ? graphOptions.tooltipOptions.rectOptions.fillColor : '#00FF00',
-          shadowBlur: graphOptions?.tooltipOptions?.rectOptions?.shadowBlur ? graphOptions.tooltipOptions.rectOptions.shadowBlur : null,
-          shadowColor: graphOptions?.tooltipOptions?.rectOptions?.shadowColor ? graphOptions.tooltipOptions.rectOptions.shadowColor : "black",
-          cornerRadius: graphOptions?.tooltipOptions?.rectOptions?.cornerRadius ? graphOptions.tooltipOptions.rectOptions.cornerRadius : 5
+          shadowBlur: graphOptions?.tooltipOptions?.rectOptions?.shadowBlur ? graphOptions.tooltipOptions.rectOptions.shadowBlur : 5,
+          shadowColor: graphOptions?.tooltipOptions?.rectOptions?.shadowColor ? graphOptions.tooltipOptions.rectOptions.shadowColor : "gray",
+          cornerRadius: graphOptions?.tooltipOptions?.rectOptions?.cornerRadius ? graphOptions.tooltipOptions.rectOptions.cornerRadius : 2
         },
         padding: graphOptions?.tooltipOptions?.padding ? graphOptions.tooltipOptions.padding : 10,
         marginFromPoint: graphOptions?.tooltipOptions?.marginFromPoint ? graphOptions.tooltipOptions.marginFromPoint : 20

@@ -11,10 +11,10 @@ export declare type GraphOptions = {
   margin?: number;
   textOptions?: TextOptions;
   tooltipOptions?: { 
-	  textOptions?: TextOptions,
-	  padding?: number,
-	  marginFromPoint?: number,
-	  rectOptions?: RectOptions
+    textOptions?: TextOptions,
+    padding?: number,
+    marginFromPoint?: number,
+    rectOptions?: RectOptions
   }
 }
 export declare type ChartOptions = {
@@ -27,11 +27,12 @@ export declare type ChartOptions = {
 }
 export declare type StackedBarChartOptions = {
   totals?: {
-	showTotals?: boolean;
-	suffix?: string;
-	marginFromBar?: number;
-	textOptions?: TextOptions;
+    showTotals?: boolean;
+    suffix?: string;
+    marginFromBar?: number;
+    textOptions?: TextOptions;
   }
+  gutterSize?: number;
 }
 export declare type AxisOptions = {
   title?: string;
@@ -100,8 +101,10 @@ export declare type ChartDataPoint = {
 }
 export declare type StackedBarData = {
   name: string,
-  stacks: {
-    amount: number;
-    category: string;
-    color: string;}[];
+  stacks: StackedBarStack[];
+}
+export declare type StackedBarStack = {
+  amount: number;
+  category: string;
+  color: string;
 }

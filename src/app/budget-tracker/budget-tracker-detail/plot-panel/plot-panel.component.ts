@@ -31,16 +31,18 @@ export class PlotPanelComponent implements OnChanges, AfterViewInit {
 		const expenseRecords = this.filteredRecords.filter((r) => r.type === BudgetRecordType.EXPENSE);
 		data.push({ name: "income", stacks: [] } as StackedBarData);
 		this.groupByCategory(incomeRecords, rec => rec.category.name).forEach((v: BudgetRecord[], k: string) => {
-		const total = v.map(rec => rec.amount).reduce((rec1, rec2) => rec1 + rec2, 0);
-		const color = v[0].category.color;
-		data[0].stacks.push({ category: k, amount: total, color: color});
+			const total = v.map(rec => rec.amount).reduce((rec1, rec2) => rec1 + rec2, 0);
+			const color = v[0].category.color;
+			data[0].stacks.push({ category: k, amount: total, color: color});
 		});
+    data[0].stacks.sort((s1, s2) => s1.category.localeCompare(s2.category));
 		data.push({ name: "expenses", stacks: [] } as StackedBarData);
 		this.groupByCategory(expenseRecords, rec => rec.category.name).forEach((v: BudgetRecord[], k: string) => {
-		const total = v.map(rec => rec.amount).reduce((rec1, rec2) => rec1 + rec2, 0);
-		const color = v[0].category.color;
-		data[1].stacks.push({ category: k, amount: total, color: color});
+			const total = v.map(rec => rec.amount).reduce((rec1, rec2) => rec1 + rec2, 0);
+			const color = v[0].category.color;
+			data[1].stacks.push({ category: k, amount: total, color: color});
 		});
+    data[1].stacks.sort((s1, s2) => s1.category.localeCompare(s2.category));
 	
 		// Chart options config
 		const chartOptions: StackedBarChartConfig = new StackedBarChartConfig(
@@ -99,12 +101,12 @@ export class PlotPanelComponent implements OnChanges, AfterViewInit {
         },
         rectOptions: {
           fillColor: this.tracker.color,
-          cornerRadius: 15,
+          cornerRadius: 5,
           shadowColor: "gray",
           shadowBlur: 15
         },
         padding: 10,
-        marginFromPoint: 1
+        marginFromPoint: 10
       },
 		},
 		{ // Stacked Bar Chart
@@ -112,9 +114,9 @@ export class PlotPanelComponent implements OnChanges, AfterViewInit {
         showTotals: true,
         suffix: this.tracker.currency,
         textOptions: {
-          baseLine: "middle",
-          fontSize: 14,
-          fontWeight: "lighter"
+          baseLine: "bottom",
+          fontSize: 18,
+          fontWeight: "bold"
         }
       },
 		},

@@ -21,7 +21,8 @@ export class StackedBarChartConfig extends CanvasConfig {
           color: stackedBarChart?.totals?.textOptions?.color ? stackedBarChart.totals.textOptions.color : '#000000',
           alignment: stackedBarChart?.totals.textOptions?.alignment ? stackedBarChart.totals.textOptions.alignment : "left"
         }
-      }
+      },
+      gutterSize: stackedBarChart?.gutterSize ? stackedBarChart.gutterSize : 20
     };
 	}
 }
