@@ -12,7 +12,6 @@ import { BudgetRecordService } from './budget-record/budget-record.service';
 import { BudgetRecordManipulationDialogComponent } from './budget-record/budget-record-manipulation-dialog/budget-record-manipulation-dialog.component';
 import { RecordPanelComponent } from './budget-tracker-detail/record-panel/record-panel.component';
 import { FilterPanelComponent } from './budget-tracker-detail/filter-panel/filter-panel.component';
-import { SettingsPanelComponent } from './budget-tracker-detail/settings-panel/settings-panel.component';
 import { PlotPanelComponent } from './budget-tracker-detail/plot-panel/plot-panel.component';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { PlotPanelComponent } from './budget-tracker-detail/plot-panel/plot-pane
     BudgetRecordManipulationDialogComponent,
     RecordPanelComponent,
     FilterPanelComponent,
-    SettingsPanelComponent,
     PlotPanelComponent
   ],
   imports: [

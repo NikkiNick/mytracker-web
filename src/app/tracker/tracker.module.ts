@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { TrackerDetailComponent } from './tracker-detail/tracker-detail.component';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { SettingsPanelComponent } from './tracker-detail/settings-panel/settings-panel.component';
 import { RecordPanelComponent } from './tracker-detail/record-panel/record-panel.component';
 import { TrackerRecordModule } from '../tracker-record/tracker-record.module';
 import { ChartPanelComponent } from './tracker-detail/chart-panel/chart-panel.component';
@@ -19,7 +18,6 @@ import { TrackerManipulationDialogComponent } from './tracker-manipulation-dialo
   declarations: [
     TrackerOverviewComponent,
     TrackerDetailComponent,
-    SettingsPanelComponent,
     RecordPanelComponent,
     ChartPanelComponent,
     FilterPanelComponent,

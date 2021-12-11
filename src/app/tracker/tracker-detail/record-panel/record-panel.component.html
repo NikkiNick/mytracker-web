@@ -2,6 +2,11 @@
     <h2 class="text-center fw-bold" i18n="@@records">Records</h2>
     <mat-card-content [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
         <div class="container-fluid">
+            <div class="row" *ngIf="tracker.records.length > 1">
+              <div class="col">
+                  <app-chart-panel [tracker]="tracker" [filteredRecords]="filteredRecords" class="m-5"></app-chart-panel>
+              </div>
+            </div>
             <div class="row">
                 <div class="col">
                     <table mat-table [dataSource]="tableDataSource" class="w-100" [ngStyle]="{ 'background-color': '#ff000000'}">
@@ -60,14 +65,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="tracker.records.length > 1">
-                <div class="col">
-                    <app-chart-panel [tracker]="tracker" [filteredRecords]="filteredRecords" class="m-5"></app-chart-panel>
-                </div>
-            </div>
         </div>
     </mat-card-content>
     <div class="floatingButtonRight m-3">
+        <button mat-raised-button (click)="editTracker()" matTooltip="Edit settings" i18n-matTooltip="@@tracker-edit-settings"><mat-icon>settings</mat-icon></button>
         <button mat-raised-button (click)="addRecord()" matTooltip="Add record" i18n-matTooltip="@@record-add"><mat-icon>add</mat-icon></button>
         <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="showContent" matTooltip="Minimize panel" i18n-matTooltip="@@record-minimize-panel"><mat-icon>minimize</mat-icon></button>
         <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="!showContent" matTooltip="Maximize panel" i18n-matTooltip="@@record-maximize-panel"><mat-icon>maximize</mat-icon></button>

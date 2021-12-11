@@ -11,7 +11,9 @@ import { BudgetRecordManipulationDialogComponent } from '../../budget-record/bud
 import { BudgetRecordType } from '../../budget-record/budget-record-type.enum';
 import { BudgetRecord } from '../../budget-record/budget-record.model';
 import { BudgetRecordService } from '../../budget-record/budget-record.service';
+import { BudgetTrackerManipulationDialogComponent } from '../../budget-tracker-manipulation-dialog/budget-tracker-manipulation-dialog.component';
 import { BudgetTracker } from '../../budget-tracker.model';
+import { BudgetTrackerService } from '../../budget-tracker.service';
 
 @Component({
   selector: 'app-record-panel',
@@ -31,7 +33,8 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
     private dialog: MatDialog,
     private recordService: BudgetRecordService,
     private snackbarService: SnackBarService,
-    private router: Router) {}
+    private router: Router,
+    private budgetTrackerService: BudgetTrackerService) {}
   ngAfterViewInit(): void {
     this.tableDataSource.paginator = this.paginator;
   }
@@ -42,7 +45,11 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
       this.tableDataSource = new MatTableDataSource<BudgetRecord>(this.filteredRecords);
     }
   }
-
+  editTracker(): void {
+    this.dialog.closeAll();
+    const dialogRef = this.dialog.open(BudgetTrackerManipulationDialogComponent, { data: { modelId: this.tracker.id } as unknown as ManipulationDialogData });
+    dialogRef.componentInstance.service = this.budgetTrackerService;
+  }
   addRecord(): void {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(BudgetRecordManipulationDialogComponent, { data: { modelId: null, parentId: this.tracker.id } as ManipulationDialogData });
