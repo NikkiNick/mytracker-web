@@ -284,13 +284,9 @@ export class ChartComponent extends CanvasComponent {
         ];
         const tooltipCoordinate: CanvasCoordinate = {
           x: transformedDatapointFound.transformed.x,
-          y: transformedDatapointFound.transformed.y + this.config.chart.dataCircleOptions.radius + this.config.graph.tooltipOptions.marginFromPoint
+          y: transformedDatapointFound.transformed.y
         };
-        const tooltipTextOptions = this.config.graph.tooltipOptions.textOptions;
-        const tooltipRectOptions = this.config.graph.tooltipOptions.rectOptions;
-        const tooltipPadding = this.config.graph.tooltipOptions.padding;
-        const tooltipMarginFromPoint = this.config.graph.tooltipOptions.marginFromPoint;
-        this.drawTooltip(this.ctxOverlay, tooltipCoordinate, tooltipText, { textOptions: tooltipTextOptions, rectOptions: tooltipRectOptions, padding: tooltipPadding, marginFromPoint: tooltipMarginFromPoint });
+        this.drawTooltip(this.ctxOverlay, tooltipCoordinate, tooltipText, this.config.graph.tooltipOptions);
       } 
       else {
         this.ctxOverlay.clearRect(0, 0, this.ctxOverlay.canvas.width, this.ctxOverlay.canvas.height);

@@ -126,11 +126,12 @@ export class CanvasComponent {
     ctx.font = `${tooltipOptions.textOptions.fontSize}px ${tooltipOptions.textOptions.font}`;
     // Draw rectangle
     // 1. calculate total width / height
+    pos.y += tooltipOptions.marginFromPoint;
     if (textLines.length > 0) {
       const longestSize = this.calculateLongestValue(textLines, tooltipOptions.textOptions);
       tooltipOptions.rectOptions.width = longestSize + (this.config.graph.tooltipOptions.padding * 2);
       tooltipOptions.rectOptions.height = (this.config.graph.tooltipOptions.textOptions.fontSize * textLines.length) + (textLines.length > 1 ? (tooltipOptions.padding/2) * (textLines.length -1) : 0) + (tooltipOptions.padding*2);
-
+      
       // Moving canvas cursor to corner for rectangle to start
       if(pos.x - (tooltipOptions.rectOptions.width/2) > 0){
         if(ctx.canvas.width - pos.x > tooltipOptions.rectOptions.width/2){
@@ -140,12 +141,13 @@ export class CanvasComponent {
         }
       }
       if(ctx.canvas.height - pos.y < tooltipOptions.rectOptions.height){
-        ctx.translate(0, (tooltipOptions.rectOptions.height * - 1.5 - tooltipOptions.marginFromPoint) );
+        pos.y -= tooltipOptions.marginFromPoint * 2;
+        ctx.translate(0, (tooltipOptions.rectOptions.height * - 1 ));
       }
       // Draw rectangle
       this.drawRect(ctx, pos, tooltipOptions.rectOptions);
       // Move cursor for text
-      ctx.translate(tooltipOptions.rectOptions.width/2, tooltipOptions.marginFromPoint);
+      ctx.translate(tooltipOptions.rectOptions.width/2, tooltipOptions.padding);
       // Draw text
       for(let i = 0; i < textLines.length; i++){
         this.drawText(ctx, pos, textLines[i], tooltipOptions.textOptions);

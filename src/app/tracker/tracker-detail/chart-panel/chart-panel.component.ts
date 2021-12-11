@@ -135,6 +135,12 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
           textOptions: {
             fontSize: 15
           },
+		  tooltipOptions: {
+			  rectOptions: {
+				  fillColor: this.tracker.color
+			  },
+			  marginFromPoint: 20
+		  }
 		},
 		{ // Chart
           dataCircleOptions: {

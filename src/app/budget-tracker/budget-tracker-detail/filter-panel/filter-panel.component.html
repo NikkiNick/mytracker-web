@@ -25,21 +25,41 @@
             </div>
             <!-- DISPLAY FILTER -->
             <h2 class="text-center fw-bold" i18n="@@record-display">Display</h2>
-            <div class="row justify-content-center">
-                <app-toggle-button color="#ceff95" [isActive]="incomeFilter" (active)="toggleIncomeFilter()" class="col-4">
-                    <div class="fw-bold text-center w-100">INCOME</div>
-                </app-toggle-button>
-                <app-toggle-button color="#ff9898" [isActive]="expenseFilter" (active)="toggleExpenseFilter()" class="col-4">
-                    <span class="fw-bold">EXPENSE</span>
-                </app-toggle-button>
-            </div> 
+			<div class="row justify-content-center">
+				<mat-chip-list aria-label="Display filter" multiple selectable class="d-flex justify-content-center">
+					<mat-chip 
+						[selected]="incomeFilter"
+						(click)="toggleIncomeFilter()">
+						<div class="d-flex align-items-center">
+							<mat-icon [ngStyle]="{'color': '#ceff95', 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
+							Income
+						</div>
+					</mat-chip>
+					<mat-chip 
+						[selected]="expenseFilter"
+						(click)="toggleExpenseFilter()">
+						<div class="d-flex align-items-center">
+							<mat-icon [ngStyle]="{'color': '#ff9898', 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
+							Expense
+						</div>
+					</mat-chip>
+				</mat-chip-list>
+			</div>
             <!-- CATEGORY FILTER -->
             <h2 class="text-center fw-bold" i18n="@@record-categories">Categories</h2>
-            <div class="row  justify-content-center">
-                <app-toggle-button *ngFor="let filterCategory of filterCategories" [color]="filterCategory.category.color" [isActive]="filterCategory.isActive" (active)="toggleCategoryFilter(filterCategory.category)" class="col-4">
-                    <div class="fw-bold text-wrap">{{filterCategory.category.name}}</div>
-                </app-toggle-button>
-            </div> 
+			<div class="row justify-content-center">
+				<mat-chip-list aria-label="Category filter" multiple selectable class="d-flex justify-content-center">
+					<mat-chip 
+						*ngFor="let filterCategory of filterCategories"
+						[selected]="filterCategory.selected"
+						(click)="toggleCategoryFilter(filterCategory.category)">
+						<div class="d-flex align-items-center">
+							<mat-icon [ngStyle]="{'color': filterCategory.category.color, 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
+							{{filterCategory.category.name}}
+						</div>
+					</mat-chip>
+				</mat-chip-list>
+			</div>
         </form>
         <div *ngIf="tracker.records.length === 0" i18n="@@record-filter-norecords">No records to filter</div>
         <div *ngIf="tracker.records.length === 1" i18n="@@record-filter-oneRecord">You need more than 1 record to filter</div>

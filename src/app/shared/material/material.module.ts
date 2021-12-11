@@ -19,6 +19,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatChipsModule } from '@angular/material/chips';
 
 const materialModules = [
 	MatCardModule,
@@ -40,7 +41,8 @@ const materialModules = [
     MatMenuModule,
     MatDatepickerModule,
     MatCheckboxModule,
-	MatRadioModule
+	MatRadioModule,
+	MatChipsModule
 ];
 
 @NgModule({

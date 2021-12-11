@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { compareAsc, format, isAfter, isBefore, isSameDay } from 'date-fns';
 import { BudgetRecordCategory } from '../../budget-record-category/budget-record-category.model';
@@ -11,19 +11,24 @@ import { BudgetTracker } from '../../budget-tracker.model';
   templateUrl: './filter-panel.component.html',
   styleUrls: ['./filter-panel.component.scss']
 })
-export class FilterPanelComponent implements OnInit {
+export class FilterPanelComponent implements OnInit, AfterContentChecked {
+	
+	@Input() tracker: BudgetTracker;
+	@Output() filteredData = new EventEmitter<BudgetRecord[]>();
   filterDates: Date[];
-  filterCategories: { category: BudgetRecordCategory, isActive: boolean }[];
+  filterCategories: { category: BudgetRecordCategory, selected: boolean }[];
   incomeFilter = true;
   expenseFilter = true;
-  @Input() tracker: BudgetTracker;
-  @Output() filteredData = new EventEmitter<BudgetRecord[]>();
   form: FormGroup;
   showContent = true;
   compareFn: ((f1: Date, f2: Date) => boolean) | null = this.compareByValue;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private cdRef: ChangeDetectorRef) { 
 
+  }
+  ngAfterContentChecked(): void {
+    this.cdRef.detectChanges();
+  }
   ngOnInit(): void {
     const validators: ValidatorFn[] = [];
     if (this.tracker.records.length > 1) {
@@ -37,22 +42,22 @@ export class FilterPanelComponent implements OnInit {
     }, { validators });
     this.selectChange();
   }
-  toggleCategoryFilter(category: BudgetRecordCategory) {
+  toggleCategoryFilter(category: BudgetRecordCategory): void {
     const filterCategory = this.filterCategories.find((e) => e.category === category);
     if (filterCategory) {
-      filterCategory.isActive = !filterCategory.isActive;
+      filterCategory.selected = !filterCategory.selected;
     }
     this.selectChange();
   }
-  toggleIncomeFilter() {
+  toggleIncomeFilter(): void {
     this.incomeFilter = !this.incomeFilter;
     this.selectChange();
   }
-  toggleExpenseFilter() {
+  toggleExpenseFilter(): void {
     this.expenseFilter = !this.expenseFilter;
     this.selectChange();
   }
-  selectChange() {
+  selectChange(): void {
     if (this.form.valid) {
       // Date filter
       const fromDate = this.form.get('intervalFrom').value;
@@ -71,23 +76,23 @@ export class FilterPanelComponent implements OnInit {
         data = [];
       }
       // Category filter
-      data = data.filter((r) => this.filterCategories.filter((c) => c.isActive).map((c) => c.category.id).indexOf(r.category.id) !== -1);
+      data = data.filter((r) => this.filterCategories.filter((c) => c.selected).map((c) => c.category.id).indexOf(r.category.id) !== -1);
 
       this.filteredData.emit(data);
     }
   }
-  resetChartInterval() {
+  resetChartInterval(): void {
     this.form.setValue({
       intervalFrom: this.filterDates[0] || null,
       intervalTo: this.filterDates[this.filterDates.length-1] || null
     });
     this.incomeFilter = true;
     this.expenseFilter = true;
-    this.filterCategories.forEach((e) => e.isActive = true);
+    this.filterCategories.forEach((e) => e.selected = true);
     this.selectChange();
   }
 
-  toggleContent() {
+  toggleContent(): void {
     this.showContent = !this.showContent;
   }
 
@@ -108,10 +113,10 @@ export class FilterPanelComponent implements OnInit {
     return from !== null && to !== null && (isBefore(from, to) || isSameDay(from, to)) ? null : { interval: true };
   };
 
-  compareByValue(f1: Date, f2: Date) {
+  compareByValue(f1: Date, f2: Date): boolean {
     return f1 && f2 && f1 === f2;
   }
-  private generateFilterDates() {
+  private generateFilterDates(): void {
     const tempFilterDatesStrings = new Set(this.tracker.records.map((r) => format(new Date(r.date), 'MM-dd-yyyy')));
     const tempFilterDates = [];
     for (const entry of tempFilterDatesStrings) {
@@ -120,18 +125,14 @@ export class FilterPanelComponent implements OnInit {
 
     this.filterDates = [...tempFilterDates.sort((r1, r2) => compareAsc(r1, r2))];
   }
-  private generateFilterCategories() {
+  private generateFilterCategories(): void {
     const cats = this.tracker.records.map((r) => r.category);
-    const tempFilterCategories: { category: BudgetRecordCategory, isActive: boolean }[] = [];
+    const tempFilterCategories: { category: BudgetRecordCategory, selected: boolean }[] = [];
     for (const cat of cats) {
       if (tempFilterCategories.findIndex((e) => e.category.id === cat.id) === -1) {
-        tempFilterCategories.push({ category: cat, isActive: true });
+        tempFilterCategories.push({ category: cat, selected: true });
       }
     }
     this.filterCategories = tempFilterCategories;
-    // for(let entry of tempFilterCategories){
-    //   tempFilterCat.push({ category: entry, isActive: true });
-    // }
-    // this.filterCategories = [...tempFilterCat];
   }
 }

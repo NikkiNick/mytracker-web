@@ -104,7 +104,7 @@ export class PlotPanelComponent implements OnChanges, AfterViewInit {
           shadowBlur: 15
         },
         padding: 10,
-        marginFromPoint: 0
+        marginFromPoint: 1
       },
 		},
 		{ // Stacked Bar Chart
