@@ -15,31 +15,27 @@ import { BudgetTrackerService } from '../budget-tracker.service';
 export class BudgetTrackerDetailComponent {
   tracker: BudgetTracker;
   filteredRecords: BudgetRecord[];
-  filteredIncome: BudgetRecord[];
-  filteredExpenses: BudgetRecord[];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: BudgetTrackerService,
     private snackbarService: SnackBarService) {
-    this.route.params.subscribe((p) => {
-      const id: number = +p.id;
-      this.service.getById(id).subscribe(
-        (data: BudgetTracker) => {
-          this.tracker = data;
-          this.filteredIncome = data.records.filter((r) => r.type === BudgetRecordType.INCOME);
-          this.filteredExpenses = data.records.filter((r) => r.type === BudgetRecordType.EXPENSE);
-        },
-        (err: HttpErrorResponse) => {
-          this.snackbarService.showHttpError(err, $localize`:@@budgetTracker:Budget Tracker` + ' ');
-          this.router.navigate(['/budget-trackers/overview']);
-        }
-      );
-    });
+      this.route.params.subscribe((p) => {
+        const id: number = +p.id;
+        this.service.getById(id).subscribe(
+          (data: BudgetTracker) => {
+            this.tracker = data;
+          },
+          (err: HttpErrorResponse) => {
+            this.snackbarService.showHttpError(err, $localize`:@@budgetTracker:Budget Tracker` + ' ');
+            this.router.navigate(['/budget-trackers/overview']);
+          }
+        );
+      });
   }
 
-  setFilteredData(data: BudgetRecord[]) {
+  setFilteredData(data: BudgetRecord[]): void {
     this.filteredRecords = data;
   }
 }

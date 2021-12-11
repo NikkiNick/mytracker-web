@@ -1,20 +1,21 @@
 <div class="container-fluid">
-	<div class="row justify-content-center">
-		<form [formGroup]="form" class="col-3">
-			<div class="d-flex flex-column align-items-center">
-				<label id="displayBy-label" class="fw-bold">Display</label>
-				<mat-radio-group aria-label="Display" i18n-aria-label="@@tracker-chart-display" (change)="displayChart()" formControlName="displayBy" aria-labelledby="displayBy-label">
-					<mat-radio-button value="Amount" i18n="@@record-amount">Amount</mat-radio-button>
-					&nbsp;
-					<mat-radio-button value="Average" i18n="@@record-average">Average</mat-radio-button>
-				</mat-radio-group>
-				<mat-checkbox formControlName="options_showAverage" (change)="displayChart()">Show average line</mat-checkbox>
-				<mat-checkbox formControlName="options_showAxisValuesX" (change)="displayChart()">Show X-axis values</mat-checkbox>
-				<mat-checkbox formControlName="options_showAxisValuesY" (change)="displayChart()">Show Y-axis values</mat-checkbox>
-				<mat-checkbox formControlName="options_showHelpers" (change)="displayChart()">Show helper lines</mat-checkbox>
-			</div>
-		</form>
-	</div>
+    <!-- DISPLAY FILTER -->
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col">
+                <mat-form-field appearance="outline" class="d-inline">
+                    <mat-label>Chart display options</mat-label>
+                    <mat-chip-list aria-label="Chart display options" multiple selectable class="d-flex justify-content-center">
+                        <mat-chip *ngFor="let displayOption of chartDisplayOptions"
+                            [selected]="displayOption.selected"
+                            (click)="toggleDisplayOption(displayOption)">
+                            {{displayOption.label}}
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+        </div>
+	</form>
     <div class="row">
         <app-chart #chart (window:resize)="displayChart()"></app-chart>
     </div>

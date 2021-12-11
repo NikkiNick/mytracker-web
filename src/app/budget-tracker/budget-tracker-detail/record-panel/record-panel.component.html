@@ -22,7 +22,7 @@
                     <ng-container matColumnDef="amount">
                       <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-amount" width="7.5%" class="text-center">Amount</th>
                       <td mat-cell *matCellDef="let record" class="pt-2 pr-2 pb-2" class="text-center">
-                        <span [ngClass]="{'text-success': record.type === recordTypes.INCOME, 'text-danger': record.type === recordTypes.EXPENSE}">
+                        <span [ngClass]="{'text-success': record.type === recordTypes.INCOME, 'text-danger': record.type === recordTypes.EXPENSE}" class="fs-5">
                           <span *ngIf="record.type === recordTypes.INCOME">+</span>
                           <span *ngIf="record.type === recordTypes.EXPENSE">-</span>
                           <span>{{ record.amount }}</span>

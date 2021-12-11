@@ -15,6 +15,7 @@ import { TrackerService } from '../tracker.service';
 export class TrackerDetailComponent {
   tracker: Tracker;
   filteredRecords: TrackerRecord[];
+  selectedDisplayType: 'amount' | 'average' = 'amount';
 
   constructor(
     private route: ActivatedRoute,
@@ -35,8 +36,10 @@ export class TrackerDetailComponent {
       );
     });
   }
-
-  setFilteredData(data: TrackerRecord[]) {
+  setDisplayType(type: 'amount' | 'average'): void {
+    this.selectedDisplayType = type;
+  }
+  setFilteredData(data: TrackerRecord[]): void {
     this.filteredRecords = data;
   }
 }

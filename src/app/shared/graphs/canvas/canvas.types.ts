@@ -78,6 +78,7 @@ export declare type RectOptions = {
 	cornerRadius?: number;
 	shadowColor?: string;
 	shadowBlur?: number;
+  lineThickness?: number;
 }
 export declare type CircleOptions = {
   radius?: number;

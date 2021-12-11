@@ -43,6 +43,7 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
     if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
       this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
       this.tableDataSource = new MatTableDataSource<BudgetRecord>(this.filteredRecords);
+      this.tableDataSource.paginator = this.paginator;
     }
   }
   editTracker(): void {

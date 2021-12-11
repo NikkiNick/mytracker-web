@@ -21,6 +21,7 @@ import { TrackerService } from '../../tracker.service';
 export class RecordPanelComponent implements OnChanges, AfterViewInit {
   @Input() filteredRecords: TrackerRecord[];
   @Input() tracker: Tracker;
+  @Input() selectedDisplayType: 'amount' | 'average' = 'amount';
   tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'breakpoint', 'actions' ];
   tableDataSource: MatTableDataSource<TrackerRecord>;
   showContent = true;
@@ -38,7 +39,7 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
+    if ((changes.filteredRecords && changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) && (changes.selectedDisplayType && changes.selectedDisplayType.currentValue !== changes.selectedDisplayType.previousValue)) {
       this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
       this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
     }

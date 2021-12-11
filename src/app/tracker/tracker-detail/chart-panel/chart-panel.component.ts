@@ -17,20 +17,22 @@ import { ChartDataPoint } from 'src/app/shared/graphs/canvas/canvas.types.js';
 export class ChartPanelComponent implements OnChanges, AfterViewInit {
   @Input() tracker?: Tracker;
   @Input() filteredRecords: TrackerRecord[];
+  @Input() selectedDisplayType: 'amount' | 'average' = 'amount';
   @ViewChild('chart', { static: false }) charts: ChartComponent;
   form: FormGroup;
+  chartDisplayOptions: { label: string, selected: boolean }[] = [];
 
   constructor(private fb: FormBuilder, private datePipe: DatePipe) {
-    this.form = this.fb.group({
-      displayBy: [ 'Amount', [] ],
-      options_showAverage: [ true, [] ],
-      options_showAxisValuesX: [ true, [] ],
-      options_showAxisValuesY: [ true, [] ],
-      options_showHelpers: [ true, [] ]
-    });
+    this.form = this.fb.group({});
+    this.chartDisplayOptions.push({ label: "Show average line", selected: true });
+    this.chartDisplayOptions.push({ label: "Show X-axis values", selected: true });
+    this.chartDisplayOptions.push({ label: "Show Y-axis values", selected: true });
+    this.chartDisplayOptions.push({ label: "Show helper lines", selected: true });
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.filteredRecords.firstChange && changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
+    if (
+      (!changes.filteredRecords?.firstChange && changes.filteredRecords?.currentValue !== changes.filteredRecords?.previousValue) || 
+      (!changes.selectedDisplayType?.firstChange && changes.selectedDisplayType?.currentValue !== changes.selectedDisplayType?.previousValue)) {
       this.displayChart();
     }
   }
@@ -38,19 +40,21 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     this.displayChart();
   }
-
+  toggleDisplayOption(option: { label: string, selected: boolean }): void{
+    option.selected = !option.selected;
+    this.displayChart();
+  }
 	displayChart(): void {
     if (this.form.valid) {
       const data: ChartDataPoint[] = [];
       // FormData
-      const displayBy_formValue = this.form.get('displayBy').value;
-      const options_showAverage_formValue = this.form.get('options_showAverage').value;
-      const options_showAxisValuesX_formValue = this.form.get('options_showAxisValuesX').value;
-      const options_showAxisValuesY_formValue = this.form.get('options_showAxisValuesY').value;
-      const options_showHelpers_formValue = this.form.get('options_showHelpers').value;
+      const options_showAverage = this.chartDisplayOptions[0].selected;
+      const options_showAxisValuesX = this.chartDisplayOptions[1].selected;
+      const options_showAxisValuesY = this.chartDisplayOptions[2].selected;
+      const options_showHelpers = this.chartDisplayOptions[3].selected;
       // Datapoints
-      switch (displayBy_formValue) {
-        case 'Amount':
+      switch (this.selectedDisplayType) {
+        case 'amount':
           for (const rec of this.filteredRecords) {
             const dataPoint: ChartDataPoint = {
               original: { x: new Date(rec.date).getTime(), y: rec.amount as unknown as number },
@@ -59,7 +63,7 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
             data.push(dataPoint);
           }
           break;
-        case 'Average':
+        case 'average':
           for (let i = 0; i < this.filteredRecords.length; i++) {
             if (i < this.filteredRecords.length - 1) {
               const diff = TrackerRecord.calculateDifference(this.filteredRecords[i], this.filteredRecords[i + 1]);
@@ -95,14 +99,14 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
             }
           },
           axisValues: {
-            showAxisValues: options_showAxisValuesX_formValue,
+            showAxisValues: options_showAxisValuesX,
             axisValuesTextOptions: {
               fontSize: 12,
             },
             marginFromAxis: 5
           },
           helperOptions: {
-            showHelperLines: options_showHelpers_formValue
+            showHelperLines: options_showHelpers
           }
         },
         // yAxis
@@ -119,14 +123,14 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
             showAxisIntersect: false,
           },
           axisValues: {
-            showAxisValues: options_showAxisValuesY_formValue,
+            showAxisValues: options_showAxisValuesY,
             axisValuesTextOptions: {
               fontSize: 12
             },
             marginFromAxis: 5
           },
           helperOptions: {
-            showHelperLines: options_showHelpers_formValue
+            showHelperLines: options_showHelpers
           }
         },
         // Graph
@@ -135,12 +139,12 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
           textOptions: {
             fontSize: 15
           },
-		  tooltipOptions: {
-			  rectOptions: {
-				  fillColor: this.tracker.color
-			  },
-			  marginFromPoint: 20
-		  }
+          tooltipOptions: {
+            rectOptions: {
+              fillColor: this.tracker.color
+            },
+            marginFromPoint: 20
+          }
 		},
 		{ // Chart
           dataCircleOptions: {
@@ -148,7 +152,7 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
             fillColor: this.tracker.color,
           },
           averageOptions: {
-            showAverage: options_showAverage_formValue,
+            showAverage: options_showAverage,
           }
           // showAverage: this.form.get('displayBy').value === 'Amount' ? false : true
         },

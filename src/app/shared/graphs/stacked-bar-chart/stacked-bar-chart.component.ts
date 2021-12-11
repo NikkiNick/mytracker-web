@@ -160,7 +160,7 @@ export class StackedBarChartComponent extends CanvasComponent{
       // Draw individual stacks
       for(const stack of bar.stacks){
         // Stack
-        this.drawRect(this.ctx, { x: currentXLevel, y: currentYLevel}, { height: this.barHeight, width: stack.width, fillColor: stack.data.color}); 
+        this.drawRect(this.ctx, { x: currentXLevel, y: currentYLevel}, { height: this.barHeight, width: stack.width, fillColor: stack.data.color, lineThickness: this.config.graph.tooltipOptions.rectOptions.lineThickness }); 
         this.overlayContainers.push({
           data: {
             category: stack.data.category, 
@@ -206,7 +206,7 @@ export class StackedBarChartComponent extends CanvasComponent{
       if(areaDetected){
         this.config.graph.tooltipOptions.rectOptions.fillColor = areaDetected.data.color;
         const tooltipText = [areaDetected.data.category, `${areaDetected.data.amount} ${this.config.stackedBarChart.totals.suffix}`];
-        this.drawRect(this.ctxOverlay, { x: areaDetected.pos.topLeft.x - 3, y: areaDetected.pos.topLeft.y - 3 }, { width: areaDetected.width+6, height: this.barHeight+6, fillColor: areaDetected.data.color, shadowBlur: 5, shadowColor: "gray"});
+        this.drawRect(this.ctxOverlay, { x: areaDetected.pos.topLeft.x - 3, y: areaDetected.pos.topLeft.y - 3 }, { width: areaDetected.width+6, height: this.barHeight+6, fillColor: areaDetected.data.color, shadowBlur: 5, shadowColor: "gray", lineThickness: 2});
         this.drawTooltip(this.ctxOverlay, { x: e.offsetX, y: e.offsetY }, tooltipText, this.config.graph.tooltipOptions);
       }
     });

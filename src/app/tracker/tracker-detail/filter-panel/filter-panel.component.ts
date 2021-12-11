@@ -1,6 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn } from '@angular/forms';
 import { isBefore, isWithinInterval, compareDesc } from 'date-fns';
+import { ChartDataPoint } from 'src/app/shared/graphs/canvas/canvas.types';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model';
 import { Tracker } from '../../tracker.model';
 
@@ -10,13 +12,15 @@ import { Tracker } from '../../tracker.model';
   styleUrls: ['./filter-panel.component.scss']
 })
 export class FilterPanelComponent implements OnInit {
-  constructor(private fb: FormBuilder) { }
-
   @Input() tracker: Tracker;
   @Output() filteredData = new EventEmitter<TrackerRecord[]>();
+  @Output() selectedDisplayType: EventEmitter<string> = new EventEmitter();
+  selectedDisplayTypeVar: 'amount' | 'average' = 'amount';
   form: FormGroup;
   showContent = true;
   compareFn: ((f1: TrackerRecord, f2: TrackerRecord) => boolean) | null = this.compareByValue;
+
+  constructor(private fb: FormBuilder, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     const validators: ValidatorFn[] = [];
@@ -29,7 +33,10 @@ export class FilterPanelComponent implements OnInit {
     }, { validators });
     this.selectChange();
   }
-
+  toggleDisplayType(): void{
+    this.selectedDisplayTypeVar = this.selectedDisplayTypeVar === 'amount' ? 'average' : 'amount';
+    this.selectedDisplayType.emit(this.selectedDisplayTypeVar);
+  }
   selectChange(): void {
     if (this.form.valid) {
       const from = this.form.get('intervalFrom').value as TrackerRecord;
@@ -47,7 +54,6 @@ export class FilterPanelComponent implements OnInit {
     });
     this.selectChange();
   }
-
   toggleContent(): void {
     this.showContent = !this.showContent;
   }

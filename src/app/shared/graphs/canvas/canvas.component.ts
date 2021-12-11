@@ -95,6 +95,7 @@ export class CanvasComponent {
 	ctx.beginPath();
     ctx.fillStyle = config.fillColor;
     ctx.strokeStyle = config.strokeColor;
+    ctx.lineWidth = config.lineThickness;
     if(config.shadowColor && config.shadowBlur){
       ctx.shadowColor = config.shadowColor;
       ctx.shadowBlur = config.shadowBlur;

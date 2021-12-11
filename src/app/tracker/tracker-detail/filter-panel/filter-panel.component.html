@@ -3,8 +3,8 @@
     <mat-card-content class="text-center" [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
         <form [formGroup]="form" class="container-fluid" *ngIf="tracker.records.length > 1">
             <div class="row">
-				<div class="col col-lg-6">
-					<mat-form-field appearance="outline" class="m-0 mx-2 w-100">
+				<div class="col-12 col-lg-6">
+					<mat-form-field appearance="outline" class="w-100">
 						<mat-label i18n="@@record-from">From</mat-label>
 						<mat-select formControlName="intervalFrom" [compareWith]="compareFn" (selectionChange)="selectChange()">
 							<mat-option *ngFor="let record of tracker.records" [value]="record">{{ record.date | date: 'shortDate' }} ({{ record.amount }} {{tracker.unitType.shortName}})</mat-option>
@@ -13,8 +13,8 @@
 						<mat-error *ngIf="form.controls['intervalFrom'].errors?.sameFromAndTo" i18n="@@record-filterFrom-error-sameFromAndTo">'From' can not be the same as 'To'</mat-error>
 					</mat-form-field>
 				</div>
-                <div class="col col-lg-6">
-					<mat-form-field appearance="outline" class="m-0 mx-2 w-100">
+                <div class="col-12 col-lg-6">
+					<mat-form-field appearance="outline" class="w-100">
 						<mat-label i18n="@@record-to">To</mat-label>
 						<mat-select formControlName="intervalTo" [compareWith]="compareFn" (selectionChange)="selectChange()">
 							<mat-option *ngFor="let record of tracker.records" [value]="record">{{ record.date | date: 'shortDate' }} ({{ record.amount }} {{tracker.unitType.shortName}})</mat-option>
@@ -24,6 +24,26 @@
 					</mat-form-field>
 				</div>
             </div>
+             <!-- DISPLAY FILTER -->
+			<div class="row">
+				<div class="col">
+					<mat-form-field appearance="outline" class="w-100">
+						<mat-label>Display</mat-label>
+						<mat-chip-list aria-label="Display filter" multiple selectable class="d-flex justify-content-center">
+							<mat-chip 
+								[selected]="selectedDisplayTypeVar === 'amount'"
+								(click)="toggleDisplayType()">
+								Amount
+							</mat-chip>
+                            <mat-chip 
+                                [selected]="selectedDisplayTypeVar === 'average'"
+                                (click)="toggleDisplayType()">
+                                Average
+                            </mat-chip>
+						</mat-chip-list>
+					</mat-form-field>
+				</div>
+			</div>
         </form>
         <app-tracker-record-difference-display *ngIf="tracker.records.length > 1" [tracker]="tracker" [firstRecord]="form.controls['intervalTo'].value" [secondRecord]="form.controls['intervalFrom'].value" [smallSize]="false"></app-tracker-record-difference-display>
         <div *ngIf="tracker.records.length === 0" i18n="@@record-filter-norecords">No records to filter</div>

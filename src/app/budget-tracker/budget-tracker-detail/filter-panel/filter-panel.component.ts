@@ -134,5 +134,6 @@ export class FilterPanelComponent implements OnInit, AfterContentChecked {
       }
     }
     this.filterCategories = tempFilterCategories;
+    this.filterCategories.sort((f1, f2) => f1.category.name.localeCompare(f2.category.name));
   }
 }

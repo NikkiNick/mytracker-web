@@ -4,7 +4,7 @@
         <div class="container-fluid">
             <div class="row" *ngIf="tracker.records.length > 1">
               <div class="col">
-                  <app-chart-panel [tracker]="tracker" [filteredRecords]="filteredRecords" class="m-5"></app-chart-panel>
+                  <app-chart-panel [tracker]="tracker" [filteredRecords]="filteredRecords" class="m-5" [selectedDisplayType]="selectedDisplayType"></app-chart-panel>
               </div>
             </div>
             <div class="row">
