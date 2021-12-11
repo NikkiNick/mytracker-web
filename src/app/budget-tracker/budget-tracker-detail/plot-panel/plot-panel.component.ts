@@ -57,17 +57,17 @@ export class PlotPanelComponent implements OnChanges, AfterViewInit {
 			axisLineOptions: {
 				thickness: 2
 			},
-			showAxisIntersect: false,
+			showAxisIntersect: true,
 			arrowOptions: {
 				arrowSize: 15
 			}
 			},
 			axisValues: {
-			showAxisValues: false,
-			axisValuesTextOptions: {
-				fontSize: 12,
-			},
-			marginFromAxis: 5
+        showAxisValues: false,
+        axisValuesTextOptions: {
+          fontSize: 12,
+        },
+        marginFromAxis: 5
 			},
 		},
 		{ // yAxis
@@ -92,7 +92,7 @@ export class PlotPanelComponent implements OnChanges, AfterViewInit {
 		{ // Graph
 			margin: 20,
 			textOptions: {
-			  fontSize: 15
+        fontSize: 15
 			},
       tooltipOptions: {
         textOptions: {

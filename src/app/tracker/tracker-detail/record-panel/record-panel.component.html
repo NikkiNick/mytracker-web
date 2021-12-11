@@ -13,7 +13,9 @@
                         <ng-container matColumnDef="amount">
                             <th mat-header-cell *matHeaderCellDef scope="col" i18n="@@record-amount">Amount</th>
                             <td mat-cell *matCellDef="let record" class="p-2 pr-3">
-                                <app-tracker-record-display [record]="record" [suffix]="tracker.unitType.shortName" [color]="tracker.color"></app-tracker-record-display>
+                                <app-info-box [color]="tracker.color" size="large">
+                                  <span class="fs-4 fw-bolder">{{record.amount}} {{tracker.unitType.shortName}}</span>
+                                </app-info-box>
                             </td>
                             <th mat-footer-cell *matFooterCellDef></th>
                         </ng-container>

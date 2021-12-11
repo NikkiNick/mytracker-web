@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { compareDesc } from 'date-fns';
@@ -11,7 +12,6 @@ import { BudgetRecordType } from '../../budget-record/budget-record-type.enum';
 import { BudgetRecord } from '../../budget-record/budget-record.model';
 import { BudgetRecordService } from '../../budget-record/budget-record.service';
 import { BudgetTracker } from '../../budget-tracker.model';
-import { BudgetTrackerService } from '../../budget-tracker.service';
 
 @Component({
   selector: 'app-record-panel',
@@ -19,6 +19,7 @@ import { BudgetTrackerService } from '../../budget-tracker.service';
   styleUrls: ['./record-panel.component.scss']
 })
 export class RecordPanelComponent implements OnChanges, AfterViewInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @Input() filteredRecords: BudgetRecord[];
   @Input() tracker: BudgetTracker;
   tableColumnsToDisplay = [ 'category', 'date', 'amount', 'name', 'description', 'actions' ];
@@ -29,38 +30,35 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private recordService: BudgetRecordService,
-    private trackerService: BudgetTrackerService,
     private snackbarService: SnackBarService,
     private router: Router) {}
-
   ngAfterViewInit(): void {
-    // this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-    // this.tableDataSource = new MatTableDataSource<BudgetRecord>(this.filteredRecords);
+    this.tableDataSource.paginator = this.paginator;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
       this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
       this.tableDataSource = new MatTableDataSource<BudgetRecord>(this.filteredRecords);
     }
   }
 
-  addRecord() {
+  addRecord(): void {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(BudgetRecordManipulationDialogComponent, { data: { modelId: null, parentId: this.tracker.id } as ManipulationDialogData });
     dialogRef.componentInstance.service = this.recordService;
   }
 
-  editRecord(id: number) {
+  editRecord(id: number): void {
     this.dialog.closeAll();
     const dialogRef = this.dialog.open(BudgetRecordManipulationDialogComponent, { data: { modelId: id, parentId: this.tracker.id } as ManipulationDialogData });
     dialogRef.componentInstance.service = this.recordService;
   }
-  toggleContent() {
+  toggleContent(): void {
     this.showContent = !this.showContent;
   }
 
-  deleteRecord(id: number) {
+  deleteRecord(id: number): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, { data: { title: $localize`:@@record-delete-title:Please confirm`, message: $localize`:@@record-delete-message:Are you sure you want to delete this Record?` } });
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {

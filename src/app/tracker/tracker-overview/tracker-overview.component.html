@@ -6,7 +6,9 @@
         <ng-template tableColumn="Latest record" width="15%" alignment="center" let-model i18n-tableColumn="@@tracker-latest-record">
             <span *ngIf="model.records.length === 0" i18n="@@tracker-norecords">No records</span>
             <div *ngIf="model.records.length > 0" class="m-2 mx-3">
-                <app-tracker-record-display [record]="model.records[0]" [suffix]="model.unitType.shortName" [color]="model.color"></app-tracker-record-display>
+              <app-info-box [color]="model.color" size="large">
+                <span class="fs-4 fw-bolder">{{model.records[0].amount}} {{model.unitType.shortName}}</span>
+              </app-info-box>
             </div>
         </ng-template>            
         <ng-template tableColumn="Since breakpoint" width="15%" let-model i18n-tableColumn="@@tracker-since-breakpoint">
@@ -19,12 +21,6 @@
         <ng-template tableColumn="Created" let-model width="10%" i18n-tableColumn="@@tracker-created" alignment="center" >
             {{ model.created | date: 'shortDate' }}
         </ng-template>
-        <!-- <ng-template tableColumn="Color" width="2%"  [centeredColumn]="true"  let-model i18n-tableColumn="@@tracker-color">
-            <div *ngIf="model.color" [ngStyle]="{ 'background-color': model.color, 'border': '1px solid '+model.color, 'min-height': '22px'}" class="rounded text-center p-1 shadow"></div>
-        </ng-template>
-        <ng-template tableColumn="Record precision" [centeredColumn]="true" let-model i18n-tableColumn="@@tracker-record-precision">
-            {{ model.recordPrecision }}
-        </ng-template> -->
         <ng-template tableActionsColumn let-model alignment="right">
             <button mat-raised-button class="mx-1" color="success" (click)="openAddRecordDialog(model)" matTooltip="Add record" i18n-matTooltip="@@add-record"><mat-icon>add</mat-icon></button>
         </ng-template>
@@ -34,7 +30,9 @@
         <ng-template gridCardContent let-model>
             <div *ngIf="model.records.length > 0" class="d-flex flex-column align-items-center text-center">
                 <span class="fw-bold h6">Current</span>
-                <app-tracker-record-display [record]="model.records[0]" [suffix]="model.unitType.shortName" [color]="model.color" class="w-100"></app-tracker-record-display>
+                <app-info-box [color]="model.color" size="large">
+                  <span class="fs-4 fw-bolder">{{model.records[0].amount}} {{model.unitType.shortName}}</span>
+                </app-info-box>
                 <div class="d-flex flex-column align-items-center mt-3" *ngIf="model.records.length > 1 && model.breakpoint">
                     <span class="fw-bold h6" i18n="@@tracker-since-breakpoint-date">Since breakpoint ({{model.breakpoint.date | date: "shortDate"}})</span>
                     <app-tracker-record-difference-display [firstRecord]="model.records[0]" [secondRecord]="model.breakpoint" [tracker]="model" [smallSize]="false"></app-tracker-record-difference-display>

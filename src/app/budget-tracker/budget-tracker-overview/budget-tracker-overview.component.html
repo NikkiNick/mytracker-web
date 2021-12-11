@@ -9,8 +9,5 @@
         <ng-template tableColumn="Created" width="25%" let-model  [centeredColumn]="true"  i18n-tableColumn="@@budgetTracker-created">
             {{ model.created | date: 'shortDate' }}
         </ng-template>
-        <!-- <ng-template tableColumn="Color" width="25%"  [centeredColumn]="true"  let-model i18n-tableColumn="@@budgetTracker-color">
-            <div *ngIf="model.color" [ngStyle]="{ 'background-color': model.color, 'border': '1px solid '+model.color, 'min-height': '22px'}" class="rounded text-center p-1 shadow"></div>
-        </ng-template> -->
     </app-crud-table>
 </app-page>

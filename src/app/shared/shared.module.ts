@@ -6,13 +6,11 @@ import { ChartComponent } from './graphs/chart/chart.component';
 import { CrudModule } from './crud/crud.module';
 import { DialogModule } from './dialog/dialog.module';
 import { PageComponent } from './page/page.component';
-import { ToggleButtonComponent } from './components/toggle-button/toggle-button.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { StackedBarChartComponent } from './graphs/stacked-bar-chart/stacked-bar-chart.component';
-import { CanvasComponent } from './graphs/canvas/canvas.component';
-
+import { InfoBoxComponent } from './components/info-box/info-box.component';
 
 @NgModule({
   declarations: [
@@ -20,8 +18,9 @@ import { CanvasComponent } from './graphs/canvas/canvas.component';
     ConfirmationDialogComponent,
     ChartComponent,
     PageComponent,
-    ToggleButtonComponent,
-    StackedBarChartComponent
+    InfoBoxComponent,
+    StackedBarChartComponent,
+    InfoBoxComponent
   ],
   imports: [
     CommonModule,
@@ -38,9 +37,9 @@ import { CanvasComponent } from './graphs/canvas/canvas.component';
     ReactiveFormsModule,
     BreadCrumbsComponent,
     ConfirmationDialogComponent,
-    ToggleButtonComponent,
+    InfoBoxComponent,
     ChartComponent,
-	StackedBarChartComponent,
+    StackedBarChartComponent,
     MaterialModule,
     CrudModule,
     DialogModule,

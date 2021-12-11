@@ -1,13 +1,10 @@
 <app-page title="Record categories overview" i18n-title="@@recordCategory-overview">
-    <app-crud-table [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[5,10,15]" [displayModes]="['table', 'grid']">
+    <app-crud-table [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[10, 25, 50]" [displayModes]="['table', 'grid']">
         <ng-template tableColumn="Name" width="30%" let-model i18n-tableColumn="@@recordCategory-name">
             {{ model.name }}
         </ng-template>
         <ng-template tableColumn="Description" width="40%" let-model i18n-tableColumn="@@recordCategory-description">
             {{ model.description }}
-        </ng-template>
-        <ng-template tableColumn="Color" width="10%" let-model i18n-tableColumn="@@recordCategory-color">
-            <div *ngIf="model.color" [ngStyle]="{ 'background-color': model.color, 'border': '1px solid '+model.color, 'min-height': '22px'}" class="rounded text-center p-1 shadow"></div>
         </ng-template>
         <ng-template gridCardTitle let-model>
             <div class="text-center h2">{{model.name}}</div>
