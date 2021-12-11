@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { ChartDataPoint, ChartOptions } from 'src/app/shared/chart/chart-options.model.js';
-import { ChartComponent } from 'src/app/shared/chart/chart.component.js';
+import { ChartComponent } from 'src/app/shared/graphs/chart/chart.component.js';
 import { Tracker } from '../../tracker.model.js';
 import { round } from 'lodash';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TrackerRecord } from 'src/app/tracker-record/tracker-record.model.js';
-import { ChartCoordinate } from 'src/app/shared/chart/chart.types.js';
 import { DatePipe } from '@angular/common';
+import { ChartConfig } from 'src/app/shared/graphs/chart/chart-config.js';
+import { ChartDataPoint } from 'src/app/shared/graphs/canvas/canvas.types.js';
 
 
 @Component({
@@ -40,7 +40,6 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
   }
 
 	displayChart(): void {
-    console.log("displaying chart");
     if (this.form.valid) {
       const data: ChartDataPoint[] = [];
       // FormData
@@ -75,7 +74,7 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
       }
 
       // Chart options config
-      const chartOptions: ChartOptions = new ChartOptions(
+      const chartOptions: ChartConfig = new ChartConfig(
         // Canvas
         {
           height: '600px',
@@ -136,23 +135,11 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
           textOptions: {
             fontSize: 15
           },
+		},
+		{ // Chart
           dataCircleOptions: {
             radius: 8,
             fillColor: this.tracker.color,
-          },
-          tooltipOptions: {
-            textOptions: {
-              fontSize: 20,
-              fontWeight: "bold"
-            },
-            rectOptions: {
-              fillColor: this.tracker.color,
-              cornerRadius: 15,
-              shadowColor: "gray",
-              shadowBlur: 15
-            },
-            padding: 10,
-            marginFromPoint: 10
           },
           averageOptions: {
             showAverage: options_showAverage_formValue,
@@ -161,7 +148,7 @@ export class ChartPanelComponent implements OnChanges, AfterViewInit {
         },
         data);
       // Init chart
-      this.charts.initChart(chartOptions);
+      this.charts.init(chartOptions);
     }
   }
   compareByValue(f1: TrackerRecord, f2: TrackerRecord): boolean {

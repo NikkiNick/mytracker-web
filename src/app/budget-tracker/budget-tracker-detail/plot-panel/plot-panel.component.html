@@ -1,45 +1,5 @@
-<ng-container *ngIf="incomeRecordsPlotData && expenseRecordsPlotData; else loading">
-    <div class="d-flex flex-column w-100">
-        <div class="row align-items-center">
-            <div class="col-2">
-                <app-toggle-button color="#ceff95" [isActive]="false">
-                    <span class="fw-bold">INCOME</span>
-                </app-toggle-button>
-            </div>
-			<div class="col-1">
-				<div  class="income rounded shadow fw-bold text-success p-3 w-100">
-					+ {{incomeRecordsPlotData.totalAmount}} {{tracker.currency}}
-				</div>
-			</div>
-            <div class="col-9">
-                <div [style.width.%]="incomeRecordsPlotData.percentile" *ngIf="incomeRecordsPlotData.totalAmount > 0" class="income rounded shadow fw-bold text-success p-3">
-                </div>
-            </div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col-2">
-                <app-toggle-button color="#ff9898" [isActive]="false">
-                    <span class="fw-bold">EXPENSE</span>
-                </app-toggle-button>
-            </div>
-			<div class="col-1">
-				<div  class="expense rounded shadow fw-bold text-danger p-3 w-100">
-                    - {{expenseRecordsPlotData.totalAmount}} {{tracker.currency}}
-				</div>
-			</div>
-            <div class="col-9">
-                <div [style.width.%]="expenseRecordsPlotData.percentile" *ngIf="expenseRecordsPlotData.totalAmount > 0" class="expense rounded shadow fw-bold text-danger p-3">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col m-3 text-center">
-                <div [style.width.%]="100" [ngClass]="{'income': totalRecordsPlotData > 0, 'expense': totalRecordsPlotData < 0}" class="rounded shadow fw-bold  p-3">
-                        TOTAL: {{totalRecordsPlotData}} {{tracker.currency}}
-                </div>
-            </div>
-        </div>
-    </div>
+<ng-container *ngIf="filteredRecords; else loading">
+	<app-stacked-bar-chart #chart (window:resize)="displayStackBarChart()"></app-stacked-bar-chart>
 </ng-container>
 <ng-template #loading>
     Loading...

@@ -6,7 +6,7 @@
 $primary: mat-palette($mat-indigo);
 $accent: mat-palette($mat-yellow);
 $warn: mat-palette($mat-red);
-$theme: mat-dark-theme($primary, $accent, $warn);
+$theme: mat-light-theme($primary, $accent, $warn);
 
 $blue-gray: mat-palette($mat-blue-gray);
 

@@ -3,28 +3,31 @@
     <mat-card-content class="text-center" [ngClass]="{'d-none': !showContent, 'd-block': showContent}"> 
         <form [formGroup]="form" class="container-fluid" *ngIf="tracker.records.length > 1">
             <!-- DATE FILTER -->
-            <div class="row d-flex justify-content-center align-items-center">
-                <mat-form-field appearance="outline" class="m-0 mx-2">
-                    <mat-label i18n="@@record-from">From</mat-label>
-                    <mat-select formControlName="intervalFrom" [compareWith]="compareFn" (selectionChange)="selectChange()">
-                        <mat-option *ngFor="let date of filterDates" [value]="date">{{ date | date: "shortDate" }}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="form.controls['intervalFrom'].errors?.toIsBeforeFrom" i18n="@@record-filterFrom-error-fromIsBeforeTo">'From' can not be after 'To'</mat-error>
-                </mat-form-field>
-                
-                <mat-form-field appearance="outline" class="m-0 mx-2">
-                    <mat-label i18n="@@record-to">To</mat-label>
-                    <mat-select formControlName="intervalTo" [compareWith]="compareFn" (selectionChange)="selectChange()">
-                        <mat-option *ngFor="let date of filterDates" [value]="date">{{ date | date: "shortDate" }}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="form.controls['intervalTo'].errors?.toIsBeforeFrom" i18n="@@record-filterFrom-error-toIsBeforeFrom">'To' can not be before 'From'</mat-error>
-                </mat-form-field>
+            <div class="row">
+				<div class="col-12 col-lg-6">
+					<mat-form-field appearance="outline" class="m-0 mx-2 w-100">
+						<mat-label i18n="@@record-from">From</mat-label>
+						<mat-select formControlName="intervalFrom" [compareWith]="compareFn" (selectionChange)="selectChange()">
+							<mat-option *ngFor="let date of filterDates" [value]="date">{{ date | date: "shortDate" }}</mat-option>
+						</mat-select>
+						<mat-error *ngIf="form.controls['intervalFrom'].errors?.toIsBeforeFrom" i18n="@@record-filterFrom-error-fromIsBeforeTo">'From' can not be after 'To'</mat-error>
+					</mat-form-field>
+				</div>
+                <div class="col-12 col-lg-6">
+					<mat-form-field appearance="outline" class="m-0 mx-2 w-100">
+						<mat-label i18n="@@record-to">To</mat-label>
+						<mat-select formControlName="intervalTo" [compareWith]="compareFn" (selectionChange)="selectChange()">
+							<mat-option *ngFor="let date of filterDates" [value]="date">{{ date | date: "shortDate" }}</mat-option>
+						</mat-select>
+						<mat-error *ngIf="form.controls['intervalTo'].errors?.toIsBeforeFrom" i18n="@@record-filterFrom-error-toIsBeforeFrom">'To' can not be before 'From'</mat-error>
+					</mat-form-field>
+				</div>
             </div>
             <!-- DISPLAY FILTER -->
             <h2 class="text-center fw-bold" i18n="@@record-display">Display</h2>
             <div class="row justify-content-center">
                 <app-toggle-button color="#ceff95" [isActive]="incomeFilter" (active)="toggleIncomeFilter()" class="col-4">
-                    <span class="fw-bold">INCOME</span>
+                    <div class="fw-bold text-center w-100">INCOME</div>
                 </app-toggle-button>
                 <app-toggle-button color="#ff9898" [isActive]="expenseFilter" (active)="toggleExpenseFilter()" class="col-4">
                     <span class="fw-bold">EXPENSE</span>
