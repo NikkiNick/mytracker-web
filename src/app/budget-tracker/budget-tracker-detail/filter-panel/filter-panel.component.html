@@ -5,7 +5,7 @@
             <!-- DATE FILTER -->
             <div class="row">
 				<div class="col-12 col-lg-6">
-					<mat-form-field appearance="outline" class="m-0 mx-2 w-100">
+					<mat-form-field appearance="outline" class="w-100">
 						<mat-label i18n="@@record-from">From</mat-label>
 						<mat-select formControlName="intervalFrom" [compareWith]="compareFn" (selectionChange)="selectChange()">
 							<mat-option *ngFor="let date of filterDates" [value]="date">{{ date | date: "shortDate" }}</mat-option>
@@ -14,7 +14,7 @@
 					</mat-form-field>
 				</div>
                 <div class="col-12 col-lg-6">
-					<mat-form-field appearance="outline" class="m-0 mx-2 w-100">
+					<mat-form-field appearance="outline" class="w-100">
 						<mat-label i18n="@@record-to">To</mat-label>
 						<mat-select formControlName="intervalTo" [compareWith]="compareFn" (selectionChange)="selectChange()">
 							<mat-option *ngFor="let date of filterDates" [value]="date">{{ date | date: "shortDate" }}</mat-option>
@@ -24,41 +24,49 @@
 				</div>
             </div>
             <!-- DISPLAY FILTER -->
-            <h2 class="text-center fw-bold" i18n="@@record-display">Display</h2>
-			<div class="row justify-content-center">
-				<mat-chip-list aria-label="Display filter" multiple selectable class="d-flex justify-content-center">
-					<mat-chip 
-						[selected]="incomeFilter"
-						(click)="toggleIncomeFilter()">
-						<div class="d-flex align-items-center">
-							<mat-icon [ngStyle]="{'color': '#ceff95', 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
-							Income
-						</div>
-					</mat-chip>
-					<mat-chip 
-						[selected]="expenseFilter"
-						(click)="toggleExpenseFilter()">
-						<div class="d-flex align-items-center">
-							<mat-icon [ngStyle]="{'color': '#ff9898', 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
-							Expense
-						</div>
-					</mat-chip>
-				</mat-chip-list>
+			<div class="row">
+				<div class="col">
+					<mat-form-field appearance="outline" class="w-100">
+						<mat-label>Display</mat-label>
+						<mat-chip-list aria-label="Display filter" multiple selectable class="d-flex justify-content-center">
+							<mat-chip 
+								[selected]="incomeFilter"
+								(click)="toggleIncomeFilter()">
+								<div class="d-flex align-items-center">
+									<mat-icon [ngStyle]="{'color': '#ceff95', 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
+									Income
+								</div>
+							</mat-chip>
+							<mat-chip 
+								[selected]="expenseFilter"
+								(click)="toggleExpenseFilter()">
+								<div class="d-flex align-items-center">
+									<mat-icon [ngStyle]="{'color': '#ff9898', 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
+									Expense
+								</div>
+							</mat-chip>
+						</mat-chip-list>
+					</mat-form-field>
+				</div>
 			</div>
             <!-- CATEGORY FILTER -->
-            <h2 class="text-center fw-bold" i18n="@@record-categories">Categories</h2>
-			<div class="row justify-content-center">
-				<mat-chip-list aria-label="Category filter" multiple selectable class="d-flex justify-content-center">
-					<mat-chip 
-						*ngFor="let filterCategory of filterCategories"
-						[selected]="filterCategory.selected"
-						(click)="toggleCategoryFilter(filterCategory.category)">
-						<div class="d-flex align-items-center">
-							<mat-icon [ngStyle]="{'color': filterCategory.category.color, 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
-							{{filterCategory.category.name}}
-						</div>
-					</mat-chip>
-				</mat-chip-list>
+			<div class="row">
+				<div class="col">
+					<mat-form-field appearance="outline" class="w-100">
+						<mat-label>Categories</mat-label>
+						<mat-chip-list aria-label="Category filter" multiple selectable class="d-flex justify-content-center">
+							<mat-chip 
+								*ngFor="let filterCategory of filterCategories"
+								[selected]="filterCategory.selected"
+								(click)="toggleCategoryFilter(filterCategory.category)">
+								<div class="d-flex align-items-center">
+									<mat-icon [ngStyle]="{'color': filterCategory.category.color, 'font-size': '14px', 'width': '14px', 'height': '14px'}" class="me-2">circle</mat-icon>
+									{{filterCategory.category.name}}
+								</div>
+							</mat-chip>
+						</mat-chip-list>
+					</mat-form-field>
+				</div>
 			</div>
         </form>
         <div *ngIf="tracker.records.length === 0" i18n="@@record-filter-norecords">No records to filter</div>
