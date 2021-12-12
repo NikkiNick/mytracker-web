@@ -30,12 +30,12 @@ export class ProfileComponent {
     );
   }
 
-  openDialog_editUser() {
+  openDialog_editUser(): void {
     this.dialog.closeAll();
     this.dialog.open(UserManipulationDialogComponent, { data: { modelId: this.authenticatedUser.id } as ManipulationDialogData });
   }
 
-  openDialog_changePassword() {
+  openDialog_changePassword(): void {
     this.dialog.closeAll();
     this.dialog.open(ChangePasswordComponent, { data: { model: this.authenticatedUser, navigateTo: this.router.url } });
   }
