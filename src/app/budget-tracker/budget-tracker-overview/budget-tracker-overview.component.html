@@ -1,5 +1,5 @@
 <app-page title="BudgetTracker overview" i18n-title="@@budgetTracker-overview">
-    <app-crud-table detailUrl="/budget-trackers/detail" [service]="service" [itemsPerPage]="[5,10,15]" [manipulationDialog]="manipulationDialog">
+    <app-crud-table detailUrl="/budget-trackers/detail" [service]="service" [itemsPerPage]="[5,10,15]" [manipulationDialog]="manipulationDialog" [displayModes]="['table']">
         <ng-template tableColumn="Name" width="20%" let-model i18n-tableColumn="@@budgetTracker-name">
             <span class="h4">{{ model.name }}</span>
         </ng-template>         
@@ -9,5 +9,11 @@
         <ng-template tableColumn="Created" width="25%" let-model  [centeredColumn]="true"  i18n-tableColumn="@@budgetTracker-created">
             {{ model.created | date: 'shortDate' }}
         </ng-template>
+        <ng-template overflowMenuOption>
+          <button mat-menu-item (click)="navigateToCategories()">
+              <mat-icon>category</mat-icon>
+              <span>Manage categories</span>
+          </button>
+      </ng-template>
     </app-crud-table>
 </app-page>

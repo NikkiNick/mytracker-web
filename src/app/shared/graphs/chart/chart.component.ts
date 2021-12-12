@@ -23,7 +23,7 @@ export class ChartComponent extends CanvasComponent {
   }
 
   private initGraphData(data: ChartDataPoint[]): void {
-	this.transformedDatapoints = [];
+	  this.transformedDatapoints = [];
     // Calculating graph origin (0,0) and dimensions 
     const yLongestValue = this.calculateLongestValue(data.map(p => `${p.display.y}${this.config.axisY.suffix ? ' '+this.config.axisY.suffix : ''}`), this.config.axisY.axisValues.axisValuesTextOptions);
     const xAxisValuesOffset = this.config.axisX.axisValues.showAxisValues ? (this.config.axisX.axisValues.axisValuesTextOptions.fontSize + this.config.axisX.axisValues.marginFromAxis) : 0;

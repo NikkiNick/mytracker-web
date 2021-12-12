@@ -11,6 +11,7 @@ import { TableColumnDirective } from './crud-table/directives/table-column.direc
 import { GridCardTitleDirective } from './crud-table/directives/grid-card-title.directive';
 import { GridCardContentDirective } from './crud-table/directives/grid-card-content.directive';
 import { TableActionsColumnDirective } from './crud-table/directives/table-actions-column.directive';
+import { OverflowMenuOptionDirective } from './crud-table/directives/overflow-menu-option.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TableActionsColumnDirective } from './crud-table/directives/table-actio
     ManipulationDialogComponent,
     GridCardDirective,
     GridCardTitleDirective,
-    GridCardContentDirective
+    GridCardContentDirective,
+    OverflowMenuOptionDirective
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { TableActionsColumnDirective } from './crud-table/directives/table-actio
     GridCardDirective,
     GridCardTitleDirective,
     GridCardContentDirective,
-    ManipulationDialogComponent
+    ManipulationDialogComponent,
+    OverflowMenuOptionDirective
   ]
 })
 export class CrudModule { }

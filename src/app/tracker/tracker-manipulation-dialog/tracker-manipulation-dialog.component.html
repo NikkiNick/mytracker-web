@@ -16,6 +16,7 @@
                         <mat-label i18n="@@unittype">Unittype</mat-label>
                         <mat-select formControlName="trackerUnitType" [compareWith]="compareFn" [(ngModel)]="model.value.unitType">
                             <mat-option *ngFor="let unitType of unitTypes" [value]="unitType">{{ unitType.longName }} ({{ unitType.shortName }})</mat-option>
+                            <mat-option [value]="null" (click)="addNewUnitType()" class="fst-italic"><mat-icon>add</mat-icon>Add new unittype</mat-option>
                         </mat-select>
                         <mat-error *ngIf="form.controls['trackerUnitType'].errors?.required" i18n="@@tracker-unittype-error-required">Please select a unittype for this tracker</mat-error>
                     </mat-form-field>

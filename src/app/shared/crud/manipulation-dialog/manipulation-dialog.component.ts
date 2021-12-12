@@ -38,7 +38,7 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
   ngAfterContentInit(): void {
     this.loadModel();
   }
-  loadModel() {
+  loadModel() : void{
     // Edit
     if (this.data.modelId) {
       this.service.getById(this.data.modelId, this.data.parentId).subscribe(
@@ -63,7 +63,7 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
         (res) => {
           this.snackbarService.show('Succesfully updated item');
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);
-          this.dialogRef.close();
+          this.dialogRef.close(res);
         },
         (err) => this.snackbarService.showHttpError(err),
       );
@@ -72,7 +72,7 @@ export class ManipulationDialogComponent<T extends IBaseModel> extends DialogCom
         (res) => {
           this.snackbarService.show('Succesfully added item');
           this.router.navigateByUrl(this.data.navigateTo || this.router.url);
-          this.dialogRef.close();
+          this.dialogRef.close(res);
         },
         (err) => this.snackbarService.showHttpError(err),
       );

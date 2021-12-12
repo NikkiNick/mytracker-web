@@ -17,6 +17,7 @@
                         <mat-label i18n="@@recordCategory">Category</mat-label>
                         <mat-select formControlName="recordCategory" [compareWith]="compareFnCategory" [(ngModel)]="model.value.category">
                             <mat-option *ngFor="let category of recordCategories" [value]="category">{{ category.name }}</mat-option>
+                            <mat-option [value]="null" (click)="addNewCategory()" class="fst-italic"><mat-icon>add</mat-icon>Add new category</mat-option>
                         </mat-select>
                         <mat-error *ngIf="form.controls['recordCategory'].errors?.required" i18n="@@record-category-error-required">Please select a category for this record</mat-error>
                     </mat-form-field>

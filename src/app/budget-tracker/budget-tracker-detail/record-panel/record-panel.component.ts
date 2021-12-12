@@ -36,15 +36,18 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
     private router: Router,
     private budgetTrackerService: BudgetTrackerService) {}
   ngAfterViewInit(): void {
-    this.tableDataSource.paginator = this.paginator;
+    this.initData();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) {
-      this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-      this.tableDataSource = new MatTableDataSource<BudgetRecord>(this.filteredRecords);
-      this.tableDataSource.paginator = this.paginator;
+      this.initData();
     }
+  }
+  private initData(): void {
+    this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+    this.tableDataSource = new MatTableDataSource<BudgetRecord>(this.filteredRecords);
+    this.tableDataSource.paginator = this.paginator;
   }
   editTracker(): void {
     this.dialog.closeAll();

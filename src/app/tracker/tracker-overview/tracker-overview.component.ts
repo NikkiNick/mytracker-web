@@ -23,4 +23,7 @@ export class TrackerOverviewComponent {
     this.dialog.closeAll();
     this.dialog.open(TrackerRecordAddComponent, { data: { model: null, navigateTo: this.router.url, forEntity: tracker } });
   }
+  navigateToUnittypes(): void {
+    this.router.navigate(['unittypes', 'overview']);
+  }
 }

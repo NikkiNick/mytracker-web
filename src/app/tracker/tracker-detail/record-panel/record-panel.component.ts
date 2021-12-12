@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { compareDesc } from 'date-fns';
@@ -24,6 +25,7 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
   @Input() selectedDisplayType: 'amount' | 'average' = 'amount';
   tableColumnsToDisplay = [ 'date', 'amount', 'diff', 'breakpoint', 'actions' ];
   tableDataSource: MatTableDataSource<TrackerRecord>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   showContent = true;
 
   constructor(
@@ -34,15 +36,18 @@ export class RecordPanelComponent implements OnChanges, AfterViewInit {
     private router: Router) {}
 
   ngAfterViewInit(): void {
-    this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-    this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
+    this.initData();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.filteredRecords && changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) && (changes.selectedDisplayType && changes.selectedDisplayType.currentValue !== changes.selectedDisplayType.previousValue)) {
-      this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
-      this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);
+    if ((changes.filteredRecords && changes.filteredRecords.currentValue !== changes.filteredRecords.previousValue) || (changes.selectedDisplayType && changes.selectedDisplayType.currentValue !== changes.selectedDisplayType.previousValue)) {
+      this.initData();
     }
+  }
+  private initData(): void {
+    this.filteredRecords.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
+    this.tableDataSource = new MatTableDataSource<TrackerRecord>(this.filteredRecords);    
+    this.tableDataSource.paginator = this.paginator;
   }
   editTracker(): void {
     this.dialog.closeAll();

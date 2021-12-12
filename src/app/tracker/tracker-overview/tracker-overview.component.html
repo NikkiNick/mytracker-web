@@ -40,5 +40,11 @@
             </div>
             <div *ngIf="model.records.length === 0" class="text-center" i18n="@@tracker-no-records">No records</div>
         </ng-template>
+        <ng-template overflowMenuOption>
+            <button mat-menu-item (click)="navigateToUnittypes()">
+                <mat-icon>category</mat-icon>
+                <span>Manage unittypes</span>
+            </button>
+        </ng-template>
     </app-crud-table>
 </app-page>
