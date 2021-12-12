@@ -1,0 +1,26 @@
+<app-page title="Profile" i18n-title="@@user-profile">
+    <div class="container-fluid p-5" *ngIf="authenticatedUser">
+        <mat-card class="text-white position-relative">
+            <mat-card-content class="p-3">
+                <div class="d-flex align-items-center">
+                    <mat-icon>person</mat-icon>
+                    <div class="h3 m-0 ml-3">{{authenticatedUser.firstName}} {{authenticatedUser.lastName}}</div>
+                </div>
+                <div class="container-fluid mt-3">
+                    <div class="row py-3">
+                        <div class="col-3 fw-bold" i18n="@@user-email">Email</div>
+                        <div class="col-9">{{authenticatedUser.email}}</div>
+                    </div>                
+                    <div class="row pt-3">
+                        <div class="col-3 fw-bold" i18n="@@user-created">Created</div>
+                        <div class="col-9">{{authenticatedUser.created | date: 'shortDate' }}</div>
+                    </div>
+                </div>
+            </mat-card-content>
+            <div class="floatingButtonRight m-3">
+                <button mat-raised-button (click)="openDialog_changePassword()" matTooltip="Change password" i18n-matTooltip="@@user-change-password"><mat-icon>password</mat-icon></button>
+                <button mat-raised-button (click)="openDialog_editUser()" class="ml-2" matTooltip="Change profile" i18n-matTooltip="@@user-change-profile"><mat-icon>settings</mat-icon></button>
+            </div>
+        </mat-card>
+    </div>
+</app-page>

@@ -1,0 +1,6 @@
+<ng-container *ngIf="filteredRecords; else loading">
+	<app-stacked-bar-chart #chart (window:resize)="displayStackBarChart()"></app-stacked-bar-chart>
+</ng-container>
+<ng-template #loading>
+    Loading...
+</ng-template>

@@ -1,0 +1,36 @@
+@import "./theme";
+@import "./variables";
+
+/* GLOBAL STYLES */
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+	background-color: #ffffff;
+	color: black;
+}
+
+h1 {
+    font-size: 3rem !important;
+    font-style: italic !important;
+    color: $primary-color-dark;
+}
+.bg-primary2{
+    background-color: $primary-color-highlight !important;
+}
+.floatingButtonRight {
+    position: absolute !important;
+    top: 0;
+    right: 0;
+}
+.floatingButtonLeft {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+}
+button{
+	margin-left: 5px !important;
+}

@@ -1,0 +1,50 @@
+<app-page title="Trackers overview" i18n-title="@@tracker-overview">
+    <app-crud-table detailUrl="/trackers/detail" [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[5,10,15]">
+        <ng-template tableColumn="Name" width="20%" let-model i18n-tableColumn="@@tracker-name">
+            <span class="h4">{{ model.name }}</span>
+        </ng-template>
+        <ng-template tableColumn="Latest record" width="15%" alignment="center" let-model i18n-tableColumn="@@tracker-latest-record">
+            <span *ngIf="model.records.length === 0" i18n="@@tracker-norecords">No records</span>
+            <div *ngIf="model.records.length > 0" class="m-2 mx-3">
+              <app-info-box [color]="model.color" size="large">
+                <span class="fs-4 fw-bolder">{{model.records[0].amount}} {{model.unitType.shortName}}</span>
+              </app-info-box>
+            </div>
+        </ng-template>            
+        <ng-template tableColumn="Since breakpoint" width="15%" let-model i18n-tableColumn="@@tracker-since-breakpoint">
+            <app-tracker-record-difference-display *ngIf="model.breakpoint" [firstRecord]="model.records[0]" [secondRecord]="model.breakpoint" [tracker]="model" [smallSize]="true"></app-tracker-record-difference-display>
+            <span *ngIf="!model.breakpoint" i18n="@@tracker-nobreakpoint">No breakpoint set</span>
+        </ng-template>            
+        <ng-template tableColumn="Unittype" width="10%" let-model i18n-tableColumn="@@unittype" alignment="center" >
+            {{ model.unitType.longName }} ({{ model.unitType.shortName }})
+        </ng-template>            
+        <ng-template tableColumn="Created" let-model width="10%" i18n-tableColumn="@@tracker-created" alignment="center" >
+            {{ model.created | date: 'shortDate' }}
+        </ng-template>
+        <ng-template tableActionsColumn let-model alignment="right">
+            <button mat-raised-button class="mx-1" color="success" (click)="openAddRecordDialog(model)" matTooltip="Add record" i18n-matTooltip="@@add-record"><mat-icon>add</mat-icon></button>
+        </ng-template>
+        <ng-template gridCardTitle let-model>
+            <div class="text-center h2 m-0">{{model.name}}</div>
+        </ng-template>
+        <ng-template gridCardContent let-model>
+            <div *ngIf="model.records.length > 0" class="d-flex flex-column align-items-center text-center">
+                <span class="fw-bold h6">Current</span>
+                <app-info-box [color]="model.color" size="large">
+                  <span class="fs-4 fw-bolder">{{model.records[0].amount}} {{model.unitType.shortName}}</span>
+                </app-info-box>
+                <div class="d-flex flex-column align-items-center mt-3" *ngIf="model.records.length > 1 && model.breakpoint">
+                    <span class="fw-bold h6" i18n="@@tracker-since-breakpoint-date">Since breakpoint ({{model.breakpoint.date | date: "shortDate"}})</span>
+                    <app-tracker-record-difference-display [firstRecord]="model.records[0]" [secondRecord]="model.breakpoint" [tracker]="model" [smallSize]="false"></app-tracker-record-difference-display>
+                </div>
+            </div>
+            <div *ngIf="model.records.length === 0" class="text-center" i18n="@@tracker-no-records">No records</div>
+        </ng-template>
+        <ng-template overflowMenuOption>
+            <button mat-menu-item (click)="navigateToUnittypes()">
+                <mat-icon>category</mat-icon>
+                <span>Manage unittypes</span>
+            </button>
+        </ng-template>
+    </app-crud-table>
+</app-page>

@@ -1,0 +1,57 @@
+<mat-card [ngStyle]="{ 'background-color': tracker.color+'60' }" class="position-relative">
+    <h2 class="text-center fw-bold" i18n="@@record-filter">Filter</h2>
+    <mat-card-content class="text-center" [ngClass]="{'d-none': !showContent, 'd-block': showContent}">
+        <form [formGroup]="form" class="container-fluid" *ngIf="tracker.records.length > 1">
+            <div class="row">
+				<div class="col-12 col-lg-6">
+					<mat-form-field appearance="outline" class="w-100">
+						<mat-label i18n="@@record-from">From</mat-label>
+						<mat-select formControlName="intervalFrom" [compareWith]="compareFn" (selectionChange)="selectChange()">
+							<mat-option *ngFor="let record of tracker.records" [value]="record">{{ record.date | date: 'shortDate' }} ({{ record.amount }} {{tracker.unitType.shortName}})</mat-option>
+						</mat-select>
+						<mat-error *ngIf="form.controls['intervalFrom'].errors?.toIsBeforeFrom" i18n="@@record-filterFrom-error-fromIsBeforeTo">'From' can not be after 'To'</mat-error>
+						<mat-error *ngIf="form.controls['intervalFrom'].errors?.sameFromAndTo" i18n="@@record-filterFrom-error-sameFromAndTo">'From' can not be the same as 'To'</mat-error>
+					</mat-form-field>
+				</div>
+                <div class="col-12 col-lg-6">
+					<mat-form-field appearance="outline" class="w-100">
+						<mat-label i18n="@@record-to">To</mat-label>
+						<mat-select formControlName="intervalTo" [compareWith]="compareFn" (selectionChange)="selectChange()">
+							<mat-option *ngFor="let record of tracker.records" [value]="record">{{ record.date | date: 'shortDate' }} ({{ record.amount }} {{tracker.unitType.shortName}})</mat-option>
+						</mat-select>
+						<mat-error *ngIf="form.controls['intervalTo'].errors?.toIsBeforeFrom" i18n="@@record-filterFrom-error-toIsBeforeFrom">'To' can not be before 'From'</mat-error>
+						<mat-error *ngIf="form.controls['intervalFrom'].errors?.sameFromAndTo" i18n="@@record-filterFrom-error-sameToAndFrom">'To' can not be the same as 'From'</mat-error>
+					</mat-form-field>
+				</div>
+            </div>
+             <!-- DISPLAY FILTER -->
+			<div class="row">
+				<div class="col">
+					<mat-form-field appearance="outline" class="w-100">
+						<mat-label>Display</mat-label>
+						<mat-chip-list aria-label="Display filter" multiple selectable class="d-flex justify-content-center">
+							<mat-chip 
+								[selected]="selectedDisplayTypeVar === 'amount'"
+								(click)="toggleDisplayType()">
+								Amount
+							</mat-chip>
+                            <mat-chip 
+                                [selected]="selectedDisplayTypeVar === 'average'"
+                                (click)="toggleDisplayType()">
+                                Average
+                            </mat-chip>
+						</mat-chip-list>
+					</mat-form-field>
+				</div>
+			</div>
+        </form>
+        <app-tracker-record-difference-display *ngIf="tracker.records.length > 1" [tracker]="tracker" [firstRecord]="form.controls['intervalTo'].value" [secondRecord]="form.controls['intervalFrom'].value" [smallSize]="false"></app-tracker-record-difference-display>
+        <div *ngIf="tracker.records.length === 0" i18n="@@record-filter-norecords">No records to filter</div>
+        <div *ngIf="tracker.records.length === 1" i18n="@@record-filter-oneRecord">You need more than 1 record to filter</div>
+    </mat-card-content>
+    <div class="m-3 floatingButtonRight">
+        <button mat-raised-button (click)="resetChartInterval()" *ngIf="tracker.records.length > 1" matTooltip="Reset filter" i18n-matTooltip="@@record-reset-filter"><mat-icon>restore</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="showContent" matTooltip="Minimize panel" i18n-matTooltip="@@record-minimize-panel"><mat-icon>minimize</mat-icon></button>
+        <button mat-raised-button class="ml-2" (click)="toggleContent()" *ngIf="!showContent" matTooltip="Maximize panel" i18n-matTooltip="@@record-maximize-panel"><mat-icon>maximize</mat-icon></button>
+    </div>
+</mat-card>

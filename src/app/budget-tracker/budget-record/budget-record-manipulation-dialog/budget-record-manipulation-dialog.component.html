@@ -1,0 +1,63 @@
+<app-manipulation-dialog [heading]="(data.modelId?'Edit':'Add')+' budget record'" [service]="recordService">
+    <ng-container *ngIf="model.value">
+        <form class="container-fluid" [formGroup]="form" #manipulationForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@budgetRecord-type">Type</mat-label>
+                        <mat-select formControlName="recordType" [compareWith]="compareFn"  [(ngModel)]="model.value.type">
+                            <mat-option *ngFor="let type of recordTypes" [value]="type">{{type}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@recordCategory">Category</mat-label>
+                        <mat-select formControlName="recordCategory" [compareWith]="compareFnCategory" [(ngModel)]="model.value.category">
+                            <mat-option *ngFor="let category of recordCategories" [value]="category">{{ category.name }}</mat-option>
+                            <mat-option [value]="null" (click)="addNewCategory()" class="fst-italic"><mat-icon>add</mat-icon>Add new category</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls['recordCategory'].errors?.required" i18n="@@record-category-error-required">Please select a category for this record</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@tracker-name">Name</mat-label>
+                        <input matInput type="text" formControlName="recordName" [(ngModel)]="model.value.name">
+                        <mat-error *ngIf="form.controls['recordName'].errors?.required" i18n="@@tracker-name-error-required">Please enter a record name</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@tracker-description">Description</mat-label>
+                        <input matInput type="text" formControlName="recordDescription" [(ngModel)]="model.value.description">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@tracker-amount">Amount</mat-label>
+                        <input matInput type="text" formControlName="recordAmount" [(ngModel)]="model.value.amount">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="recordDate" [(ngModel)]="model.value.date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</app-manipulation-dialog>

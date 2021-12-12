@@ -1,0 +1,88 @@
+
+@import "variables";
+a {
+	color: white;
+}
+.sidenav-icon{
+	font-size: 3rem;
+	width: 3rem;
+	height: 3rem;
+	margin: 0;
+}
+.overflowz{
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.sidenav {
+	background-color: $sidenav-bg;
+	border-right: 1px solid $sidenav-navItem-divider-color;
+	@media(min-width:992px){
+		min-height: calc(100vh - 52px);
+		height: 100%;
+	}
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+ul a,
+ul > li > div {
+	background-color: $sidenav-navItem-bg;
+	display: block;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	color: $sidenav-text-color;
+	text-decoration: none;
+	border-bottom: 1px solid $sidenav-navItem-divider-color;
+	cursor: pointer;
+}
+ul > a:hover,
+ul > li > div:hover {
+	background-color: $sidenav-navItem-bg-hover;
+
+	padding-left: 1.5rem;
+	transition: all 0.7s ease-in-out;
+}
+.subnavItem {
+	text-indent: 1rem;
+	background-color: $sidenav-subNavItem-bg;
+}
+.subnavItem:hover {
+	background-color: $sidenav-subNavItem-bg-hover;
+	transition: all 0.3s ease-in-out;
+}
+// [data-bs-toggle="collapse"].collapsed .expand-icon::after {
+// 	content: "expand_more";
+// }
+// [data-bs-toggle="collapse"]:not(.collapsed) .expand-icon::after {
+// 	content: "expand_less";
+// }
+[aria-expanded="false"] .expand-icon {
+	//content: "expand_more";
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+[aria-expanded="true"] .expand-icon {
+	//content: "expand_less";
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+div[data-bs-toggle="collapse"][aria-expanded="true"] .expand-icon {
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+div[data-bs-toggle="collapse"][aria-expanded="false"] .expand-icon {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	transform: rotate(0deg);
+}
+.expand-icon {
+	transition: all 0.3s ease;
+}

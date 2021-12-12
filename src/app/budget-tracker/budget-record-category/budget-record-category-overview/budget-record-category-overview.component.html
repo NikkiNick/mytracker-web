@@ -1,0 +1,18 @@
+<app-page title="Record categories overview" i18n-title="@@recordCategory-overview">
+    <app-crud-table [service]="service" [manipulationDialog]="manipulationDialog" [itemsPerPage]="[10, 25, 50]" [displayModes]="['table', 'grid']">
+        <ng-template tableColumn="Name" width="30%" let-model i18n-tableColumn="@@recordCategory-name">
+            {{ model.name }}
+        </ng-template>
+        <ng-template tableColumn="Description" width="40%" let-model i18n-tableColumn="@@recordCategory-description">
+            {{ model.description }}
+        </ng-template>
+        <ng-template gridCardTitle let-model>
+            <div class="text-center h2">{{model.name}}</div>
+        </ng-template>
+        <ng-template gridCardContent let-model>
+            <div class="d-flex justify-content-center">
+                <div class="h3">{{model.description}}</div>
+            </div>
+        </ng-template>
+    </app-crud-table>
+</app-page>

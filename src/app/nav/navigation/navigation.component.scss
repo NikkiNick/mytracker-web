@@ -1,0 +1,25 @@
+@import "_variables";
+
+nav{
+    background-color: $primary-color-dark !important;
+    color: $primary-color-highlight !important;
+}
+mat-icon {
+    color: $primary-color-highlight !important;
+}
+nav a{
+  color: white !important;
+}
+nav a.active{
+    color: $primary-color-highlight !important;
+}
+nav button{
+    background-color: $primary-color-highlight !important;
+}
+.sidenav-icon{
+	font-size: 2rem;
+	width: 2rem;
+	height: 2rem;
+	margin: 0;
+  color: white !important;
+}

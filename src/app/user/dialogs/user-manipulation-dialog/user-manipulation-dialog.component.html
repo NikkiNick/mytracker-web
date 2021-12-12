@@ -1,0 +1,32 @@
+<app-manipulation-dialog [heading]="(data.modelId?'Edit':'Add')+' profile'" [service]="userService">
+    <ng-container *ngIf="model.value">
+        <form class="container-fluid" [formGroup]="form" #manipulationForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label i18n="@@user-firstname">Firstname</mat-label>
+                        <input matInput type="text" formControlName="firstName" [(ngModel)]="model.value.firstName">
+                        <mat-error *ngIf="form.controls['firstName'].errors?.required" i18n="@@user-firstname-error-required">Please enter a firstname</mat-error>
+                    </mat-form-field>
+                </div>        
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label i18n="@@user-lastname">Lastname</mat-label>
+                        <input matInput type="text" formControlName="lastName" [(ngModel)]="model.value.lastName">
+                        <mat-error *ngIf="form.controls['lastName'].errors?.required" i18n="@@user-lastname-error-required">Please enter a lastname</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@user-email">Email</mat-label>
+                        <input matInput type="email" formControlName="email" [(ngModel)]="model.value.email">
+                        <mat-error *ngIf="form.controls['email'].errors?.required" i18n="@@user-email-error-required">Please enter an email</mat-error>
+                        <mat-error *ngIf="form.controls['email'].errors?.email" i18n="@@user-email-error-invalid">Email is not valid</mat-error>
+                    </mat-form-field>  
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</app-manipulation-dialog>

@@ -1,0 +1,8 @@
+<h1 class="text-center">{{title}}</h1>
+<mat-divider *ngIf="showTitleDivider"></mat-divider>
+<ng-container *ngIf="showBreadcrumbs">
+    <app-bread-crumbs></app-bread-crumbs>
+</ng-container>
+<div class="my-3">
+    <ng-content></ng-content>
+</div>

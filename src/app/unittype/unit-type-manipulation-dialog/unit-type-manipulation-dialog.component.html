@@ -1,0 +1,24 @@
+<app-manipulation-dialog [heading]="(data.modelId?'Edit':'Add')+' Unittype'" [service]="service">
+    <ng-container *ngIf="model.value">
+        <form class="container-fluid" [formGroup]="form" #manipulationForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@unittype-shortname">Name (short)</mat-label>
+                        <input matInput type="text" formControlName="unitType_shortName" [(ngModel)]="model.value.shortName">
+                        <mat-error *ngIf="form.controls['unitType_shortName'].errors?.required" i18n="@@unittype-shortname-error-required">Please enter a unittype name (short)</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@unittype-longname">Name (long)</mat-label>
+                        <input matInput type="text" formControlName="unitType_longName" [(ngModel)]="model.value.longName">
+                        <mat-error *ngIf="form.controls['unitType_longName'].errors?.required" i18n="@@unittype-longname-error-required">Please enter a unittype name (long)</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</app-manipulation-dialog>

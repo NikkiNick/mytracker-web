@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow">
+    <div class="container-fluid">
+        <div class="d-flex align-items-center navbar-brand text-white">
+            <mat-icon class="sidenav-icon">legend_toggle</mat-icon>
+            <span>My Tracker</span>
+        </div>
+        <button  class="navbar-toggler"  type="button"  data-toggle="collapse"  data-target="#navbarSupportedContent"  aria-controls="navbarSupportedContent"  aria-expanded="false"  aria-label="Toggle navigation">
+            <span  class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between align-items-center" id="navbarSupportedContent">
+            <div class="d-flex justify-content-center w-100">
+                <ul class="navbar-nav">
+                    <li class="nav-item" *ngFor="let menuItem of menuItems">
+                        <a class="nav-link fs-3 mx-2" [routerLink]="menuItem.url" [ngClass]="{'active': activeRoute === menuItem.url}" aria-current="page">{{ menuItem.name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div *ngIf="isAuthenticated$ | async" class="d-flex align-items-center">
+            <a routerLink="/user/profile" class="m-2" matTooltip="My profile">
+                <mat-icon class="sidenav-icon">account_circle</mat-icon>
+            </a>
+            <a class="m-2" (click)="logOut()" type="button" matTooltip="Logout">
+                <mat-icon class="sidenav-icon">logout</mat-icon>
+            </a>
+        </div>
+        <div *ngIf="(isAuthenticated$ | async) === false" class="d-flex align-items-center">
+            <a class="m-2" routerLink="/user/login" type="button" matTooltip="Login">
+                <mat-icon class="sidenav-icon">login</mat-icon>
+            </a>
+        </div>
+    </div>
+</nav>

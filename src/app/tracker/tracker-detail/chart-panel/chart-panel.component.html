@@ -1,0 +1,22 @@
+<div class="container-fluid">
+    <!-- DISPLAY FILTER -->
+    <form [formGroup]="form">
+        <div class="row">
+            <div class="col">
+                <mat-form-field appearance="outline" class="d-inline">
+                    <mat-label>Chart display options</mat-label>
+                    <mat-chip-list aria-label="Chart display options" multiple selectable class="d-flex justify-content-center">
+                        <mat-chip *ngFor="let displayOption of chartDisplayOptions"
+                            [selected]="displayOption.selected"
+                            (click)="toggleDisplayOption(displayOption)">
+                            {{displayOption.label}}
+                        </mat-chip>
+                    </mat-chip-list>
+                </mat-form-field>
+            </div>
+        </div>
+	</form>
+    <div class="row">
+        <app-chart #chart (window:resize)="displayChart()"></app-chart>
+    </div>
+</div>

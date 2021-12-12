@@ -1,0 +1,43 @@
+<app-manipulation-dialog [heading]="(data.modelId?'Edit':'Add')+' tracker'" [service]="trackerService">
+    <ng-container *ngIf="model.value">
+        <form class="container-fluid" [formGroup]="form" #manipulationForm="ngForm">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@tracker-name">Name</mat-label>
+                        <input matInput type="text" formControlName="trackerName" [(ngModel)]="model.value.name">
+                        <mat-error *ngIf="form.controls['trackerName'].errors?.required" i18n="@@tracker-name-error-required">Please enter a tracker name</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@unittype">Unittype</mat-label>
+                        <mat-select formControlName="trackerUnitType" [compareWith]="compareFn" [(ngModel)]="model.value.unitType">
+                            <mat-option *ngFor="let unitType of unitTypes" [value]="unitType">{{ unitType.longName }} ({{ unitType.shortName }})</mat-option>
+                            <mat-option [value]="null" (click)="addNewUnitType()" class="fst-italic"><mat-icon>add</mat-icon>Add new unittype</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls['trackerUnitType'].errors?.required" i18n="@@tracker-unittype-error-required">Please select a unittype for this tracker</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@tracker-color">Color</mat-label>
+                        <input matInput formControlName="trackerColor" [style.background]="form.controls['trackerColor'].value+'60'" type="color"  [(ngModel)]="model.value.color"/>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label i18n="@@tracker-record-precision">Record precision</mat-label>
+                        <input matInput type="number" min="0" max="6" formControlName="trackerRecordPrecision" [(ngModel)]="model.value.recordPrecision">
+                        <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.required" i18n="@@tracker-record-precision-error-required">Please enter a record precision</mat-error>
+                        <mat-error *ngIf="form.controls['trackerRecordPrecision'].errors?.min || form.controls['trackerRecordPrecision'].errors?.max" i18n="@@tracker-record-precision-error-range">Record precision must be between 0 and 6</mat-error>
+                    </mat-form-field>   
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</app-manipulation-dialog>
