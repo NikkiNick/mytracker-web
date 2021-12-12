@@ -16,6 +16,7 @@ export class AuthService {
   apiUrl = `${environment.apiUrl}user/authenticate`;
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isAuthenticated$: Observable<boolean>;
+  attemtedUrlBeforeLoginRedirect: string;
 
   constructor(private http: HttpClient, private router: Router) {
     this.isAuthenticated.next(!this.isTokenExpired());
